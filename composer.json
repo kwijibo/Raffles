@@ -1,0 +1,13 @@
+{
+    "name": "keithalexander/Raffles",
+    "description": "simple filebased rdf store",
+    "require": {
+        "nharbour/pecs": "dev-master"
+    },
+    "authors": [
+        {
+            "name": "keith alexander",
+            "email": "keithalexander@keithalexander.co.uk"
+        }
+    ]
+}
