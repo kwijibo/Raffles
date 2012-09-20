@@ -2,7 +2,8 @@
     "name": "keithalexander/Raffles",
     "description": "simple filebased rdf store",
     "require": {
-        "nharbour/pecs": "dev-master"
+        "nharbour/pecs": "dev-master",
+        "njh/easyrdf": "dev-master"
     },
     "authors": [
         {

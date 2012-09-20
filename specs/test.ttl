@@ -1,0 +1,1133 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix ecco-tcp: <http://example.org/ecco-tcp/ref/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix whois: <http://www.kanzaki.com/ns/whois#> .
+@prefix ov: <http://open.vocab.org/terms/> .
+
+<http://example.org/ecco-tcp/organization/E_Farley_And_Co>
+    a foaf:Organization ;
+    rdfs:label "E. Farley and Co." ;
+    foaf:name "E. Farley and Co." .
+
+<http://example.org/ecco-tcp/organization/Harrison_And_Co>
+    a foaf:Organization ;
+    rdfs:label "Harrison and Co." ;
+    foaf:name "Harrison and Co." .
+
+<http://example.org/ecco-tcp/organization/J_Fletcher_And_Co>
+    a foaf:Organization ;
+    rdfs:label "J. Fletcher and Co." ;
+    foaf:name "J. Fletcher and Co." .
+
+<http://example.org/ecco-tcp/organization/T_Becket_And_Co>
+    a foaf:Organization ;
+    rdfs:label "T. Becket and Co." ;
+    foaf:name "T. Becket and Co." .
+
+<http://example.org/ecco-tcp/organization/T_Becket_And_P_A_De_Hondt_In_The_Strand_Booksellers>
+    a foaf:Organization ;
+    rdfs:label "T. Becket and P. A. de Hondt in the Strand Booksellers" ;
+    foaf:name "T. Becket and P. A. de Hondt in the Strand Booksellers" .
+
+<http://example.org/ecco-tcp/organization/The_Company_Of_Booksellers>
+    a foaf:Organization ;
+    rdfs:label "the Company of Booksellers" ;
+    foaf:name "the Company of Booksellers" .
+
+<http://example.org/ecco-tcp/organization/The_United_Company_Of_Booksellers>
+    a foaf:Organization ;
+    rdfs:label "the United Company of Booksellers" ;
+    foaf:name "the United Company of Booksellers" .
+
+<http://example.org/ecco-tcp/organization/W_Blanchard_And_Co>
+    a foaf:Organization ;
+    rdfs:label "W. Blanchard and Co." ;
+    foaf:name "W. Blanchard and Co." .
+
+<http://example.org/ecco-tcp/person/A_Alison>
+    a foaf:Person ;
+    rdfs:label "A. Alison" ;
+    foaf:name "A. Alison" .
+
+<http://example.org/ecco-tcp/person/A_Baldwin>
+    a foaf:Person ;
+    rdfs:label "A. Baldwin" ;
+    foaf:name "A. Baldwin" .
+
+<http://example.org/ecco-tcp/person/A_Bell>
+    a foaf:Person ;
+    rdfs:label "A. Bell" ;
+    foaf:name "A. Bell" .
+
+<http://example.org/ecco-tcp/person/A_Campbell>
+    a foaf:Person ;
+    rdfs:label "A. Campbell" ;
+    foaf:name "A. Campbell" .
+
+<http://example.org/ecco-tcp/person/A_Cleugh>
+    a foaf:Person ;
+    rdfs:label "A. Cleugh" ;
+    foaf:name "A. Cleugh" .
+
+<http://example.org/ecco-tcp/person/A_De>
+    a foaf:Person ;
+    rdfs:label "A. De" ;
+    foaf:name "A. De" .
+
+<http://example.org/ecco-tcp/person/A_Dodd>
+    a foaf:Person ;
+    rdfs:label "A. Dodd" ;
+    foaf:name "A. Dodd" .
+
+<http://example.org/ecco-tcp/person/A_Donaldson>
+    a foaf:Person ;
+    rdfs:label "A. Donaldson" ;
+    foaf:name "A. Donaldson" .
+
+<http://example.org/ecco-tcp/person/A_Ewing>
+    a foaf:Person ;
+    rdfs:label "A. Ewing" ;
+    foaf:name "A. Ewing" .
+
+<http://example.org/ecco-tcp/person/A_Kincaid>
+    a foaf:Person ;
+    rdfs:label "A. Kincaid" ;
+    foaf:name "A. Kincaid" .
+
+<http://example.org/ecco-tcp/person/A_Kincaid_Bookseller_And>
+    a foaf:Person ;
+    rdfs:label "A. Kincaid Bookseller and" ;
+    foaf:name "A. Kincaid Bookseller and" .
+
+<http://example.org/ecco-tcp/person/A_Leathly_>
+    a foaf:Person ;
+    rdfs:label "A. Leathly ." ;
+    foaf:name "A. Leathly ." .
+
+<http://example.org/ecco-tcp/person/A_Millar>
+    a foaf:Person ;
+    rdfs:label "A. Millar" ;
+    foaf:name "A. Millar" .
+
+<http://example.org/ecco-tcp/person/A_Millar_In_The_Strand_London>
+    a foaf:Person ;
+    rdfs:label "A. Millar in the Strand London" ;
+    foaf:name "A. Millar in the Strand London" .
+
+<http://example.org/ecco-tcp/person/A_Moor>
+    a foaf:Person ;
+    rdfs:label "A. Moor" ;
+    foaf:name "A. Moor" .
+
+<http://example.org/ecco-tcp/person/A_Moore>
+    a foaf:Person ;
+    rdfs:label "A. Moore" ;
+    foaf:name "A. Moore" .
+
+<http://example.org/ecco-tcp/person/A_Strahan>
+    a foaf:Person ;
+    rdfs:label "A. Strahan" ;
+    foaf:name "A. Strahan" .
+
+<http://example.org/ecco-tcp/person/A_Strahan_Printers-street>
+    a foaf:Person ;
+    rdfs:label "A. Strahan Printers-Street" ;
+    foaf:name "A. Strahan Printers-Street" .
+
+<http://example.org/ecco-tcp/person/A_Strahan_Printers_Street>
+    a foaf:Person ;
+    rdfs:label "A. Strahan Printers Street" ;
+    foaf:name "A. Strahan Printers Street" .
+
+<http://example.org/ecco-tcp/person/A_Ward>
+    a foaf:Person ;
+    rdfs:label "A. Ward" ;
+    foaf:name "A. Ward" .
+
+<http://example.org/ecco-tcp/person/Aaron_Hill_1685-1750>
+    ov:dateOfDeath "1750" ;
+    whois:born "1685" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3305033583>, <http://example.org/ecco-tcp/text/CW3305564567>, <http://example.org/ecco-tcp/text/CW3306514472>, <http://example.org/ecco-tcp/text/CW3307744628>, <http://example.org/ecco-tcp/text/CW3309719892>, <http://example.org/ecco-tcp/text/CW3309771531>, <http://example.org/ecco-tcp/text/CW3309771611>, <http://example.org/ecco-tcp/text/CW3309771626>, <http://example.org/ecco-tcp/text/CW3310660413>, <http://example.org/ecco-tcp/text/CW3310660904>, <http://example.org/ecco-tcp/text/CW3311927118>, <http://example.org/ecco-tcp/text/CW3312773641>, <http://example.org/ecco-tcp/text/CW3313463543>, <http://example.org/ecco-tcp/text/CW3313726929>, <http://example.org/ecco-tcp/text/CW3313803406>, <http://example.org/ecco-tcp/text/CW3314390574> ;
+    foaf:name "Aaron Hill" ;
+    foaf:surname "Hill" .
+
+<http://example.org/ecco-tcp/person/Aaron_Rhames>
+    a foaf:Person ;
+    rdfs:label "Aaron Rhames" ;
+    foaf:name "Aaron Rhames" .
+
+<http://example.org/ecco-tcp/person/Adam_Ferguson_1723-1816>
+    ov:dateOfDeath "1816" ;
+    whois:born "1723" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3301128777> ;
+    foaf:name "Adam Ferguson" ;
+    foaf:surname "Ferguson" .
+
+<http://example.org/ecco-tcp/person/Adam_Smith_1723-1790>
+    ov:dateOfDeath "1790" ;
+    whois:born "1723" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW120137304>, <http://example.org/ecco-tcp/text/CW3304916822>, <http://example.org/ecco-tcp/text/CW3305124089>, <http://example.org/ecco-tcp/text/CW3306157733> ;
+    foaf:name "Adam Smith" ;
+    foaf:surname "Smith" .
+
+<http://example.org/ecco-tcp/person/Alex_Ewing>
+    a foaf:Person ;
+    rdfs:label "Alex. Ewing" ;
+    foaf:name "Alex. Ewing" .
+
+<http://example.org/ecco-tcp/person/Alex_Hogg>
+    a foaf:Person ;
+    rdfs:label "Alex. Hogg" ;
+    foaf:name "Alex. Hogg" .
+
+<http://example.org/ecco-tcp/person/Alex_Stuart>
+    a foaf:Person ;
+    rdfs:label "Alex. Stuart" ;
+    foaf:name "Alex. Stuart" .
+
+<http://example.org/ecco-tcp/person/Alexander_D_Dow_1779->
+    ov:dateOfDeath "" ;
+    whois:born "1779" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3302942524>, <http://example.org/ecco-tcp/text/CW3310244999>, <http://example.org/ecco-tcp/text/CW3310245093> ;
+    foaf:name "Alexander d. Dow" ;
+    foaf:surname "Dow" .
+
+<http://example.org/ecco-tcp/person/Alexander_Gerard_1728-1795>
+    ov:dateOfDeath "1795" ;
+    whois:born "1728" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3318248282>, <http://example.org/ecco-tcp/text/CW3318339020>, <http://example.org/ecco-tcp/text/CW3318391665>, <http://example.org/ecco-tcp/text/CW3319664119>, <http://example.org/ecco-tcp/text/CW3320221557>, <http://example.org/ecco-tcp/text/CW3322134818>, <http://example.org/ecco-tcp/text/CW3322618919> ;
+    foaf:name "Alexander Gerard" ;
+    foaf:surname "Gerard" .
+
+<http://example.org/ecco-tcp/person/Alexander_Pope_1688-1744>
+    ov:dateOfDeath "1744" ;
+    whois:born "1688" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW111212958>, <http://example.org/ecco-tcp/text/CW3301013072>, <http://example.org/ecco-tcp/text/CW3303311835>, <http://example.org/ecco-tcp/text/CW3303357028>, <http://example.org/ecco-tcp/text/CW3305050439>, <http://example.org/ecco-tcp/text/CW3305492159>, <http://example.org/ecco-tcp/text/CW3305586974>, <http://example.org/ecco-tcp/text/CW3310017338>, <http://example.org/ecco-tcp/text/CW3310104143>, <http://example.org/ecco-tcp/text/CW3310471557>, <http://example.org/ecco-tcp/text/CW3311149665>, <http://example.org/ecco-tcp/text/CW3311153917>, <http://example.org/ecco-tcp/text/CW3311252252>, <http://example.org/ecco-tcp/text/CW3311652046>, <http://example.org/ecco-tcp/text/CW3311930261>, <http://example.org/ecco-tcp/text/CW3312455752>, <http://example.org/ecco-tcp/text/CW3312480308>, <http://example.org/ecco-tcp/text/CW3312909881>, <http://example.org/ecco-tcp/text/CW3312919144>, <http://example.org/ecco-tcp/text/CW3313094058>, <http://example.org/ecco-tcp/text/CW3313116761>, <http://example.org/ecco-tcp/text/CW3313134792>, <http://example.org/ecco-tcp/text/CW3313180836>, <http://example.org/ecco-tcp/text/CW3313193981>, <http://example.org/ecco-tcp/text/CW3313385661>, <http://example.org/ecco-tcp/text/CW3313448874>, <http://example.org/ecco-tcp/text/CW3313549784>, <http://example.org/ecco-tcp/text/CW3313743997>, <http://example.org/ecco-tcp/text/CW3313744420>, <http://example.org/ecco-tcp/text/CW3313744783>, <http://example.org/ecco-tcp/text/CW3313800978>, <http://example.org/ecco-tcp/text/CW3313881377>, <http://example.org/ecco-tcp/text/CW3313975798>, <http://example.org/ecco-tcp/text/CW3314026671>, <http://example.org/ecco-tcp/text/CW3314110739>, <http://example.org/ecco-tcp/text/CW3314138630>, <http://example.org/ecco-tcp/text/CW3314388315>, <http://example.org/ecco-tcp/text/CW3314391526>, <http://example.org/ecco-tcp/text/CW3314460581>, <http://example.org/ecco-tcp/text/CW3314970895>, <http://example.org/ecco-tcp/text/CW3315091181>, <http://example.org/ecco-tcp/text/CW3315793665>, <http://example.org/ecco-tcp/text/CW3316338637>, <http://example.org/ecco-tcp/text/CW3316560458>, <http://example.org/ecco-tcp/text/CW3317119553>, <http://example.org/ecco-tcp/text/CW3317170174>, <http://example.org/ecco-tcp/text/CW3317207439>, <http://example.org/ecco-tcp/text/CW3319328564>, <http://example.org/ecco-tcp/text/CW3320166735>, <http://example.org/ecco-tcp/text/CW3324564277>, <http://example.org/ecco-tcp/text/CW3324670202>, <http://example.org/ecco-tcp/text/CW3324670410>, <http://example.org/ecco-tcp/text/CW3324671561>, <http://example.org/ecco-tcp/text/CW3324717816>, <http://example.org/ecco-tcp/text/CW3324763043>, <http://example.org/ecco-tcp/text/CW3324785366>, <http://example.org/ecco-tcp/text/CW3325016193>, <http://example.org/ecco-tcp/text/CW3325276988>, <http://example.org/ecco-tcp/text/CW3325283683>, <http://example.org/ecco-tcp/text/CW3325690829> ;
+    foaf:name "Alexander Pope" ;
+    foaf:surname "Pope" .
+
+<http://example.org/ecco-tcp/person/Alexander_Pope_1763-1835>
+    ov:dateOfDeath "1835" ;
+    whois:born "1763" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3307646870> ;
+    foaf:name "Alexander Pope" ;
+    foaf:surname "Pope" .
+
+<http://example.org/ecco-tcp/person/Algernon_Sidney_1622-1683>
+    ov:dateOfDeath "1683" ;
+    whois:born "1622" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3305267615>, <http://example.org/ecco-tcp/text/CW3305733058> ;
+    foaf:name "Algernon Sidney" ;
+    foaf:surname "Sidney" .
+
+<http://example.org/ecco-tcp/person/Ambrose_Philips_1674-1749>
+    ov:dateOfDeath "1749" ;
+    whois:born "1674" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3309502314> ;
+    foaf:name "Ambrose Philips" ;
+    foaf:surname "Philips" .
+
+<http://example.org/ecco-tcp/person/And_Millar_London>
+    a foaf:Person ;
+    rdfs:label "And. Millar London" ;
+    foaf:name "And. Millar London" .
+
+<http://example.org/ecco-tcp/person/Anderson_In>
+    a foaf:Person ;
+    rdfs:label "Anderson In" ;
+    foaf:name "Anderson In" .
+
+<http://example.org/ecco-tcp/person/Andrew_Bell>
+    a foaf:Person ;
+    rdfs:label "Andrew Bell" ;
+    foaf:name "Andrew Bell" .
+
+<http://example.org/ecco-tcp/person/Andrew_Foulis>
+    a foaf:Person ;
+    rdfs:label "Andrew Foulis" ;
+    foaf:name "Andrew Foulis" .
+
+<http://example.org/ecco-tcp/person/Andrew_Millar>
+    a foaf:Person ;
+    rdfs:label "Andrew Millar" ;
+    foaf:name "Andrew Millar" .
+
+<http://example.org/ecco-tcp/person/Ann_Sophia_Radcliffe>
+    a foaf:Agent ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3324596510> ;
+    foaf:name "Ann Sophia Radcliffe" ;
+    foaf:surname "Radcliffe" .
+
+<http://example.org/ecco-tcp/person/Ann_Ward_Radcliffe_1764-1823>
+    ov:dateOfDeath "1823" ;
+    whois:born "1764" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3301637429>, <http://example.org/ecco-tcp/text/CW3310964504>, <http://example.org/ecco-tcp/text/CW3310966035>, <http://example.org/ecco-tcp/text/CW3310966475>, <http://example.org/ecco-tcp/text/CW3314299090>, <http://example.org/ecco-tcp/text/CW3314411031>, <http://example.org/ecco-tcp/text/CW3314411272>, <http://example.org/ecco-tcp/text/CW3316606049>, <http://example.org/ecco-tcp/text/CW3316606337> ;
+    foaf:name "Ann Ward Radcliffe" ;
+    foaf:surname "Radcliffe" .
+
+<http://example.org/ecco-tcp/person/Anne_Kingsmill_Finch_Countess_Of_Winchilsea_1661-1720>
+    ov:dateOfDeath "1720" ;
+    whois:born "1661" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3315381121> ;
+    foaf:name "Anne Kingsmill Finch Countess of Winchilsea" ;
+    foaf:surname "Winchilsea" .
+
+<http://example.org/ecco-tcp/person/Anth_Peisley>
+    a foaf:Person ;
+    rdfs:label "Anth. Peisley" ;
+    foaf:name "Anth. Peisley" .
+
+<http://example.org/ecco-tcp/person/Anthony_Edwards>
+    a foaf:Person ;
+    rdfs:label "Anthony Edwards" ;
+    foaf:name "Anthony Edwards" .
+
+<http://example.org/ecco-tcp/person/Arthur_Duck>
+    a foaf:Agent ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3310246333> ;
+    foaf:name "Arthur Duck" ;
+    foaf:surname "Duck" .
+
+<http://example.org/ecco-tcp/person/Arthur_Murphy_1727-1805>
+    ov:dateOfDeath "1805" ;
+    whois:born "1727" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3301754297>, <http://example.org/ecco-tcp/text/CW3309733325>, <http://example.org/ecco-tcp/text/CW3310072043>, <http://example.org/ecco-tcp/text/CW3310073327>, <http://example.org/ecco-tcp/text/CW3310073525>, <http://example.org/ecco-tcp/text/CW3310143414>, <http://example.org/ecco-tcp/text/CW3310245273>, <http://example.org/ecco-tcp/text/CW3310438241>, <http://example.org/ecco-tcp/text/CW3311466545>, <http://example.org/ecco-tcp/text/CW3311466884>, <http://example.org/ecco-tcp/text/CW3311705458>, <http://example.org/ecco-tcp/text/CW3312050543>, <http://example.org/ecco-tcp/text/CW3313646996>, <http://example.org/ecco-tcp/text/CW3313791952>, <http://example.org/ecco-tcp/text/CW3314019855>, <http://example.org/ecco-tcp/text/CW3314111864>, <http://example.org/ecco-tcp/text/CW3314297155>, <http://example.org/ecco-tcp/text/CW3317025348>, <http://example.org/ecco-tcp/text/cw3306672839>, <http://example.org/ecco-tcp/text/cw3307696075>, <http://example.org/ecco-tcp/text/cw3310068156>, <http://example.org/ecco-tcp/text/cw3312468899>, <http://example.org/ecco-tcp/text/cw3312955830>, <http://example.org/ecco-tcp/text/cw3313366885>, <http://example.org/ecco-tcp/text/cw3316634781> ;
+    foaf:name "Arthur Murphy" ;
+    foaf:surname "Murphy" .
+
+<http://example.org/ecco-tcp/person/Augustin_Belloste_1654-1730>
+    ov:dateOfDeath "1730" ;
+    whois:born "1654" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW108658496> ;
+    foaf:name "Augustin Belloste" ;
+    foaf:surname "Belloste" .
+
+<http://example.org/ecco-tcp/person/B_Bragg>
+    a foaf:Person ;
+    rdfs:label "B. Bragg", "B. Bragg]" ;
+    foaf:name "B. Bragg", "B. Bragg]" .
+
+<http://example.org/ecco-tcp/person/B_Collins>
+    a foaf:Person ;
+    rdfs:label "B. Collins" ;
+    foaf:name "B. Collins" .
+
+<http://example.org/ecco-tcp/person/B_Crosby_Stationers>
+    a foaf:Person ;
+    rdfs:label "B. Crosby Stationers" ;
+    foaf:name "B. Crosby Stationers" .
+
+<http://example.org/ecco-tcp/person/B_Dod>
+    a foaf:Person ;
+    rdfs:label "B. Dod" ;
+    foaf:name "B. Dod" .
+
+<http://example.org/ecco-tcp/person/B_Lintot>
+    a foaf:Person ;
+    rdfs:label "B. Lintot" ;
+    foaf:name "B. Lintot" .
+
+<http://example.org/ecco-tcp/person/B_Seeley>
+    a foaf:Person ;
+    rdfs:label "B. Seeley" ;
+    foaf:name "B. Seeley" .
+
+<http://example.org/ecco-tcp/person/B_Smith>
+    a foaf:Person ;
+    rdfs:label "B. Smith" ;
+    foaf:name "B. Smith" .
+
+<http://example.org/ecco-tcp/person/B_White>
+    a foaf:Person ;
+    rdfs:label "B. White" ;
+    foaf:name "B. White" .
+
+<http://example.org/ecco-tcp/person/Barker>
+    a foaf:Person ;
+    rdfs:label "Barker" ;
+    foaf:name "Barker" .
+
+<http://example.org/ecco-tcp/person/Becket_Hondt>
+    a foaf:Person ;
+    rdfs:label "Becket Hondt" ;
+    foaf:name "Becket Hondt" .
+
+<http://example.org/ecco-tcp/person/Beilby>
+    a foaf:Person ;
+    rdfs:label "Beilby" ;
+    foaf:name "Beilby" .
+
+<http://example.org/ecco-tcp/person/Bell>
+    a foaf:Person ;
+    rdfs:label "Bell" ;
+    foaf:name "Bell" .
+
+<http://example.org/ecco-tcp/person/Ben_Bragg>
+    a foaf:Person ;
+    rdfs:label "Ben. Bragg" ;
+    foaf:name "Ben. Bragg" .
+
+<http://example.org/ecco-tcp/person/Benj_Bragg>
+    a foaf:Person ;
+    rdfs:label "Benj. Bragg" ;
+    foaf:name "Benj. Bragg" .
+
+<http://example.org/ecco-tcp/person/Benj_Tooke>
+    a foaf:Person ;
+    rdfs:label "Benj. Tooke" ;
+    foaf:name "Benj. Tooke" .
+
+<http://example.org/ecco-tcp/person/Benjamin>
+    a foaf:Person ;
+    rdfs:label "Benjamin" ;
+    foaf:name "Benjamin" .
+
+<http://example.org/ecco-tcp/person/Benjamin_Bragg>
+    a foaf:Person ;
+    rdfs:label "Benjamin Bragg" ;
+    foaf:name "Benjamin Bragg" .
+
+<http://example.org/ecco-tcp/person/Benjamin_Hoadly_1676-1761>
+    ov:dateOfDeath "1761" ;
+    whois:born "1676" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3318400319> ;
+    foaf:name "Benjamin Hoadly" ;
+    foaf:surname "Hoadly" .
+
+<http://example.org/ecco-tcp/person/Benjamin_Robins_1707-1751>
+    ov:dateOfDeath "1751" ;
+    whois:born "1707" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3307248457> ;
+    foaf:name "Benjamin Robins" ;
+    foaf:surname "Robins" .
+
+<http://example.org/ecco-tcp/person/Benjamin_White>
+    a foaf:Person ;
+    rdfs:label "Benjamin White" ;
+    foaf:name "Benjamin White" .
+
+<http://example.org/ecco-tcp/person/Bernard_Lintot>
+    a foaf:Person ;
+    rdfs:label "Bernard Lintot" ;
+    foaf:name "Bernard Lintot" .
+
+<http://example.org/ecco-tcp/person/Bernard_Lintott>
+    a foaf:Person ;
+    rdfs:label "Bernard Lintott" ;
+    foaf:name "Bernard Lintott" .
+
+<http://example.org/ecco-tcp/person/Bernard_Mandeville_1670-1733>
+    ov:dateOfDeath "1733" ;
+    whois:born "1670" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3305769247> ;
+    foaf:name "Bernard Mandeville" ;
+    foaf:surname "Mandeville" .
+
+<http://example.org/ecco-tcp/person/Bewick>
+    a foaf:Person ;
+    rdfs:label "Bewick" ;
+    foaf:name "Bewick" .
+
+<http://example.org/ecco-tcp/person/Bigg>
+    a foaf:Person ;
+    rdfs:label "Bigg" ;
+    foaf:name "Bigg" .
+
+<http://example.org/ecco-tcp/person/Black_Boy>
+    a foaf:Person ;
+    rdfs:label "Black Boy" ;
+    foaf:name "Black Boy" .
+
+<http://example.org/ecco-tcp/person/Black_Swan>
+    a foaf:Person ;
+    rdfs:label "Black Swan" ;
+    foaf:name "Black Swan" .
+
+<http://example.org/ecco-tcp/person/Boulter_Grierson_Printer>
+    a foaf:Person ;
+    rdfs:label "Boulter Grierson Printer" ;
+    foaf:name "Boulter Grierson Printer" .
+
+<http://example.org/ecco-tcp/person/Bradfute>
+    a foaf:Person ;
+    rdfs:label "Bradfute" ;
+    foaf:name "Bradfute" .
+
+<http://example.org/ecco-tcp/person/Brett_Smith>
+    a foaf:Person ;
+    rdfs:label "Brett Smith" ;
+    foaf:name "Brett Smith" .
+
+<http://example.org/ecco-tcp/person/Britain_Sovereign_(_Great_1760-1820>
+    ov:dateOfDeath "1820" ;
+    whois:born "1760" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW105974103> ;
+    foaf:name "Britain. Sovereign ( Great" ;
+    foaf:surname "Great" .
+
+<http://example.org/ecco-tcp/person/Byrn_Sycamore>
+    a foaf:Person ;
+    rdfs:label "Byrn Sycamore" ;
+    foaf:name "Byrn Sycamore" .
+
+<http://example.org/ecco-tcp/person/C_(charles)_Churchill_1731-1764>
+    ov:dateOfDeath "1764" ;
+    whois:born "1731" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3310483689>, <http://example.org/ecco-tcp/text/CW3310748745>, <http://example.org/ecco-tcp/text/CW3310934065>, <http://example.org/ecco-tcp/text/CW3310969278>, <http://example.org/ecco-tcp/text/CW3314015913>, <http://example.org/ecco-tcp/text/CW3314249655>, <http://example.org/ecco-tcp/text/CW3314396013>, <http://example.org/ecco-tcp/text/CW3314791150>, <http://example.org/ecco-tcp/text/CW3314903886>, <http://example.org/ecco-tcp/text/CW3314903974>, <http://example.org/ecco-tcp/text/CW3314903994>, <http://example.org/ecco-tcp/text/CW3314904014>, <http://example.org/ecco-tcp/text/CW3315011991>, <http://example.org/ecco-tcp/text/CW3315110509>, <http://example.org/ecco-tcp/text/CW3316119773>, <http://example.org/ecco-tcp/text/CW3316667127>, <http://example.org/ecco-tcp/text/CW3316667162>, <http://example.org/ecco-tcp/text/CW3317025004>, <http://example.org/ecco-tcp/text/CW3317025062>, <http://example.org/ecco-tcp/text/CW3317025254>, <http://example.org/ecco-tcp/text/CW3321089424> ;
+    foaf:name "C. (Charles) Churchill" ;
+    foaf:surname "Churchill" .
+
+<http://example.org/ecco-tcp/person/C_Borbet>
+    a foaf:Person ;
+    rdfs:label "C. Borbet" ;
+    foaf:name "C. Borbet" .
+
+<http://example.org/ecco-tcp/person/C_Brown>
+    a foaf:Person ;
+    rdfs:label "C. Brown" ;
+    foaf:name "C. Brown" .
+
+<http://example.org/ecco-tcp/person/C_Cooke>
+    a foaf:Person ;
+    rdfs:label "C. Cooke" ;
+    foaf:name "C. Cooke" .
+
+<http://example.org/ecco-tcp/person/C_Dilly>
+    a foaf:Person ;
+    rdfs:label "C. Dilly" ;
+    foaf:name "C. Dilly" .
+
+<http://example.org/ecco-tcp/person/C_Elliot>
+    a foaf:Person ;
+    rdfs:label "C. Elliot" ;
+    foaf:name "C. Elliot" .
+
+<http://example.org/ecco-tcp/person/C_Etherington>
+    a foaf:Person ;
+    rdfs:label "C. Etherington", "C. Etherington]" ;
+    foaf:name "C. Etherington", "C. Etherington]" .
+
+<http://example.org/ecco-tcp/person/C_Foster>
+    a foaf:Person ;
+    rdfs:label "C. Foster" ;
+    foaf:name "C. Foster" .
+
+<http://example.org/ecco-tcp/person/C_Henderson>
+    a foaf:Person ;
+    rdfs:label "C. Henderson" ;
+    foaf:name "C. Henderson" .
+
+<http://example.org/ecco-tcp/person/C_Hitch>
+    a foaf:Person ;
+    rdfs:label "C. Hitch" ;
+    foaf:name "C. Hitch" .
+
+<http://example.org/ecco-tcp/person/C_Kearsley>
+    a foaf:Person ;
+    rdfs:label "C. Kearsley" ;
+    foaf:name "C. Kearsley" .
+
+<http://example.org/ecco-tcp/person/C_Lowndes>
+    a foaf:Person ;
+    rdfs:label "C. Lowndes" ;
+    foaf:name "C. Lowndes" .
+
+<http://example.org/ecco-tcp/person/C_Mountfort>
+    a foaf:Person ;
+    rdfs:label "C. Mountfort" ;
+    foaf:name "C. Mountfort" .
+
+<http://example.org/ecco-tcp/person/C_Reymers>
+    a foaf:Person ;
+    rdfs:label "C. Reymers" ;
+    foaf:name "C. Reymers" .
+
+<http://example.org/ecco-tcp/person/C_Rivington>
+    a foaf:Person ;
+    rdfs:label "C. Rivington" ;
+    foaf:name "C. Rivington" .
+
+<http://example.org/ecco-tcp/person/C_Rivington_L_Davis_T_Longman_B_Law_G_Gj>
+    a foaf:Person ;
+    rdfs:label "C. Rivington L. Davis T. Longman B. Law G. G.J." ;
+    foaf:name "C. Rivington L. Davis T. Longman B. Law G. G.J." .
+
+<http://example.org/ecco-tcp/person/C_Sympson>
+    a foaf:Person ;
+    rdfs:label "C. Sympson?]" ;
+    foaf:name "C. Sympson?]" .
+
+<http://example.org/ecco-tcp/person/C_W_Leadbeater>
+    a foaf:Person ;
+    rdfs:label "C. W. Leadbeater" ;
+    foaf:name "C. W. Leadbeater" .
+
+<http://example.org/ecco-tcp/person/Cadell_Strand>
+    a foaf:Person ;
+    rdfs:label "Cadell Strand" ;
+    foaf:name "Cadell Strand" .
+
+<http://example.org/ecco-tcp/person/Campbell>
+    a foaf:Person ;
+    rdfs:label "Campbell" ;
+    foaf:name "Campbell" .
+
+<http://example.org/ecco-tcp/person/Caroline_Ridgway>
+    a foaf:Person ;
+    rdfs:label "Caroline Ridgway" ;
+    foaf:name "Caroline Ridgway" .
+
+<http://example.org/ecco-tcp/person/Charles_Dibdin_1745-1814>
+    ov:dateOfDeath "1814" ;
+    whois:born "1745" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3302746846>, <http://example.org/ecco-tcp/text/CW3302747242>, <http://example.org/ecco-tcp/text/CW3302803994>, <http://example.org/ecco-tcp/text/CW3302804392>, <http://example.org/ecco-tcp/text/CW3302862950>, <http://example.org/ecco-tcp/text/CW3306418517>, <http://example.org/ecco-tcp/text/CW3306442089>, <http://example.org/ecco-tcp/text/CW3306673928>, <http://example.org/ecco-tcp/text/CW3306676325>, <http://example.org/ecco-tcp/text/CW3309731821>, <http://example.org/ecco-tcp/text/CW3309777518>, <http://example.org/ecco-tcp/text/CW3309777548>, <http://example.org/ecco-tcp/text/CW3309973091>, <http://example.org/ecco-tcp/text/CW3310152553>, <http://example.org/ecco-tcp/text/CW3310199264>, <http://example.org/ecco-tcp/text/CW3310965243>, <http://example.org/ecco-tcp/text/CW3310965483>, <http://example.org/ecco-tcp/text/CW3310965759>, <http://example.org/ecco-tcp/text/CW3312048705>, <http://example.org/ecco-tcp/text/CW3312766997>, <http://example.org/ecco-tcp/text/CW3313057799>, <http://example.org/ecco-tcp/text/CW3313266646>, <http://example.org/ecco-tcp/text/CW3313295562>, <http://example.org/ecco-tcp/text/CW3313646482>, <http://example.org/ecco-tcp/text/CW3313793001>, <http://example.org/ecco-tcp/text/CW3313944331>, <http://example.org/ecco-tcp/text/CW3313955817>, <http://example.org/ecco-tcp/text/CW3314083816>, <http://example.org/ecco-tcp/text/CW3314506931>, <http://example.org/ecco-tcp/text/CW3314691161>, <http://example.org/ecco-tcp/text/CW3315194587>, <http://example.org/ecco-tcp/text/CW3315373401>, <http://example.org/ecco-tcp/text/CW3315415814>, <http://example.org/ecco-tcp/text/CW3315469194>, <http://example.org/ecco-tcp/text/CW3315892904>, <http://example.org/ecco-tcp/text/CW3316113077>, <http://example.org/ecco-tcp/text/CW3316836330>, <http://example.org/ecco-tcp/text/CW3316958515>, <http://example.org/ecco-tcp/text/CW3316958829>, <http://example.org/ecco-tcp/text/CW3317144071>, <http://example.org/ecco-tcp/text/CW3317148416> ;
+    foaf:name "Charles Dibdin" ;
+    foaf:surname "Dibdin" .
+
+<http://example.org/ecco-tcp/person/Charles_Dilly>
+    a foaf:Person ;
+    rdfs:label "Charles Dilly" ;
+    foaf:name "Charles Dilly" .
+
+<http://example.org/ecco-tcp/person/Charles_Dilly_In_The_Poultry>
+    a foaf:Person ;
+    rdfs:label "Charles Dilly in the Poultry" ;
+    foaf:name "Charles Dilly in the Poultry" .
+
+<http://example.org/ecco-tcp/person/Charles_Elliot>
+    a foaf:Person ;
+    rdfs:label "Charles Elliot" ;
+    foaf:name "Charles Elliot" .
+
+<http://example.org/ecco-tcp/person/Charles_Fl_Brown_1797-1799>
+    ov:dateOfDeath "1799" ;
+    whois:born "1797" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/cw3307486579> ;
+    foaf:name "Charles fl. Brown" ;
+    foaf:surname "Brown" .
+
+<http://example.org/ecco-tcp/person/Charles_Hutton_1737-1823>
+    ov:dateOfDeath "1823" ;
+    whois:born "1737" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3306612051>, <http://example.org/ecco-tcp/text/CW3306670883>, <http://example.org/ecco-tcp/text/CW3308415645>, <http://example.org/ecco-tcp/text/CW3309573349>, <http://example.org/ecco-tcp/text/CW3323044999>, <http://example.org/ecco-tcp/text/CW3325764182> ;
+    foaf:name "Charles Hutton" ;
+    foaf:surname "Hutton" .
+
+<http://example.org/ecco-tcp/person/Charles_Macklin_1697-1797>
+    ov:dateOfDeath "1797" ;
+    whois:born "1697?" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3309539766>, <http://example.org/ecco-tcp/text/CW3310017504>, <http://example.org/ecco-tcp/text/CW3310074956>, <http://example.org/ecco-tcp/text/CW3310623453>, <http://example.org/ecco-tcp/text/CW3314523504>, <http://example.org/ecco-tcp/text/CW3315644967>, <http://example.org/ecco-tcp/text/CW3316706892>, <http://example.org/ecco-tcp/text/CW3325563250> ;
+    foaf:name "Charles Macklin" ;
+    foaf:surname "Macklin" .
+
+<http://example.org/ecco-tcp/person/Charles_Reymers>
+    a foaf:Person ;
+    rdfs:label "Charles Reymers" ;
+    foaf:name "Charles Reymers" .
+
+<http://example.org/ecco-tcp/person/Charlotte_Ca_Lennox_1729-1804>
+    ov:dateOfDeath "1804" ;
+    whois:born "1729" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3309634902>, <http://example.org/ecco-tcp/text/CW3309637647>, <http://example.org/ecco-tcp/text/CW3309637932>, <http://example.org/ecco-tcp/text/CW3309684370>, <http://example.org/ecco-tcp/text/CW3309684606>, <http://example.org/ecco-tcp/text/CW3310407239>, <http://example.org/ecco-tcp/text/CW3310690871>, <http://example.org/ecco-tcp/text/CW3310691097>, <http://example.org/ecco-tcp/text/CW3311899461>, <http://example.org/ecco-tcp/text/CW3312501627>, <http://example.org/ecco-tcp/text/CW3312576476>, <http://example.org/ecco-tcp/text/CW3312681523>, <http://example.org/ecco-tcp/text/CW3313047874>, <http://example.org/ecco-tcp/text/CW3314803172>, <http://example.org/ecco-tcp/text/CW3314803380>, <http://example.org/ecco-tcp/text/CW3314803600>, <http://example.org/ecco-tcp/text/CW3315465977>, <http://example.org/ecco-tcp/text/CW3315466223>, <http://example.org/ecco-tcp/text/CW3315811323>, <http://example.org/ecco-tcp/text/CW3315811605>, <http://example.org/ecco-tcp/text/CW3315811909>, <http://example.org/ecco-tcp/text/CW3315812217>, <http://example.org/ecco-tcp/text/CW3316117794>, <http://example.org/ecco-tcp/text/CW3316674436>, <http://example.org/ecco-tcp/text/CW3317025496> ;
+    foaf:name "Charlotte ca. Lennox" ;
+    foaf:surname "Lennox" .
+
+<http://example.org/ecco-tcp/person/Charlotte_Charke_1713-1760>
+    ov:dateOfDeath "1760" ;
+    whois:born "1713" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3300126269>, <http://example.org/ecco-tcp/text/CW3303666829>, <http://example.org/ecco-tcp/text/CW3313772265> ;
+    foaf:name "Charlotte Charke" ;
+    foaf:surname "Charke" .
+
+<http://example.org/ecco-tcp/person/Charlotte_Turner_Smith_1749-1806>
+    ov:dateOfDeath "1806" ;
+    whois:born "1749" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3310688788>, <http://example.org/ecco-tcp/text/CW3310689063>, <http://example.org/ecco-tcp/text/CW3310689376>, <http://example.org/ecco-tcp/text/CW3311129605>, <http://example.org/ecco-tcp/text/CW3317151044> ;
+    foaf:name "Charlotte Turner Smith" ;
+    foaf:surname "Smith" .
+
+<http://example.org/ecco-tcp/person/Christopher_Anstey_1724-1805>
+    ov:dateOfDeath "1805" ;
+    whois:born "1724" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3312994380> ;
+    foaf:name "Christopher Anstey" ;
+    foaf:surname "Anstey" .
+
+<http://example.org/ecco-tcp/person/Christopher_Dickson>
+    a foaf:Person ;
+    rdfs:label "Christopher Dickson" ;
+    foaf:name "Christopher Dickson" .
+
+<http://example.org/ecco-tcp/person/Christopher_Smart_1722-1771>
+    ov:dateOfDeath "1771" ;
+    whois:born "1722" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3313546773> ;
+    foaf:name "Christopher Smart" ;
+    foaf:surname "Smart" .
+
+<http://example.org/ecco-tcp/person/Citizen_Famine>
+    a foaf:Agent ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3305050929> ;
+    foaf:name "Citizen Famine" ;
+    foaf:surname "Famine" .
+
+<http://example.org/ecco-tcp/person/Clinch_Bath>
+    a foaf:Person ;
+    rdfs:label "Clinch Bath" ;
+    foaf:name "Clinch Bath" .
+
+<http://example.org/ecco-tcp/person/Co>
+    a foaf:Person ;
+    rdfs:label "Co" ;
+    foaf:name "Co" .
+
+<http://example.org/ecco-tcp/person/Co_Palace>
+    a foaf:Person ;
+    rdfs:label "Co. Palace" ;
+    foaf:name "Co. Palace" .
+
+<http://example.org/ecco-tcp/person/Co_T_Davies_T_Lownds_T_Becket>
+    a foaf:Person ;
+    rdfs:label "Co. T. Davies T. Lownds T. Becket" ;
+    foaf:name "Co. T. Davies T. Lownds T. Becket" .
+
+<http://example.org/ecco-tcp/person/Colley_Cibber_1671-1757>
+    ov:dateOfDeath "1757" ;
+    whois:born "1671" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3307934794> ;
+    foaf:name "Colley Cibber" ;
+    foaf:surname "Cibber" .
+
+<http://example.org/ecco-tcp/person/Cox>
+    a foaf:Person ;
+    rdfs:label "Cox" ;
+    foaf:name "Cox" .
+
+<http://example.org/ecco-tcp/person/Cross_Keys>
+    a foaf:Person ;
+    rdfs:label "Cross Keys" ;
+    foaf:name "Cross Keys" .
+
+<http://example.org/ecco-tcp/person/Crown>
+    a foaf:Person ;
+    rdfs:label "Crown" ;
+    foaf:name "Crown" .
+
+<http://example.org/ecco-tcp/person/Crown_King>
+    a foaf:Person ;
+    rdfs:label "Crown King" ;
+    foaf:name "Crown King" .
+
+<http://example.org/ecco-tcp/person/D_Bridge>
+    a foaf:Person ;
+    rdfs:label "D. Bridge" ;
+    foaf:name "D. Bridge" .
+
+<http://example.org/ecco-tcp/person/D_Brown>
+    a foaf:Person ;
+    rdfs:label "D. Brown" ;
+    foaf:name "D. Brown" .
+
+<http://example.org/ecco-tcp/person/D_Browne>
+    a foaf:Person ;
+    rdfs:label "D. Browne" ;
+    foaf:name "D. Browne" .
+
+<http://example.org/ecco-tcp/person/D_Midwinter>
+    a foaf:Person ;
+    rdfs:label "D. Midwinter" ;
+    foaf:name "D. Midwinter" .
+
+<http://example.org/ecco-tcp/person/D_Prince>
+    a foaf:Person ;
+    rdfs:label "D. Prince" ;
+    foaf:name "D. Prince" .
+
+<http://example.org/ecco-tcp/person/Dan_Brown>
+    a foaf:Person ;
+    rdfs:label "Dan. Brown" ;
+    foaf:name "Dan. Brown" .
+
+<http://example.org/ecco-tcp/person/Dan_Midwinter>
+    a foaf:Person ;
+    rdfs:label "Dan. Midwinter" ;
+    foaf:name "Dan. Midwinter" .
+
+<http://example.org/ecco-tcp/person/Daniel_Brown>
+    a foaf:Person ;
+    rdfs:label "Daniel Brown" ;
+    foaf:name "Daniel Brown" .
+
+<http://example.org/ecco-tcp/person/Daniel_Defoe_1661-1731>
+    ov:dateOfDeath "1731" ;
+    whois:born "1661?" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW113746641>, <http://example.org/ecco-tcp/text/CW114109295>, <http://example.org/ecco-tcp/text/CW3300159149>, <http://example.org/ecco-tcp/text/CW3300486744>, <http://example.org/ecco-tcp/text/CW3300650147>, <http://example.org/ecco-tcp/text/CW3300650530>, <http://example.org/ecco-tcp/text/CW3300650949>, <http://example.org/ecco-tcp/text/CW3300651270>, <http://example.org/ecco-tcp/text/CW3300662279>, <http://example.org/ecco-tcp/text/CW3301579832>, <http://example.org/ecco-tcp/text/CW3303781667>, <http://example.org/ecco-tcp/text/CW3303788455>, <http://example.org/ecco-tcp/text/CW3303803351>, <http://example.org/ecco-tcp/text/CW3303963062>, <http://example.org/ecco-tcp/text/CW3303980829>, <http://example.org/ecco-tcp/text/CW3303994345>, <http://example.org/ecco-tcp/text/CW3304047631>, <http://example.org/ecco-tcp/text/CW3304126910>, <http://example.org/ecco-tcp/text/CW3304206906>, <http://example.org/ecco-tcp/text/CW3304233454>, <http://example.org/ecco-tcp/text/CW3304306852>, <http://example.org/ecco-tcp/text/CW3304348765>, <http://example.org/ecco-tcp/text/CW3304349384>, <http://example.org/ecco-tcp/text/CW3304362574>, <http://example.org/ecco-tcp/text/CW3304377599>, <http://example.org/ecco-tcp/text/CW3304385285>, <http://example.org/ecco-tcp/text/CW3304394386>, <http://example.org/ecco-tcp/text/CW3304432178>, <http://example.org/ecco-tcp/text/CW3304441525>, <http://example.org/ecco-tcp/text/CW3304574112>, <http://example.org/ecco-tcp/text/CW3304577568>, <http://example.org/ecco-tcp/text/CW3304595043>, <http://example.org/ecco-tcp/text/CW3304606319>, <http://example.org/ecco-tcp/text/CW3304682743>, <http://example.org/ecco-tcp/text/CW3304682852>, <http://example.org/ecco-tcp/text/CW3304727573>, <http://example.org/ecco-tcp/text/CW3304768401>, <http://example.org/ecco-tcp/text/CW3304801378>, <http://example.org/ecco-tcp/text/CW3304892499>, <http://example.org/ecco-tcp/text/CW3304921543>, <http://example.org/ecco-tcp/text/CW3304933188>, <http://example.org/ecco-tcp/text/CW3305023657>, <http://example.org/ecco-tcp/text/CW3305056195>, <http://example.org/ecco-tcp/text/CW3305066782>, <http://example.org/ecco-tcp/text/CW3305122837>, <http://example.org/ecco-tcp/text/CW3305167374>, <http://example.org/ecco-tcp/text/CW3305205231>, <http://example.org/ecco-tcp/text/CW3305221026>, <http://example.org/ecco-tcp/text/CW3305280840>, <http://example.org/ecco-tcp/text/CW3305403758>, <http://example.org/ecco-tcp/text/CW3305441862>, <http://example.org/ecco-tcp/text/CW3305531845>, <http://example.org/ecco-tcp/text/CW3305704356>, <http://example.org/ecco-tcp/text/CW3305739716>, <http://example.org/ecco-tcp/text/CW3305759673>, <http://example.org/ecco-tcp/text/CW3305967113>, <http://example.org/ecco-tcp/text/CW3306035634>, <http://example.org/ecco-tcp/text/CW3306062738>, <http://example.org/ecco-tcp/text/CW3306096824>, <http://example.org/ecco-tcp/text/CW3306096841>, <http://example.org/ecco-tcp/text/CW3306141301>, <http://example.org/ecco-tcp/text/CW3306191088>, <http://example.org/ecco-tcp/text/CW3306191733>, <http://example.org/ecco-tcp/text/CW3306253430>, <http://example.org/ecco-tcp/text/CW3306257766>, <http://example.org/ecco-tcp/text/CW3306381965>, <http://example.org/ecco-tcp/text/CW3306401364>, <http://example.org/ecco-tcp/text/CW3306549391>, <http://example.org/ecco-tcp/text/CW3306549672>, <http://example.org/ecco-tcp/text/CW3306554052>, <http://example.org/ecco-tcp/text/CW3306554062>, <http://example.org/ecco-tcp/text/CW3306555984>, <http://example.org/ecco-tcp/text/CW3306557276>, <http://example.org/ecco-tcp/text/CW3306697825>, <http://example.org/ecco-tcp/text/CW3306702668>, <http://example.org/ecco-tcp/text/CW3306711622>, <http://example.org/ecco-tcp/text/CW3310220769>, <http://example.org/ecco-tcp/text/CW3310437202>, <http://example.org/ecco-tcp/text/CW3310437203>, <http://example.org/ecco-tcp/text/CW3311336293>, <http://example.org/ecco-tcp/text/CW3311955646>, <http://example.org/ecco-tcp/text/CW3312140997>, <http://example.org/ecco-tcp/text/CW3312218090>, <http://example.org/ecco-tcp/text/CW3312656736>, <http://example.org/ecco-tcp/text/CW3312696285>, <http://example.org/ecco-tcp/text/CW3313032918>, <http://example.org/ecco-tcp/text/CW3314472220>, <http://example.org/ecco-tcp/text/CW3314792424>, <http://example.org/ecco-tcp/text/CW3316174708>, <http://example.org/ecco-tcp/text/CW3316612482>, <http://example.org/ecco-tcp/text/CW3317261405>, <http://example.org/ecco-tcp/text/CW3317392360>, <http://example.org/ecco-tcp/text/CW3317409507>, <http://example.org/ecco-tcp/text/CW3317487401>, <http://example.org/ecco-tcp/text/CW3317556071>, <http://example.org/ecco-tcp/text/CW3318369949>, <http://example.org/ecco-tcp/text/CW3320012390>, <http://example.org/ecco-tcp/text/CW3320270921>, <http://example.org/ecco-tcp/text/CW3320430307>, <http://example.org/ecco-tcp/text/CW3321133079>, <http://example.org/ecco-tcp/text/CW3321230723>, <http://example.org/ecco-tcp/text/CW3321269841>, <http://example.org/ecco-tcp/text/CW3321432596>, <http://example.org/ecco-tcp/text/CW3321783153>, <http://example.org/ecco-tcp/text/CW3322331294>, <http://example.org/ecco-tcp/text/CW3322551923>, <http://example.org/ecco-tcp/text/CW3322738040>, <http://example.org/ecco-tcp/text/CW3322893796> ;
+    foaf:name "Daniel Defoe" ;
+    foaf:surname "Defoe" .
+
+<http://example.org/ecco-tcp/person/Daniel_Isaac_Eaton>
+    a foaf:Person ;
+    rdfs:label "Daniel Isaac Eaton" ;
+    foaf:name "Daniel Isaac Eaton" .
+
+<http://example.org/ecco-tcp/person/David_Garrick_1717-1779>
+    ov:dateOfDeath "1779" ;
+    whois:born "1717" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3305107791>, <http://example.org/ecco-tcp/text/CW3306682323>, <http://example.org/ecco-tcp/text/CW3307748114>, <http://example.org/ecco-tcp/text/CW3309714744>, <http://example.org/ecco-tcp/text/CW3309714796>, <http://example.org/ecco-tcp/text/CW3309966904>, <http://example.org/ecco-tcp/text/CW3310254864>, <http://example.org/ecco-tcp/text/CW3310257618>, <http://example.org/ecco-tcp/text/CW3310912977>, <http://example.org/ecco-tcp/text/CW3311594780>, <http://example.org/ecco-tcp/text/CW3312036961>, <http://example.org/ecco-tcp/text/CW3312998134>, <http://example.org/ecco-tcp/text/CW3313137829>, <http://example.org/ecco-tcp/text/CW3313161814>, <http://example.org/ecco-tcp/text/CW3313258922>, <http://example.org/ecco-tcp/text/CW3313283483>, <http://example.org/ecco-tcp/text/CW3313470048>, <http://example.org/ecco-tcp/text/CW3313610248>, <http://example.org/ecco-tcp/text/CW3313610623>, <http://example.org/ecco-tcp/text/CW3313694583>, <http://example.org/ecco-tcp/text/CW3313694645>, <http://example.org/ecco-tcp/text/CW3313800544>, <http://example.org/ecco-tcp/text/CW3313944592>, <http://example.org/ecco-tcp/text/CW3314371708>, <http://example.org/ecco-tcp/text/CW3314371987>, <http://example.org/ecco-tcp/text/CW3315369150>, <http://example.org/ecco-tcp/text/CW3315644981> ;
+    foaf:name "David Garrick" ;
+    foaf:surname "Garrick" .
+
+<http://example.org/ecco-tcp/person/David_Henry_1710-1792>
+    ov:dateOfDeath "1792" ;
+    whois:born "1710" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3300805668>, <http://example.org/ecco-tcp/text/CW3300806119>, <http://example.org/ecco-tcp/text/CW3302001200>, <http://example.org/ecco-tcp/text/CW3302001760> ;
+    foaf:name "David Henry" ;
+    foaf:surname "Henry" .
+
+<http://example.org/ecco-tcp/person/David_Hume_1711-1776>
+    ov:dateOfDeath "1776" ;
+    whois:born "1711" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3301309247>, <http://example.org/ecco-tcp/text/CW3302104504>, <http://example.org/ecco-tcp/text/CW3302194813>, <http://example.org/ecco-tcp/text/CW3304009045>, <http://example.org/ecco-tcp/text/CW3304009475>, <http://example.org/ecco-tcp/text/CW3304527312>, <http://example.org/ecco-tcp/text/CW3304873800>, <http://example.org/ecco-tcp/text/CW3314821864>, <http://example.org/ecco-tcp/text/CW3317567712>, <http://example.org/ecco-tcp/text/CW3318060774>, <http://example.org/ecco-tcp/text/CW3318260024>, <http://example.org/ecco-tcp/text/CW3318260512>, <http://example.org/ecco-tcp/text/CW3318260843>, <http://example.org/ecco-tcp/text/CW3319043890>, <http://example.org/ecco-tcp/text/CW3319331113>, <http://example.org/ecco-tcp/text/CW3319526114>, <http://example.org/ecco-tcp/text/CW3319914515>, <http://example.org/ecco-tcp/text/CW3320013570>, <http://example.org/ecco-tcp/text/CW3320931546>, <http://example.org/ecco-tcp/text/CW3321863513>, <http://example.org/ecco-tcp/text/CW3325288867> ;
+    foaf:name "David Hume" ;
+    foaf:surname "Hume" .
+
+<http://example.org/ecco-tcp/person/David_Rivers>
+    a foaf:Agent ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3300158727> ;
+    foaf:name "David Rivers" ;
+    foaf:surname "Rivers" .
+
+<http://example.org/ecco-tcp/person/David_Steel>
+    a foaf:Person ;
+    rdfs:label "David Steel" ;
+    foaf:name "David Steel" .
+
+<http://example.org/ecco-tcp/person/Davies_Strand>
+    a foaf:Person ;
+    rdfs:label "Davies Strand" ;
+    foaf:name "Davies Strand" .
+
+<http://example.org/ecco-tcp/person/De_Hondt>
+    a foaf:Person ;
+    rdfs:label "De Hondt" ;
+    foaf:name "De Hondt" .
+
+<http://example.org/ecco-tcp/person/Delariviere_D_Manley_1724->
+    ov:dateOfDeath "" ;
+    whois:born "1724" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3309502964> ;
+    foaf:name "Delariviere d. Manley" ;
+    foaf:surname "Manley" .
+
+<http://example.org/ecco-tcp/person/Dennett_Jaques>
+    a foaf:Person ;
+    rdfs:label "Dennett Jaques" ;
+    foaf:name "Dennett Jaques" .
+
+<http://example.org/ecco-tcp/person/Dr_Trusler>
+    a foaf:Person ;
+    rdfs:label "Dr. Trusler" ;
+    foaf:name "Dr. Trusler" .
+
+<http://example.org/ecco-tcp/person/Dryden_Leach>
+    a foaf:Person ;
+    rdfs:label "Dryden Leach" ;
+    foaf:name "Dryden Leach" .
+
+<http://example.org/ecco-tcp/person/E_(edward)_Donovan_1768-1837>
+    ov:dateOfDeath "1837" ;
+    whois:born "1768" ;
+    a foaf:Person ;
+    foaf:made <http://example.org/ecco-tcp/text/CW3308360398>, <http://example.org/ecco-tcp/text/CW3308360517>, <http://example.org/ecco-tcp/text/CW3308360638>, <http://example.org/ecco-tcp/text/CW3308360760>, <http://example.org/ecco-tcp/text/CW3308360873>, <http://example.org/ecco-tcp/text/CW3308361006>, <http://example.org/ecco-tcp/text/CW3308361119>, <http://example.org/ecco-tcp/text/CW3308361243>, <http://example.org/ecco-tcp/text/CW3308361354>, <http://example.org/ecco-tcp/text/CW3308361450>, <http://example.org/ecco-tcp/text/CW3308361572>, <http://example.org/ecco-tcp/text/CW3308361710>, <http://example.org/ecco-tcp/text/CW3308361803>, <http://example.org/ecco-tcp/text/CW3308502226>, <http://example.org/ecco-tcp/text/CW3308527405>, <http://example.org/ecco-tcp/text/cw3308361921>, <http://example.org/ecco-tcp/text/cw3308362153>, <http://example.org/ecco-tcp/text/cw3308362267>, <http://example.org/ecco-tcp/text/cw3308362386>, <http://example.org/ecco-tcp/text/cw3309304396>, <http://example.org/ecco-tcp/text/cw3310039684> ;
+    foaf:name "E. (Edward) Donovan" ;
+    foaf:surname "Donovan" .
+
+<http://example.org/ecco-tcp/person/E_Berington>
+    a foaf:Person ;
+    rdfs:label "E. Berington" ;
+    foaf:name "E. Berington" .
+<http://example.org/ecco-tcp/text/CW3305901409> rdf:type bibo:Book ;
+                                                rdfs:label "THE AMERICAN CRISIS AND A LETTER TO SIR GUY CARLETON ON THE MURDER OF CAPTAIN HUDDY AND THE INTENDED RETALIATION ON CAPTAIN ASGILL OF THE GUARDS."@en ;
+                                                dct:title "THE AMERICAN CRISIS AND A LETTER TO SIR GUY CARLETON ON THE MURDER OF CAPTAIN HUDDY AND THE INTENDED RETALIATION ON CAPTAIN ASGILL OF THE GUARDS."@en ;
+                                                dct:date "1796" ;
+                                                ecco-tcp:tcpID "K000934.000" ;
+                                                ecco-tcp:estcID "N1500" ;
+                                                ecco-tcp:eccoID "CW3305901409" ;
+                                                ecco-tcp:bookID "1058401600" ;
+                                                ecco-tcp:imprint "London : printed and sold by Daniel Isaac Eaton No. 74 Newgate-Street" ;
+                                                ecco-tcp:wordCount "67326"^^<http://www.w3.org/2001/XMLSchema#integer> ;
+                                                ecco-tcp:placeOfPublication <http://example.org/ecco-tcp/place/London> ;
+                                                ecco-tcp:textDocument <http://api.talis.com/stores/ecco-tcp-texts/items/K000934.000.txt> ;
+                                                ecco-tcp:printer <http://example.org/ecco-tcp/person/Daniel_Isaac_Eaton> ;
+                                                ecco-tcp:seller <http://example.org/ecco-tcp/person/Daniel_Isaac_Eaton> ;
+                                                dct:creator <http://example.org/ecco-tcp/person/Thomas_Paine_1737-1809> . 
+
+<http://example.org/ecco-tcp/place/London> owl:sameAs <http://dbpedia.org/resource/London> ;
+                                           rdf:type geo:SpatialThing ;
+                                           rdfs:label "London"@en . 
+
+<http://example.org/ecco-tcp/person/Daniel_Isaac_Eaton> rdfs:label "Daniel Isaac Eaton" ;
+                                                        foaf:name "Daniel Isaac Eaton" ;
+                                                        rdf:type foaf:Person . 
+
+<http://example.org/ecco-tcp/person/Thomas_Paine_1737-1809> foaf:made <http://example.org/ecco-tcp/text/CW3305901409> ,
+                                                                      <http://example.org/ecco-tcp/text/CW3306330655> ,
+                                                                      <http://example.org/ecco-tcp/text/CW3304393612> ,
+                                                                      <http://example.org/ecco-tcp/text/CW3305171511> ,
+                                                                      <http://example.org/ecco-tcp/text/CW3306168473> ,
+                                                                      <http://example.org/ecco-tcp/text/CW3322094669> ,
+                                                                      <http://example.org/ecco-tcp/text/cw3303827271> ,
+                                                                      <http://example.org/ecco-tcp/text/cw3304144081> ,
+                                                                      <http://example.org/ecco-tcp/text/cw3322973323> ,
+                                                                      <http://example.org/ecco-tcp/text/cw3323319866> ,
+                                                                      <http://example.org/ecco-tcp/text/CW3306109739> ,
+                                                                      <http://example.org/ecco-tcp/text/cw3303812347> ,
+                                                                      <http://example.org/ecco-tcp/text/CW3304143987> ,
+                                                                      <http://example.org/ecco-tcp/text/cw3304144685> ,
+                                                                      <http://example.org/ecco-tcp/text/cw3304134774> ,
+                                                                      <http://example.org/ecco-tcp/text/cw3315793880> ,
+                                                                      <http://example.org/ecco-tcp/text/CW3311673891> ,
+                                                                      <http://example.org/ecco-tcp/text/cw3315793933> ,
+                                                                      <http://example.org/ecco-tcp/text/cw3303827100> ,
+                                                                      <http://example.org/ecco-tcp/text/CW3304236140> ,
+                                                                      <http://example.org/ecco-tcp/text/CW3304236313> ,
+                                                                      <http://example.org/ecco-tcp/text/cw3315793911> ,
+                                                                      <http://example.org/ecco-tcp/text/cw3323985185> ,
+                                                                      <http://example.org/ecco-tcp/text/cw3316671185> ,
+                                                                      <http://example.org/ecco-tcp/text/cw3307754892> ,
+                                                                      <http://example.org/ecco-tcp/text/cw3307692616> ,
+                                                                      <http://example.org/ecco-tcp/text/cw3307688218> ,
+                                                                      <http://example.org/ecco-tcp/text/CW3315460679> ,
+                                                                      <http://example.org/ecco-tcp/text/CW3306393365> ,
+                                                                      <http://example.org/ecco-tcp/text/CW3307699789> ;
+                                                            foaf:surname "Paine" ;
+                                                            foaf:name "Thomas Paine" ;
+                                                            whois:born "1737" ;
+                                                            ov:dateOfDeath "1809" ;
+                                                            rdf:type foaf:Person . 
+
+<http://example.org/ecco-tcp/text/CW3316607824> rdf:type bibo:Book ;
+                                                rdfs:label "ODES BY Mr. GRAY Author of an Elegy in a Country Church-Yard."@en ;
+                                                dct:title "ODES BY Mr. GRAY Author of an Elegy in a Country Church-Yard."@en ;
+                                                dct:date "1757" ;
+                                                ecco-tcp:tcpID "K006151.000" ;
+                                                ecco-tcp:estcID "N10432" ;
+                                                ecco-tcp:eccoID "CW3316607824" ;
+                                                ecco-tcp:bookID "1144200600" ;
+                                                ecco-tcp:imprint "Dublin : printed for G. Faulkner in Essex-Street and J. Rudd at the Apollo in Dame-Street" ;
+                                                ecco-tcp:wordCount "1939"^^<http://www.w3.org/2001/XMLSchema#integer> ;
+                                                ecco-tcp:placeOfPublication <http://example.org/ecco-tcp/place/Dublin> ;
+                                                ecco-tcp:textDocument <http://api.talis.com/stores/ecco-tcp-texts/items/K006151.000.txt> ;
+                                                dct:publisher <http://example.org/ecco-tcp/person/G_Faulkner> ;
+                                                dct:creator <http://example.org/ecco-tcp/person/Thomas_Gray_1716-1771> . 
+
+<http://example.org/ecco-tcp/place/Dublin> owl:sameAs <http://dbpedia.org/resource/Dublin> ;
+                                           rdf:type geo:SpatialThing ;
+                                           rdfs:label "Dublin"@en . 
+
+<http://example.org/ecco-tcp/person/G_Faulkner> rdfs:label "G. Faulkner" ;
+                                                foaf:name "G. Faulkner" ;
+                                                rdf:type foaf:Person . 
+
+<http://example.org/ecco-tcp/person/Thomas_Gray_1716-1771> foaf:made <http://example.org/ecco-tcp/text/CW3316607824> ,
+                                                                     <http://example.org/ecco-tcp/text/CW3313877223> ,
+                                                                     <http://example.org/ecco-tcp/text/CW3310706706> ,
+                                                                     <http://example.org/ecco-tcp/text/CW3314140028> ,
+                                                                     <http://example.org/ecco-tcp/text/CW3317130144> ,
+                                                                     <http://example.org/ecco-tcp/text/CW3310583073> ,
+                                                                     <http://example.org/ecco-tcp/text/CW3310639540> ,
+                                                                     <http://example.org/ecco-tcp/text/CW3302050193> ,
+                                                                     <http://example.org/ecco-tcp/text/CW3316495985> ,
+                                                                     <http://example.org/ecco-tcp/text/CW3312509540> ,
+                                                                     <http://example.org/ecco-tcp/text/CW3304606368> ;
+                                                           foaf:surname "Gray" ;
+                                                           foaf:name "Thomas Gray" ;
+                                                           whois:born "1716" ;
+                                                           ov:dateOfDeath "1771" ;
+                                                           rdf:type foaf:Person . 
+
+<http://example.org/ecco-tcp/text/CW3316666942> rdf:type bibo:Book ;
+                                                rdfs:label "POEMS."@en ;
+                                                dct:title "POEMS."@en ;
+                                                dct:date "1773" ;
+                                                ecco-tcp:tcpID "K019955.000" ;
+                                                ecco-tcp:estcID "T236" ;
+                                                ecco-tcp:eccoID "CW3316666942" ;
+                                                ecco-tcp:bookID "1174701700" ;
+                                                ecco-tcp:imprint "London : printed for Joseph Johnson in St. Paul's Church-Yard" ;
+                                                ecco-tcp:wordCount "13713"^^<http://www.w3.org/2001/XMLSchema#integer> ;
+                                                ecco-tcp:placeOfPublication <http://example.org/ecco-tcp/place/London> ;
+                                                ecco-tcp:textDocument <http://api.talis.com/stores/ecco-tcp-texts/items/K019955.000.txt> ;
+                                                dct:publisher <http://example.org/ecco-tcp/person/Joseph_Johnson> ;
+                                                dct:creator <http://example.org/ecco-tcp/person/Mrs_(anna_Letitia)_Barbauld_1743-1825> . 
+
+<http://example.org/ecco-tcp/person/Joseph_Johnson> rdfs:label "Joseph Johnson" ;
+                                                    foaf:name "Joseph Johnson" ;
+                                                    rdf:type foaf:Person . 
+
+<http://example.org/ecco-tcp/person/Mrs_(anna_Letitia)_Barbauld_1743-1825> foaf:made <http://example.org/ecco-tcp/text/CW3316666942> ,
+                                                                                     <http://example.org/ecco-tcp/text/CW3320316268> ,
+                                                                                     <http://example.org/ecco-tcp/text/CW3320130790> ,
+                                                                                     <http://example.org/ecco-tcp/text/CW3305358191> ;
+                                                                           foaf:surname "Barbauld" ;
+                                                                           foaf:name "Mrs. (Anna Letitia) Barbauld" ;
+                                                                           whois:born "1743" ;
+                                                                           ov:dateOfDeath "1825" ;
+                                                                           rdf:type foaf:Person . 
+
+<http://example.org/ecco-tcp/text/CW3314258361> rdf:type bibo:Book ;
+                                                rdfs:label "ACHILLES. AN OPERA. As it is Perform'd at the Theatre-Royal in Covent-Garden."@en ;
+                                                dct:title "ACHILLES. AN OPERA. As it is Perform'd at the Theatre-Royal in Covent-Garden."@en ;
+                                                dct:date "1733" ;
+                                                ecco-tcp:tcpID "K020978.000" ;
+                                                ecco-tcp:estcID "T1728" ;
+                                                ecco-tcp:eccoID "CW3314258361" ;
+                                                ecco-tcp:bookID "783200300" ;
+                                                ecco-tcp:imprint "London : printed for J. Watts at the Printing-Office in Wild-Court near Lincoln's-Inn-Fields" ;
+                                                ecco-tcp:wordCount "15068"^^<http://www.w3.org/2001/XMLSchema#integer> ;
+                                                ecco-tcp:placeOfPublication <http://example.org/ecco-tcp/place/London> ;
+                                                ecco-tcp:textDocument <http://api.talis.com/stores/ecco-tcp-texts/items/K020978.000.txt> ;
+                                                dct:publisher <http://example.org/ecco-tcp/person/J_Watts> ;
+                                                dct:creator <http://example.org/ecco-tcp/person/John_Gay_1685-1732> . 
+
+<http://example.org/ecco-tcp/person/J_Watts> rdfs:label "J. Watts" ;
+                                             foaf:name "J. Watts" ;
+                                             rdf:type foaf:Person . 
+
+<http://example.org/ecco-tcp/person/John_Gay_1685-1732> foaf:made <http://example.org/ecco-tcp/text/CW3314258361> ,
+                                                                  <http://example.org/ecco-tcp/text/CW3307655397> ;
+                                                        foaf:surname "Gay" ;
+                                                        foaf:name "John Gay" ;
+                                                        whois:born "1685" ;
+                                                        ov:dateOfDeath "1732" ;
+                                                        rdf:type foaf:Person . 
+
+<http://example.org/ecco-tcp/text/CW106100145> rdf:type bibo:Book ;
+                                               rdfs:label "THE ANALYSIS OF BEAUTY."@en ;
+                                               dct:title "THE ANALYSIS OF BEAUTY."@en ;
+                                               dct:date "1753" ;
+                                               ecco-tcp:tcpID "K021626.000" ;
+                                               ecco-tcp:estcID "T2690" ;
+                                               ecco-tcp:eccoID "CW106100145" ;
+                                               ecco-tcp:bookID "164401000" ;
+                                               ecco-tcp:imprint "London : printed by J. Reeves for the author and sold by him at his house in Leicester-Fields" ;
+                                               ecco-tcp:wordCount "44433"^^<http://www.w3.org/2001/XMLSchema#integer> ;
+                                               ecco-tcp:placeOfPublication <http://example.org/ecco-tcp/place/London> ;
+                                               ecco-tcp:textDocument <http://api.talis.com/stores/ecco-tcp-texts/items/K021626.000.txt> ;
+                                               ecco-tcp:printer <http://example.org/ecco-tcp/person/J_Reeves> ;
+                                               dct:creator <http://example.org/ecco-tcp/person/William_Hogarth_1697-1764> . 
+
+<http://example.org/ecco-tcp/person/J_Reeves> rdfs:label "J. Reeves" ;
+                                              foaf:name "J. Reeves" ;
+                                              rdf:type foaf:Person . 
+
+<http://example.org/ecco-tcp/person/William_Hogarth_1697-1764> foaf:made <http://example.org/ecco-tcp/text/CW106100145> ;
+                                                               foaf:surname "Hogarth" ;
+                                                               foaf:name "William Hogarth" ;
+                                                               whois:born "1697" ;
+                                                               ov:dateOfDeath "1764" ;
+                                                               rdf:type foaf:Person . 
+
+<http://example.org/ecco-tcp/text/CW3318274819> rdf:type bibo:Book ;
+                                                rdfs:label "Caution recommended in the Use and Application of Scripture Language."@en ;
+                                                dct:title "Caution recommended in the Use and Application of Scripture Language."@en ;
+                                                dct:date "1777" ;
+                                                ecco-tcp:tcpID "K022415.000" ;
+                                                ecco-tcp:estcID "T4525" ;
+                                                ecco-tcp:eccoID "CW3318274819" ;
+                                                ecco-tcp:bookID "210201600" ;
+                                                ecco-tcp:imprint "Cambridge : printed by J. Archdeacon Printer to the University; for T. &#38; J. Merrill in Cambridg" ;
+                                                ecco-tcp:wordCount "2244"^^<http://www.w3.org/2001/XMLSchema#integer> ;
+                                                ecco-tcp:placeOfPublication <http://example.org/ecco-tcp/place/Cambridge> ;
+                                                ecco-tcp:textDocument <http://api.talis.com/stores/ecco-tcp-texts/items/K022415.000.txt> ;
+                                                ecco-tcp:printer <http://example.org/ecco-tcp/person/J_Archdeacon_Printer> ;
+                                                dct:publisher <http://example.org/ecco-tcp/person/J_Merrill> ,
+                                                              <http://example.org/ecco-tcp/person/T_Merrill> ;
+                                                dct:creator <http://example.org/ecco-tcp/person/William_Paley_1743-1805> . 
+
+<http://example.org/ecco-tcp/place/Cambridge> owl:sameAs <http://dbpedia.org/resource/Cambridge> ;
+                                              rdf:type geo:SpatialThing ;
+                                              rdfs:label "Cambridge"@en . 
+
+<http://example.org/ecco-tcp/person/J_Archdeacon_Printer> rdfs:label "J. Archdeacon Printer" ;
+                                                          foaf:name "J. Archdeacon Printer" ;
+                                                          rdf:type foaf:Person . 
+
+<http://example.org/ecco-tcp/person/J_Merrill> rdfs:label "J. Merrill" ;
+                                               foaf:name "J. Merrill" ;
+                                               rdf:type foaf:Person . 
+
+<http://example.org/ecco-tcp/person/T_Merrill> rdfs:label "T. Merrill" ;
+                                               foaf:name "T. Merrill" ;
+                                               rdf:type foaf:Person . 
+
+<http://example.org/ecco-tcp/person/William_Paley_1743-1805> foaf:made <http://example.org/ecco-tcp/text/CW3318274819> ,
+                                                                       <http://example.org/ecco-tcp/text/CW3323275868> ,
+                                                                       <http://example.org/ecco-tcp/text/CW3305027435> ,
+                                                                       <http://example.org/ecco-tcp/text/CW3320351443> ,
+                                                                       <http://example.org/ecco-tcp/text/CW3318274829> ,
+                                                                       <http://example.org/ecco-tcp/text/CW3323276975> ,
+                                                                       <http://example.org/ecco-tcp/text/CW3323393765> ,
+                                                                       <http://example.org/ecco-tcp/text/CW3323278672> ,
+                                                                       <http://example.org/ecco-tcp/text/CW3318772055> ,
+                                                                       <http://example.org/ecco-tcp/text/CW3318772456> ;
+                                                             foaf:surname "Paley" ;
+                                                             foaf:name "William Paley" ;
+                                                             whois:born "1743" ;
+                                                             ov:dateOfDeath "1805" ;
+                                                             rdf:type foaf:Person . 
+
+<http://example.org/ecco-tcp/text/CW3314388315> rdf:type bibo:Book ;
+                                                rdfs:label "THE DUNCIAD. AN Heroic Poem."@en ;
+                                                dct:title "THE DUNCIAD. AN Heroic Poem."@en ;
+                                                dct:date "1728" ;
+                                                ecco-tcp:tcpID "K023025.000" ;
+                                                ecco-tcp:estcID "T5537" ;
+                                                ecco-tcp:eccoID "CW3314388315" ;
+                                                ecco-tcp:bookID "660300100" ;
+                                                ecco-tcp:imprint "[London] : Dublin printed London re-printed for A. Dodd" ;
+                                                ecco-tcp:wordCount "8215"^^<http://www.w3.org/2001/XMLSchema#integer> ;
+                                                ecco-tcp:placeOfPublication <http://example.org/ecco-tcp/place/London> ;
+                                                ecco-tcp:textDocument <http://api.talis.com/stores/ecco-tcp-texts/items/K023025.000.txt> ;
+                                                dct:publisher <http://example.org/ecco-tcp/person/A_Dodd> ;
+                                                dct:creator <http://example.org/ecco-tcp/person/Alexander_Pope_1688-1744> . 
+
+
