@@ -108,6 +108,13 @@ describe("Raffles Store", function(){
     expect(count(array_keys($results)))->to_equal(7);
   });
 
+  it("should let you query with an LDPath", function(){
+    global $store;
+    $results = $store->query("foaf:made/dct:date=1773");
+    $uris = array_keys($results);
+    expect($uris[0])->to_equal('http://example.org/ecco-tcp/person/Mrs_(anna_Letitia)_Barbauld_1743-1825');
+  });
+
 });
 
 

@@ -6,6 +6,7 @@ class RafflesStore {
   var $Index;
   var $DescriptionStore;
   var $dirname;
+  var $LDPath;
   var $indexPredicates = array('http://www.w3.org/1999/02/22-rdf-syntax-ns#type');
 
   function __construct($dirname){
@@ -20,6 +21,7 @@ class RafflesStore {
       }
     }
     $this->DescriptionStore = new DescriptionStore($dirname . DIRECTORY_SEPARATOR . 'descriptions');
+    $this->LDPath = new LDPath();
   }
 
   function load($descriptions){
@@ -75,6 +77,12 @@ class RafflesStore {
 
   function search($o_text, $property=false){
     $ids = $this->Index->searchObject($o_text,$property);
+    return $this->DescriptionStore->getDescriptionsByIDs($ids);
+  }
+
+  function query($path){
+    $triples = $this->LDPath->parse($path);
+    $ids = $this->Index->query($triples);
     return $this->DescriptionStore->getDescriptionsByIDs($ids);
   }
 
