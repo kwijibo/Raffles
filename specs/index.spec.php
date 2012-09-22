@@ -3,12 +3,7 @@
 require_once 'lib/index.php';
 require_once 'vendor/autoload.php';
 
-function getIndex(){
-  $index = new Index();
-  return $index;
-}
-
-define('testUri', "http://example.com/foo/123");
+require_once 'specs/spechelpers.php';
 
 describe("Index", function(){
   it("should let you add an entry", function(){
@@ -64,7 +59,13 @@ describe("Index", function(){
    expect($index->getAll())->to_equal(array(1,34,9));
   });
 
+  it("should return results from a triple pattern query", function(){
+    $index = getRafflesStore(true)->Index;
+    $triplepattern = getTriplePatternArray();
+    $actual = $index->query($triplepattern);
+    expect($actual)->to_equal(array(37)); //Alexander Pope
+  });
+
 
 });
-\pecs\run();
 ?>

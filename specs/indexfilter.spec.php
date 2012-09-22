@@ -3,51 +3,8 @@
 require_once 'lib/indexfilter.php';
 require_once 'lib/index.php';
 require_once 'vendor/autoload.php';
+require_once 'specs/spechelpers.php';
 
-function getFilter(){
-  $data = array(
-   #0 
-      'a' => array( 
-        'date' => array( array('value' => '1660') ) ,
-        'imprint' => array( array('value' => 'London') ) 
-      ),
-     #1 
-      'b' => array( 
-            'date' => array( array('value' => '1660') ) ,
-            'imprint' => array( array('value' => 'Paris') ),
-
-            ),
- #2     
-      'c' => array( 
-          'date' => array( array('value' => '1780') ),
-          'imprint' => array( array('value' => 'London') ),
-        ),
-  #3      
-      'd' => array( 
-          'printed' => array( array('value' => 'a'),  array('value' => 'b')  ),
-        ),
-    #4    
-      'e' => array( 
-          'printed' => array( array('value' => 'c'),  array('value' => 'b')  ),
-        ),
-
-
-    );
-    $Index = new Index();
-    $i = 0;
-    foreach($data as $s => $ps){
-      $Index->addSubject($s, $i);
-      foreach($ps as $p => $os){
-        foreach($os as $o){
-          $Index->addPredicateObject($p, $o['value'], $i);
-        }
-      }
-      $i++;
-    } 
-    $Filter = new IndexFilter($Index);
-
-    return $Filter;
-}
 
 describe("Index Filter", function(){
   it("should return a list of matching index IDs", function(){
@@ -78,5 +35,5 @@ describe("Traversing out from a filter with a predicate (printed.date=1780 )", f
   });
 });
 
-\pecs\run();
+//\pecs\run();
 

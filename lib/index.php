@@ -99,6 +99,19 @@ class Index {
     return $filter->filter($s, $p, $o);
   }
 
+  function query($triples){
+    $filter = new IndexFilter($this);
+    $triple = array_shift($triples);
+    $s = ($triple['s']['type']=='variable')? null : $triple['s']['value'];
+    $p = ($triple['p']['type']=='variable')? null : $triple['p']['value'];
+    $o = ($triple['o']['type']=='variable')? null : $triple['o']['value'];
+    $filter = $filter->filter($s,$p, $o);
+    foreach($triples as $triple){
+      $p = ($triple['p']['type']=='variable')? null : $triple['p']['value'];
+      $filter = $filter->traverseOut($p);
+    }
+    return $filter->ids();
+  }
 }
 
 ?>

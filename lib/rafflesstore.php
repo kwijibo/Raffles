@@ -1,6 +1,6 @@
 <?php
-require 'index.php';
-require 'descriptionstore.php';
+require_once 'index.php';
+require_once 'descriptionstore.php';
 
 class RafflesStore {
   var $Index;

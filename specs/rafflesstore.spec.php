@@ -2,20 +2,8 @@
 require_once 'vendor/autoload.php';
 require_once 'lib/rafflesstore.php';
 
-define('ex', "http://example.com/ns/");
-define('biboBook', 'http://purl.org/ontology/bibo/Book' );
-define('rdftype', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type' );
+require_once 'specs/spechelpers.php';
 
-function getRafflesStore($load=false){
-  $dirname = 'testdata';
-  $store = new RafflesStore($dirname);
-  $store->reset();
-  if($load){
-    $data = file_get_contents('specs/test.ttl');
-    $store->loadData($data);
-  }
-  return $store;
-}
   $store = getRafflesStore(true);
 
 describe("Raffles Store", function(){
