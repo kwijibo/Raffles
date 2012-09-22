@@ -1,5 +1,5 @@
 <?php 
-
+require 'indexfilter.php';
 class Index {
 
   var $index = array(
@@ -9,25 +9,15 @@ class Index {
   function __construct(){
   }
 
-  function addTerm($termType, $t, $linenumbers){
-    $linenumbers = (array) $linenumbers;
-    $t = (string)$t;
-    if(!isset($this->index[$termType][$t])) $this->index[$termType][$t] = array();
-    $existingLineNumbers = $this->index[$termType][$t];
-    foreach($linenumbers as $linenumber){
-      if(!in_array($linenumber, $existingLineNumbers)){ 
-        array_push( $this->index[$termType][$t], $linenumber );
-      }
-    }
-    return $this->index[$termType][$t];
+  function addSubject($s, $linenumber){
+    $this->index['subjects'][$s] = $linenumber;
+    return $linenumber;
   }
   
-  function addSubject($s, $ln){ return $this->addTerm('subjects', $s, $ln); }
 
-  function replaceSubject($s, $lns){
-    $lns = (array)$lns;
-    $this->index['subjects'][$s] = $lns;
-    return $lns;
+  function replaceSubject($s, $ln){
+    $this->index['subjects'][$s] = $ln;
+    return $ln;
   }
   
   function addPredicateObject($p,$o, $linenumbers){
@@ -44,15 +34,20 @@ class Index {
 
   }
 
-  function getTerm($termType, $s){
-    return $this->index[$termType][$s];  
-  }
-
   function getPredicateObject($p,$o){
-      return $this->index['po'][$p][$o];    
+    if(!empty($this->index['po'][$p]) 
+      AND !empty($this->index['po'][$p][$o])
+    ) { return $this->index['po'][$p][$o]; }
+      else { return array();   }
   }
 
-  function getSubject($s){ return $this->getTerm('subjects', $s); }
+  function getSubject($s){ 
+    return $this->index['subjects'][$s];  
+  }
+
+  function getSubjectByID($id){
+    return array_search($id, $this->index['subjects']);
+  }
     
   function getObject($o){ 
     $all_line_numbers=array();
@@ -91,6 +86,17 @@ class Index {
       }
     }
     return $all_ids;
+  }
+
+
+  function getAll(){
+    $ids = array_values($this->index['subjects']);
+    return $ids;
+  }
+
+  function filter($s=null, $p=null,$o=null){
+    $filter = new IndexFilter($this);
+    return $filter->filter($s, $p, $o);
   }
 
 }

@@ -3,15 +3,23 @@ require_once 'vendor/autoload.php';
 require_once 'lib/rafflesstore.php';
 
 define('ex', "http://example.com/ns/");
+define('biboBook', 'http://purl.org/ontology/bibo/Book' );
+define('rdftype', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type' );
 
-function getRafflesStore(){
+function getRafflesStore($load=false){
   $dirname = 'testdata';
   $store = new RafflesStore($dirname);
   $store->reset();
+  if($load){
+    $data = file_get_contents('specs/test.ttl');
+    $store->loadData($data);
+  }
   return $store;
 }
+  $store = getRafflesStore(true);
 
 describe("Raffles Store", function(){
+
   it("should let you load some RDF", function(){
     $store = getRafflesStore();
     $response = $store->load(
@@ -67,7 +75,14 @@ describe("Raffles Store", function(){
     $data = file_get_contents('specs/test.ttl');
     $loadResponse = $store->loadData($data);
     $types = $store->getFacets('http://www.w3.org/1999/02/22-rdf-syntax-ns#type');
-    expect(empty($types))->to_equal(false);
+    $expected = array(
+      'http://xmlns.com/foaf/0.1/Organization' => 8, 
+      'http://xmlns.com/foaf/0.1/Person' => 155, 
+      'http://xmlns.com/foaf/0.1/Agent' => 4, 
+      'http://purl.org/ontology/bibo/Book' => 7, 
+      'http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing' => 3
+    );
+    expect($types)->to_equal($expected);
     
   });
 
@@ -78,6 +93,31 @@ describe("Raffles Store", function(){
     $loadResponse = $store->loadData($data);
     $results = $store->search("London");
     expect(empty($results))->to_equal(false);
+  });
+
+  it("should return a list of indexed rdf:type values", function(){
+    // $store = getRafflesStore();
+    // $store->indexPredicates = false;    
+    // $data = file_get_contents('specs/test.ttl');
+    // $loadResponse = $store->loadData($data);
+    global $store;
+    $results = $store->getTypes();
+        $expected = array(
+      'http://xmlns.com/foaf/0.1/Organization' => 8, 
+      'http://xmlns.com/foaf/0.1/Person' => 155, 
+      'http://xmlns.com/foaf/0.1/Agent' => 4, 
+      'http://purl.org/ontology/bibo/Book' => 7, 
+      'http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing' => 3
+    );
+
+    expect($results)->to_equal($expected);
+  });
+
+  it("should let you get matching descriptions for a (* p o)  triple pattern", function(){
+    global $store;
+    $results = $store->get(null, rdftype, biboBook);
+    $expected = array();
+    expect(count(array_keys($results)))->to_equal(7);
   });
 
 });

@@ -45,17 +45,14 @@ class RafflesStore {
 
   function get($s=false, $p=false, $o=false,$limit=50,$offset=0){
     $descriptions = array();
+    $IDs = $this->Index->filter($s,$p, $o)->ids();   
+    return $this->describeIDs(array_slice((array)$IDs, $offset, $limit));
+  }
 
-    if($s && $p && $o) $IDs = array_merge($this->Index->getSubject($s), $this->Index->getPredicateObject($p, $o));
-    if($s && $p && !$o) $IDs = array_merge($this->Index->getSubject($s), $this->Index->getPredicate($p));
-    if($s && !$p && $o) $IDs = array_merge($this->Index->getSubject($s), $this->Index->getObject($o));
-    if($s && !$p && !$o) $IDs = $this->Index->getSubject($s);
-    if(!$s && $p && $o) $IDs = $this->Index->getPredicateObject($p, $o);
-    if(!$s && !$p && $o) $IDs = $this->Index->getObject($o);
-    if(!$s && $p && !$o) $IDs = $this->Index->getPredicate($p);
-    if(!$s && !$p && !$o) $IDs = range(0, $this->DescriptionStore->size());
-    
-    return $this->DescriptionStore->getDescriptionsByIDs(array_slice($IDs, $offset, $limit));
+
+
+  private function describeIDs($ids){
+    return $this->DescriptionStore->getDescriptionsByIDs($ids);
   }
 
   function loadData($data){
@@ -70,6 +67,10 @@ class RafflesStore {
       $propertyIndex[$o] = count($lns);
     }
     return $propertyIndex;
+  }
+
+  function getTypes(){
+    return $this->getFacets('http://www.w3.org/1999/02/22-rdf-syntax-ns#type');
   }
 
   function search($o_text, $property=false){
