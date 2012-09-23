@@ -6,81 +6,80 @@ hosting without using an external database.
 ## Installation 
 
 
-`
-git clone https://github.com/kwijibo/Raffles.git Raffles
-cd Raffles
-composer install
-`
+
+        git clone https://github.com/kwijibo/Raffles.git Raffles
+        cd Raffles
+        composer install
+
 see [Composer](http://getcomposer.org)
 
 ## Creating a Store and Importing Data
 
-`
-require 'Raffles/lib/rafflesstore.php';
-require_once 'Raffles/vendor/autoload.php';
 
-$data_dir = __DIR__ . '/data';
-$store = new RafflesStore($data_dir);
-$store->indexPredicates = array(
-    'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
-    'http://purl.org/dc/terms/creator',
-    'http://purl.org/dc/terms/date',
-);
-// you can configure Raffles to only index specific predicates
+        require 'Raffles/lib/rafflesstore.php';
+        require_once 'Raffles/vendor/autoload.php';
 
-$store->addNamespacePrefix('library', 'http://purl.org/library/');
-// add prefixes you want to use in queries
-`
+        $data_dir = __DIR__ . '/data';
+        $store = new RafflesStore($data_dir);
+        $store->indexPredicates = array(
+            'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
+            'http://purl.org/dc/terms/creator',
+            'http://purl.org/dc/terms/date',
+        );
+        // you can configure Raffles to only index specific predicates
+
+        $store->addNamespacePrefix('library', 'http://purl.org/library/');
+        // add prefixes you want to use in queries
+
 
 ### Getting types of things in the Store
-`
-$types = $store->getTypes();
-// array(
-// http://schema.org/Place => 321,
-// http://schema.org/Person => 456,
-//)
 
-`
+        $types = $store->getTypes();
+        // array(
+        // http://schema.org/Place => 321,
+        // http://schema.org/Person => 456,
+        //)
+
+
 
 ### Getting Facets
 
-`
-$dates = $store->getFacets('http://purl.org/dc/terms/date');
+        $dates = $store->getFacets('http://purl.org/dc/terms/date');
 
-// array ( "1560" => 4, "1562" => 12, "1570" => 31  )
+        // array ( "1560" => 4, "1562" => 12, "1570" => 31  )
 
-`
+
 ## Basic Path query language
 
 `rdf:type=foaf:Person` (all things of type Person)
 
 `foaf:made/dct:date=1780` (anyone who made something in 1780)
 
-`
-$limit=20;
-$offset=0;
-$results = $store->query("foaf:made/dct:date=1560", $limit, $offset);
-`
+        
+        $limit=20;
+        $offset=0;
+        $results = $store->query("foaf:made/dct:date=1560", $limit, $offset);
+        
 
 Results are returned as a PHP associative array following the [RDF JSON](https://github.com/iand/rdf-json) structure
 
-`
-array (
-S => array(
-    P => array (  
-      array(
-          value => O, 
-          type => literal|uri|bnode 
-          [, lang=O_LANG ] 
-          [, datatype=O_DATATYPE ]
-        )
-    )
- )
-`
+        
+        array (
+        S => array(
+            P => array (  
+              array(
+                  value => O, 
+                  type => literal|uri|bnode 
+                  [, lang=O_LANG ] 
+                  [, datatype=O_DATATYPE ]
+                )
+            )
+         )
+        
 
 ## Search
 
-`$results = $store->search("Edinbu");`
+        `$results = $store->search("Edinbu");`
 
 # Running the tests
 
