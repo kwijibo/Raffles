@@ -4,7 +4,7 @@ require_once 'lib/rafflesstore.php';
 
 require_once 'specs/spechelpers.php';
 
-  $store = getRafflesStore(true);
+$store = getRafflesStore(true);
 
 describe("Raffles Store", function(){
 
@@ -114,6 +114,13 @@ describe("Raffles Store", function(){
     $uris = array_keys($results);
     expect($uris[0])->to_equal('http://example.org/ecco-tcp/person/Mrs_(anna_Letitia)_Barbauld_1743-1825');
   });
+  it("should let you query with simple LDPath rdf:type=foaf:Person", function(){
+    global $store;
+    $results = $store->query("rdf:type=foaf:Person");
+    $uris = array_keys($results);
+    expect($uris[0])->to_equal('http://example.org/ecco-tcp/person/A_Alison');
+});
+
 
 });
 

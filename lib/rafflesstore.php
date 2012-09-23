@@ -1,4 +1,5 @@
 <?php
+require_once 'ldpath.php';
 require_once 'index.php';
 require_once 'descriptionstore.php';
 
@@ -7,11 +8,28 @@ class RafflesStore {
   var $DescriptionStore;
   var $dirname;
   var $LDPath;
+  var $prefixes = array(
+    "foaf" =>	"http://xmlns.com/foaf/0.1/",
+    "rdf" =>	"http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs" =>	"http://www.w3.org/2000/01/rdf-schema#",
+    "owl" =>	"http://www.w3.org/2002/07/owl#",
+    "dcterms" =>	"http://purl.org/dc/terms/",
+    "dc" =>	"http://purl.org/dc/elements/1.1/",
+    "dct" =>	"http://purl.org/dc/terms/",
+    "schema" =>	"http://schema.org/",
+    "bibo" =>	"http://purl.org/ontology/bibo/",
+    "gr" => "http://purl.org/goodrelations/v1#",
+    "geo" => "http://www.w3.org/2003/01/geo/wgs84_pos#",
+  );
   var $indexPredicates = array('http://www.w3.org/1999/02/22-rdf-syntax-ns#type');
 
   function __construct($dirname){
     $this->dirname = $dirname;
-    if(!is_dir($dirname)) mkdir($dirname);
+    if(!is_dir($this->dirname)){
+      if(!mkdir($this->dirname)){
+        throw new Exception("Couldn't create directory $this->dirname");
+      }
+    }
     $index_file = $this->dirname . DIRECTORY_SEPARATOR .'index';
     $this->Index = new Index();
     if(file_exists($index_file)){
@@ -21,7 +39,12 @@ class RafflesStore {
       }
     }
     $this->DescriptionStore = new DescriptionStore($dirname . DIRECTORY_SEPARATOR . 'descriptions');
-    $this->LDPath = new LDPath();
+    $this->LDPath = new LDPath($this->prefixes);
+  }
+
+  function setPrefixes($prefixes){
+    $this->prefixes = $prefixes; 
+    $this->LDPath->setPrefixes($prefixes);
   }
 
   function load($descriptions){
@@ -30,8 +53,9 @@ class RafflesStore {
       'p' => 0,
       'o' => 0
     );
+    $lineNumbers = $this->DescriptionStore->insertDescriptions($descriptions);
     foreach($descriptions as $s => $props){
-      $lineNumber = $this->DescriptionStore->insertDescription(array($s => $props));
+      $lineNumber = $lineNumbers[$s];     
       $this->Index->addSubject($s, $lineNumber);
       $count['s']++;
       foreach($props as $p => $objs){
@@ -80,10 +104,10 @@ class RafflesStore {
     return $this->DescriptionStore->getDescriptionsByIDs($ids);
   }
 
-  function query($path){
+  function query($path, $limit=50,$offset=0){
     $triples = $this->LDPath->parse($path);
     $ids = $this->Index->query($triples);
-    return $this->DescriptionStore->getDescriptionsByIDs($ids);
+    return $this->DescriptionStore->getDescriptionsByIDs(array_slice((array)$ids, $offset, $limit));
   }
 
   function __destruct() {

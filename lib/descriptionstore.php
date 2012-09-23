@@ -9,7 +9,7 @@ class DescriptionStore {
 
   function size(){
     $i = 0;
-    $file = fopen($this->filename, 'a+');
+    $file = fopen($this->filename, 'r');
     rewind($file);
     while($line=fgets($file)){
             $i++;
@@ -18,10 +18,17 @@ class DescriptionStore {
     return $i;
   }
 
-  function insertDescription($description){
-    $contents = json_encode($description)."\n";
-    file_put_contents($this->filename, $contents, FILE_APPEND|LOCK_EX);
-    return ($this->size()-1);
+  function insertDescriptions($descriptions){
+    $fh = fopen($this->filename, 'a+');
+    $id_no = $this->size();
+    $uris_to_ids = array();
+    foreach($descriptions as $uri => $props){
+      $contents = json_encode(array($uri => $props))."\n";
+      $uris_to_ids[$uri] = $id_no++;
+      fwrite($fh, $contents);
+    }
+    fclose($fh);
+    return $uris_to_ids;
   }
 
   function getDescriptionsByIDs($numbers){
