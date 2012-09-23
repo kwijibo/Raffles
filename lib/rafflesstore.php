@@ -42,6 +42,10 @@ class RafflesStore {
     $this->LDPath = new LDPath($this->prefixes);
   }
 
+  function addNamespacePrefix($prefix, $ns){
+    $this->prefixes[$prefix] = $ns;
+  }
+  
   function setPrefixes($prefixes){
     $this->prefixes = $prefixes; 
     $this->LDPath->setPrefixes($prefixes);
