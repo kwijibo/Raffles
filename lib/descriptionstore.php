@@ -20,6 +20,10 @@ class DescriptionStore {
 
   function insertDescriptions($descriptions){
     $fh = fopen($this->filename, 'a+');
+    $lock = flock($fh, LOCK_EX);
+    if(!$lock){
+      throw new Exception("Couldn't get lock on file: $this->filename for inserting descriptions");
+    }
     $id_no = $this->size();
     $uris_to_ids = array();
     foreach($descriptions as $uri => $props){
@@ -27,6 +31,7 @@ class DescriptionStore {
       $uris_to_ids[$uri] = $id_no++;
       fwrite($fh, $contents);
     }
+    flock($fh, LOCK_UN);
     fclose($fh);
     return $uris_to_ids;
   }

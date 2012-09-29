@@ -20,6 +20,7 @@ class RafflesStore {
     "bibo" =>	"http://purl.org/ontology/bibo/",
     "gr" => "http://purl.org/goodrelations/v1#",
     "geo" => "http://www.w3.org/2003/01/geo/wgs84_pos#",
+    "open" => "http://open.vocab.org/terms/",
   );
   var $indexPredicates = array('http://www.w3.org/1999/02/22-rdf-syntax-ns#type');
 
@@ -44,6 +45,7 @@ class RafflesStore {
 
   function addNamespacePrefix($prefix, $ns){
     $this->prefixes[$prefix] = $ns;
+    $this->LDPath->setPrefixes($this->prefixes);
   }
   
   function setPrefixes($prefixes){
@@ -62,6 +64,20 @@ class RafflesStore {
       $lineNumber = $lineNumbers[$s];     
       $this->Index->addSubject($s, $lineNumber);
       $count['s']++;
+
+      //geo
+      if(isset($props[Geo_NS.'lat_long'])){
+         $lat_long = $props[Geo_NS.'lat_long'][0]['value'];
+      } else if(isset($props[Geo_NS.'lat']) && isset($props[Geo_NS.'long'])){
+        $lat_long = $props[Geo_NS.'lat'][0]['value'].','.$props[Geo_NS.'long'][0]['value'];
+      }
+
+      if(isset($lat_long)){ 
+        $lat_long = trim($lat_long);
+        $this->Index->setUriLatLong($s, $lat_long); 
+        $this->Index->addPredicateObject(Geo_NS.'lat_long', $lat_long, $lineNumber);
+      }
+
       foreach($props as $p => $objs){
         $count['p']++;
         foreach($objs as $obj){
@@ -114,17 +130,29 @@ class RafflesStore {
     return $this->DescriptionStore->getDescriptionsByIDs(array_slice((array)$ids, $offset, $limit));
   }
 
-  function __destruct() {
-    file_put_contents($this->dirname . DIRECTORY_SEPARATOR .'index', serialize($this->Index), LOCK_EX);
-    foreach($this->Index->po as $p => $o_ids){
-      file_put_contents($this->dirname . DIRECTORY_SEPARATOR . 'index_' . )
+  function distance($uri, $km=30){
+    if($lat_long = $this->Index->getUriLatLong($uri)){
+      $ids = $this->Index->getIDsByDistance($lat_long, $km);
+      return $this->describeIDs($ids);
+    } else {
+      return array();
     }
   }
 
+  function __destruct() {
+    foreach($this->Index->po as $p => $o_ids){
+      $filename = $this->dirname . DIRECTORY_SEPARATOR . 'index_po_' .urlencode($p);
+      file_put_contents($filename, serialize($o_ids), LOCK_EX);
+      $this->Index->po[$p] = $filename;
+    }
+    file_put_contents($this->dirname . DIRECTORY_SEPARATOR .'index', serialize($this->Index), LOCK_EX);
+  }
+
   function reset(){
-    foreach(array('index','descriptions') as $filename){
-      $full_filepath = $this->dirname . DIRECTORY_SEPARATOR .$filename;
-      if(is_file($full_filepath)) unlink($full_filepath);
+    foreach(glob($this->dirname . DIRECTORY_SEPARATOR .'*') as $full_filepath){
+      if(is_file($full_filepath)){
+        unlink($full_filepath);
+      }
     }
     $this->Index = new Index();
     $this->DescriptionStore = new DescriptionStore($this->dirname . DIRECTORY_SEPARATOR . 'descriptions');

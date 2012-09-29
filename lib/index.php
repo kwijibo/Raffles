@@ -1,5 +1,6 @@
 <?php 
 require 'indexfilter.php';
+define('Geo_NS', 'http://www.w3.org/2003/01/geo/wgs84_pos#');
 class Index {
 
   var $subjects = '';
@@ -167,15 +168,19 @@ class Index {
     return array($s,'');
   }
 
-  function setSubjectLatLong($s, $lat_long){
+  function getUriLatLong($s_uri){
+    return isset($this->geo[$s_uri])? $this->geo[$s_uri] : null;
+  }
+
+  function setUriLatLong($s, $lat_long){
     $this->geo[$s]=$lat_long;
   }
   function getIDsByDistance($lat_long, $km){
     $return_ids = array();
     list($lat1,$long1) = explode(',',$lat_long);
-    $this->reloadIndex('http://www.w3.org/2003/01/geo/wgs84_pos#lat_long');
-    if(isset($this->po['http://www.w3.org/2003/01/geo/wgs84_pos#lat_long'])){
-      foreach($this->po['http://www.w3.org/2003/01/geo/wgs84_pos#lat_long'] as $lat_long2 => $ids ){
+    $this->reloadIndex(Geo_NS.'lat_long');
+    if(isset($this->po[Geo_NS.'lat_long']) AND is_array($this->po[Geo_NS.'lat_long'])){
+      foreach($this->po[Geo_NS.'lat_long'] as $lat_long2 => $ids ){
         list($lat2,$long2) = explode(',',$lat_long2);
         $actual_distance  = $this->distance($lat1, $long1, $lat2,$long2);
         if($actual_distance <= $km){
