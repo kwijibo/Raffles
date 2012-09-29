@@ -132,7 +132,11 @@ class RafflesStore {
 
   function distance($uri, $km=30){
     if($lat_long = $this->Index->getUriLatLong($uri)){
-      $ids = $this->Index->getIDsByDistance($lat_long, $km);
+      $ids_by_distance = $this->Index->getIDsByDistance($lat_long, $km);
+      $ids = array();
+      foreach($ids_by_distance as $distance => $d_ids){
+        array_splice($ids,0,0,$d_ids);
+      }
       return $this->describeIDs($ids);
     } else {
       return array();
@@ -141,9 +145,11 @@ class RafflesStore {
 
   function __destruct() {
     foreach($this->Index->po as $p => $o_ids){
-      $filename = $this->dirname . DIRECTORY_SEPARATOR . 'index_po_' .urlencode($p);
-      file_put_contents($filename, serialize($o_ids), LOCK_EX);
-      $this->Index->po[$p] = $filename;
+      if(is_array($o_ids)){
+        $filename = $this->dirname . DIRECTORY_SEPARATOR . 'index_po_' .urlencode($p);
+        file_put_contents($filename, serialize($o_ids), LOCK_EX);
+        $this->Index->po[$p] = $filename;
+      }
     }
     file_put_contents($this->dirname . DIRECTORY_SEPARATOR .'index', serialize($this->Index), LOCK_EX);
   }

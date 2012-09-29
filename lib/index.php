@@ -118,6 +118,9 @@ class Index {
         $filename = $this->po[$p];
         if($contents = file_get_contents($filename)){
           $this->po[$p] =unserialize($contents);
+          if(!is_array($this->po[$p])){
+            throw new Exception("Couldn't load the $p index");
+          }
         }
       }
       return;
