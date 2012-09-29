@@ -79,7 +79,7 @@ Results are returned as a PHP associative array following the [RDF JSON](https:/
 
 ## Search
 
-        `$results = $store->search("Edinbu");`
+        $results = $store->search("Edinbu");
 
 # Running the tests
 

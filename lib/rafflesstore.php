@@ -115,7 +115,10 @@ class RafflesStore {
   }
 
   function __destruct() {
-    file_put_contents($this->dirname . DIRECTORY_SEPARATOR .'index', serialize($this->Index));
+    file_put_contents($this->dirname . DIRECTORY_SEPARATOR .'index', serialize($this->Index), LOCK_EX);
+    foreach($this->Index->po as $p => $o_ids){
+      file_put_contents($this->dirname . DIRECTORY_SEPARATOR . 'index_' . )
+    }
   }
 
   function reset(){

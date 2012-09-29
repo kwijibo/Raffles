@@ -1,0 +1,167 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <title><?php echo $title?> Powered by Raffles</title>
+    <link href='http://fonts.googleapis.com/css?family=Headland+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Ranchers' rel='stylesheet' type='text/css'>
+  
+<!-- <link rel="stylesheet" href="/Raffles/html/stylesheets/less/grid.less" type="text/less" media="screen" />-->
+<!-- <script src="/Raffles/html/js/less-1.1.3.min.js" type="text/javascript" ></script>-->
+<style type="text/css" media="screen">
+
+body {
+    font-family: "Headland One" ;
+    font-size: small;
+  }
+
+  a {
+      text-decoration: none; 
+      color: #4567dd 
+    }
+  
+  #data-list {
+    width: 55%;
+  }
+
+#data-list  dt , #data-list  dd {
+  font-size: 90%;
+}
+a.current {
+  font-size: larger;
+  font-weight:bold;
+  text-decoration: underline;
+}
+#nav {
+  width: 25%;
+  float: right;
+}
+#types {
+  display: block;
+  list-style-type: square;
+}
+#types a {
+  font-size: large;
+}
+
+footer {
+  font-size: larger;
+  text-align: right;
+  color: #444;
+  clear:both;
+}
+
+footer a.logo {
+  font-size: 200%;
+  font-family: 'Ranchers', cursive;
+  color: #819B8B;
+}
+
+</style>
+<!--
+<script type="text/javascript" charset="utf-8" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function(){
+      var result = $("#data-list div.result");
+     result.find('dl').hide()
+     result.find('h4').append(' &nbsp;  <a class="toggler" href="#">(details)</a>');
+     result.find('a.toggler').css({fontSize: "90%"}).toggle(function(el){
+        result.find('dl').fadeIn();
+        $(this).html('(hide)');
+        }, function(el){
+        result.find('dl').fadeOut();
+        $(this).html('(details)');
+
+        });
+  });
+</script>
+-->
+</head>
+<body>
+<section id="nav">
+  <form action="" method="get" accept-charset="utf-8">
+    
+  <input type=text" name="_search" value="">
+  
+  <p><input type="submit" value="Search"></p>
+  </form>
+    <?php if(isset($types)):?>
+  <ul id="types">
+    <?php foreach($types as $type => $count):?>
+    <li>
+      <a href="?rdf:type=<?php echo curie($type)?>"><?php echo local($type) ?></a>
+      (<?php echo $count?>)
+     </li>
+    <?php endforeach ?>
+  </ul>
+  <?php endif?>
+
+  <section id="Datasets">
+  <h4>Datasets</h4>
+  <ul>
+  <?php foreach($Config as $k => $v):?>
+  <li><a <?php  if($k==$dataset) { echo 'class="current"'; }?>href="?_dataset=<?php echo $k?>"><?php echo $k?></a></li>
+  <?php endforeach ?>
+  </ul>
+  </section>
+
+</section>
+
+
+
+
+
+
+
+  <?php if(isset($data)):
+    $itemCount=0;
+  ?>
+  <section id="data-list">
+  <h2><?php echo $title ?></h2>
+  <?php
+  if(empty($data) AND isset($requestUri)){
+  ?>
+  <a href="<?php echo $requestUri?>"><?php echo $requestUri?></a> not described in this dataset.
+  <?php }
+  ?>
+  <ol>
+    <?php foreach($data as $uri => $props):
+      $itemCount++;
+    ?>
+    <li>
+      <div class="result">
+        <h4><a href="<?php echo $uri?>"><?php echo label($props, $uri)?></a></h4>
+        <?php if(isset($props[Geo_NS.'lat'])):?>
+        (<a href="?_near=<?php echo urlencode($uri)?>">Near By</a>)
+        <?php endif ?>
+        <dl>
+          <?php foreach($props as $p => $os):?>
+            <dt> <?php echo local($p)?></dt>
+              <?php foreach($os as $o):?>
+              <dd>
+              <?php echo ($o['type']=='literal')? ($o['value']) : '<a href="?_uri='.urlencode($o['value']).'">'.local($o['value']).'</a>'?>
+              <?php if(in_array($p, $store->indexPredicates)):?> <a href="?<?php echo curie($p).'='.pathescape($o)?>">(similar)</a> <?php endif?>
+              </dd>
+              <?php endforeach ?>
+            <?php endforeach ?>
+        </dl>
+        <a href="?_related=<?php echo urlencode($uri)?>">Related</a>
+      </div>
+    </li>  
+  <?php endforeach ?>
+  </ol>
+  <div id="pager">
+    <?php if($page > 1):?> <a href="?<?php echo $query . '&amp;_page=' .($page-1) ?>">Previous</a> <?php endif?>
+    &nbsp;
+    <?php if($itemCount == 10):?> <a href="?<?php echo $query . '&amp;_page=' .($page+1)?>">Next</a> <?php endif ?>
+  </div>
+  </section>
+  <?php endif?>
+
+  <footer>
+    <a class="logo" href="https://github.com/kwijibo/Raffles">Raffles</a>, an RDF store in PHP.
+  </footer>
+
+</body>
+</html>

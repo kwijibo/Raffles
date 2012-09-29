@@ -1,0 +1,64 @@
+{
+  "ecco" : {
+    "data": "ecco.nt",
+    "prefixes": {
+      "library": "http://purl.org/library/",
+      "whois": "http://www.kanzaki.com/ns/whois#",
+      "ecco": "http://keithalexander.co.uk/ecco-tcp/ref/",
+      "places": "http://keithalexander.co.uk/ecco-tcp/place/",
+      "person" : "http://keithalexander.co.uk/ecco-tcp/person/"
+
+    },
+      "index_predicates": [
+        "rdf:type","dct:creator","dct:date","foaf:made",
+        "foaf:surname", "whois:born", "open:dateOfDeath",
+        "library:placeOfPublication","dct:publisher", "ecco:seller",
+        "ecco:printer"
+      ]
+  },
+  "pbac" : {
+    "data": "pbac.rdf",
+    "prefixes": {
+      "library": "http://purl.org/library/",
+      "pbac": "http://keithalexander.co.uk/vocabs/pbac#",
+      "whois": "http://www.kanzaki.com/ns/whois#"
+    },
+    "index_predicates": [
+      "rdf:type",
+      "pbac:lists",
+      "pbac:book",
+      "dct:creator",
+      "whois:born",
+      "open:dateOfDeath",
+      "dct:date",
+      "dct:created",
+      "foaf:made",
+      "foaf:surname",
+      "dct:format",
+      "dct:hasPart",
+      "dct:partOf",
+      "pbac:namedCollector",
+      "pbac:isNamedCollectorOn",
+      "rdfs:label",
+      "dct:title"
+    ]
+  },
+  "climb" : {
+    "data": "climb.min.ttl",
+    "prefixes" : {
+      "climb": "http://climb.dataincubator.org/vocabs/climb/",
+      "compass": "http://purl.org/net/compass#",
+      "grades": "http://climb.dataincubator.org/grades/",
+      "guidebooks": "http://climb.dataincubator.org/guidebooks/"
+    },
+    "index_predicates" : [
+      "rdf:type",
+      "geo:lat","geo:long","geo:alt","geo:lat_long",
+      "foaf:based_near",
+      "climb:grading","climb:threeStarRating", "climb:style","climb:route","climb:rock",
+      "compass:direction",
+      "open:near", "open:guide"
+    ]
+  }
+
+}
