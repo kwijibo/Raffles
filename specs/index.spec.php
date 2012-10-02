@@ -66,6 +66,33 @@ describe("Index", function(){
     expect($actual)->to_equal(array(37)); //Alexander Pope
   });
 
+  describe("Facets", function(){
+
+    it("should filtered by a set of ids to the intersection", function(){
+      $store = getRafflesStore();
+      $exns = 'http://example.com/';
+      $data = <<<_TTL_
+@base <{$exns}> .
+<A> a <Book> ; <date> "1500" .
+<C> a <Book> ; <date> "1500" .
+<B> a <Person> ; <born> "1450" .
+_TTL_;
+      $store->loadData($data);
+      $index = $store->Index;
+      $ids = $index->getPredicateObject(rdftype, $exns.'Book');
+      $filtered = $index->filterPredicateObjectIndex($ids);
+      $expected = array(
+        rdftype =>      array(   $exns.'Book' => array(0,1) ),
+        $exns.'date' => array(  '1500'=> array(0,1)   )
+      );
+        
+      expect($filtered)->to_equal($expected);
+    });
+
+  });
 
 });
+
+
+//\pecs\run();
 ?>

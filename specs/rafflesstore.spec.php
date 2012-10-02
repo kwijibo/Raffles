@@ -63,13 +63,14 @@ describe("Raffles Store", function(){
     $data = file_get_contents('specs/test.ttl');
     $loadResponse = $store->loadData($data);
     $types = $store->getFacets('http://www.w3.org/1999/02/22-rdf-syntax-ns#type');
-    $expected = array(
-      'http://xmlns.com/foaf/0.1/Organization' => 8, 
+        $expected = array(
       'http://xmlns.com/foaf/0.1/Person' => 155, 
-      'http://xmlns.com/foaf/0.1/Agent' => 4, 
+      'http://xmlns.com/foaf/0.1/Organization' => 8, 
       'http://purl.org/ontology/bibo/Book' => 7, 
+      'http://xmlns.com/foaf/0.1/Agent' => 4, 
       'http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing' => 3
     );
+
     expect($types)->to_equal($expected);
     
   });
@@ -91,10 +92,10 @@ describe("Raffles Store", function(){
     global $store;
     $results = $store->getTypes();
         $expected = array(
-      'http://xmlns.com/foaf/0.1/Organization' => 8, 
       'http://xmlns.com/foaf/0.1/Person' => 155, 
-      'http://xmlns.com/foaf/0.1/Agent' => 4, 
+      'http://xmlns.com/foaf/0.1/Organization' => 8, 
       'http://purl.org/ontology/bibo/Book' => 7, 
+      'http://xmlns.com/foaf/0.1/Agent' => 4, 
       'http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing' => 3
     );
 
@@ -125,5 +126,5 @@ describe("Raffles Store", function(){
 });
 
 
-\pecs\run();
+//\pecs\run();
 ?>

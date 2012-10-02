@@ -45,6 +45,10 @@ a.current {
   font-size: large;
 }
 
+#nav form input {
+  font-size: large;
+}
+
 footer {
   font-size: larger;
   text-align: right;
@@ -58,6 +62,48 @@ footer a.logo {
   color: #819B8B;
 }
 
+#pager {
+  border-top: 1px solid #819B8B;;
+  font-size: larger;
+  text-align: center;
+  padding: 1em;
+}
+
+#nav {
+border-left: 1px solid #819B8B;;
+padding-left: 2em;
+margin-left: 1em;
+}
+
+#facets {
+
+}
+
+#facets li span.count {
+  text-align: right;
+  display: table-cell;
+  padding-left: 2em;
+}
+
+#facets ol, #facets ol li {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+#facets li {
+  display: table-row;
+  margin-bottom: 1em;
+}
+
+#facets li a {
+  display: table-cell;
+  padding: 0.2em;
+}
+
+#facets ol li {
+  border-bottom: solid 1px #898;
+  color: green;
+}
 </style>
 <!--
 <script type="text/javascript" charset="utf-8" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
@@ -80,12 +126,16 @@ footer a.logo {
 </head>
 <body>
 <section id="nav">
-  <form action="" method="get" accept-charset="utf-8">
-    
-  <input type=text" name="_search" value="">
-  
-  <p><input type="submit" value="Search"></p>
-  </form>
+  <section id="Datasets">
+  <h4>Datasets</h4>
+  <ul>
+  <?php foreach($Config as $k => $v):?>
+  <li><a <?php  if($k==$dataset) { echo 'class="current"'; }?>href="?_dataset=<?php echo $k?>"><?php echo $k?></a></li>
+  <?php endforeach ?>
+  </ul>
+  </section>
+
+
     <?php if(isset($types)):?>
   <ul id="types">
     <?php foreach($types as $type => $count):?>
@@ -97,15 +147,30 @@ footer a.logo {
   </ul>
   <?php endif?>
 
-  <section id="Datasets">
-  <h4>Datasets</h4>
-  <ul>
-  <?php foreach($Config as $k => $v):?>
-  <li><a <?php  if($k==$dataset) { echo 'class="current"'; }?>href="?_dataset=<?php echo $k?>"><?php echo $k?></a></li>
-  <?php endforeach ?>
-  </ul>
+    <form action="" method="get" accept-charset="utf-8">
+    
+  <input type=text" name="_search" value="">
+  
+  <p><input type="submit" value="Search"></p>
+</form>
+
+
+<section id="facets">
+  <?php if(isset($facets)):
+    foreach($facets as $p => $objs):
+  ?>
+  <section class="facet">
+    <h4><?php echo local($p)?></h4>
+      <ol>
+      <?php foreach($objs as $val => $count):?>
+      <li><a href="?<?php echo curie($p).'='.curie($val)?>"><?php echo empty($val)? 'none' : local($val)?></a><span class="count"><?php echo $count ?></span></li> 
+      <?php endforeach ?>
+    </ol>
   </section>
 
+  <?php endforeach ?>
+  <?php endif ?>
+  </section>
 </section>
 
 
@@ -141,7 +206,7 @@ footer a.logo {
               <?php foreach($os as $o):?>
               <dd>
               <?php echo ($o['type']=='literal')? ($o['value']) : '<a href="?_uri='.urlencode($o['value']).'">'.local($o['value']).'</a>'?>
-              <?php if(in_array($p, $store->indexPredicates)):?> <a href="?<?php echo curie($p).'='.pathescape($o)?>">(similar)</a> <?php endif?>
+              <?php if(!is_array($store->indexPredicates) OR in_array($p, $store->indexPredicates)):?> <a href="?<?php echo curie($p).'='.pathescape($o)?>">(similar)</a> <?php endif?>
               </dd>
               <?php endforeach ?>
             <?php endforeach ?>

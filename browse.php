@@ -1,5 +1,4 @@
 <?php
-
 class AcceptHeader {
 
     function getAcceptHeader(){
@@ -82,7 +81,8 @@ class AcceptHeader {
     global $namespaces;
     if(preg_match('/([^:\/#]+)$/', $uri, $m)){
       $local = $m[1];
-      return str_replace('_', ' ', urldecode($local));
+      $local = str_replace('_', ' ', urldecode($local));
+      return ucwords(preg_replace('/([a-z])([A-Z])/','$1 $2', $local));
     }  else {
       return $uri;
     }
@@ -134,7 +134,7 @@ session_start();
   $store = new RafflesStore(__DIR__.'/'.$dataset);
   $prefixes = $Config->$dataset->prefixes;
   foreach($prefixes as $prefix => $ns){
-    $store->addNamespacePrefix($prefix, $ns);
+    $store->addPrefix($prefix, $ns);
   }
   
   $prefixes = $store->prefixes;
@@ -145,13 +145,20 @@ session_start();
   foreach($Config->$dataset->index_predicates as $indexCurie){
       $store->indexPredicates[]=curie_to_uri($indexCurie);
   }
+  if(empty($Config->$dataset->index_predicates)){
+    $store->indexPredicates=false;
+  }
 
   $title = ucwords($dataset);
  
   if(isset($_GET['_reload'])){
+    set_time_limit(0);
     $store->reset();
     $data_file = $Config->$dataset->data;
-    $store->loadData(file_get_contents($data_file));
+    if(!is_file($data_file)){
+      throw new Exception("$data_file could not be found");
+    }
+    $store->loadDataFile($data_file);
   }
 
   $types = $store->getTypes();
@@ -166,6 +173,7 @@ session_start();
     $value = curie($value);
     $title = local($value);
     if($path=='rdf:type'){ $title = plural($title); }
+    else { $title = local($path).': '.$title; }
     $data = $store->query($query, 10, $offset);
 
   } else if(isset($_GET['_search']) && $search = $_GET['_search']){
@@ -190,6 +198,7 @@ session_start();
     }
     $page =1;
   }
+$facets = $store->getFacetsForLastQuery();
 
 $acceptTypes = AcceptHeader::getAcceptTypes();
 foreach($acceptTypes as $mimetype){

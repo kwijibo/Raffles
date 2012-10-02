@@ -36,6 +36,30 @@ class DescriptionStore {
     return $uris_to_ids;
   }
 
+    function replaceDescriptions($ids_to_descriptions){
+    $tmp = tempnam('/tmp','Raffles_');
+    $temp = fopen($tmp, 'w');
+    $fh = fopen($this->filename, 'r');
+    rewind($fh);
+    $lock = flock($fh, LOCK_SH|LOCK_NB);
+    if(!$lock){
+      throw new Exception("Couldn't get lock on file: $this->filename reading descriptions");
+    }
+    $i = 0;
+    while($line = fgets($fh)){
+      if(isset($ids_to_descriptions[$i])){
+        $line = json_encode($ids_to_descriptions[$i])."\n";
+      }
+      fwrite($temp, $line);
+      $i++;
+    }
+    flock($fh, LOCK_UN);
+    fclose($fh);
+    unlink($this->filename);
+    rename($tmp,$this->filename);
+  }
+
+
   function getDescriptionsByIDs($numbers){
     $numbers = (array) $numbers;
     $descriptions = array();

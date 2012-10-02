@@ -6,80 +6,21 @@ class Index {
   var $subjects = '';
   var $_subjects = array();
   var $po = array();
-  var $related = array(); //s -> [o1,o2]
-  var $_related = array(); //s -> [o1,o2]
   var $geo = array();
   var $object_id_counter = 'A';
 
   function __construct(){
   }
 
-  function addSubjectRelation($s_uri,$r_uri){
-    if($s_uri!=$r_uri) $this->_related[$s_uri][]=$r_uri;
-  }
 
-  function indexRelated($s, $o){ 
-      $s_related = $this->getLinkersTo($s);
-      $o_related = $this->getLinkersTo($o);
-      $intersection = array_intersect($s_related, $o_related);
-      
-      foreach($o_related as $or){
-        $this->addSubjectRelation($s, $or);
-        $this->addSubjectRelation($or, $s);
-      }
-      foreach($s_related as $sr){
-        $this->addSubjectRelation($o, $sr);
-        $this->addSubjectRelation($sr, $o);
-      }
-
-      // if(empty($intersection)){
-      //   foreach($s_related as $sr){
-      //     if(empty($this->_related[$sr])) $this->_related[$sr] = $o_related;
-      //     else{
-      //       $this->_related[$sr] = array_merge($this->_related[$sr], $o_related);
-      //       $this->_related[$sr][]=$o;
-      //       $this->_related[$sr] = array_unique($this->_related[$sr]);
-      //     }
-      //   }
-      //   foreach($o_related as $or){
-      //     if(empty($this->_related[$or])) $this->_related[$or] = $s_related;
-      //     else{
-      //       $this->_related[$or] = array_merge($this->_related[$or], $s_related);
-      //       $this->_related[$or][]=$s;
-      //       if(isset($this->_related[$s])) {
-      //         $this->_related[$or] = array_merge($this->_related[$or] ,$this->_related[$s]  );
-      //       }
-      //       $this->_related[$or] = array_unique($this->_related[$or]);
-      //     }
-      //   }
-
-      //}
-
-      $this->addSubjectRelation($s, $o);
-      $this->addSubjectRelation($o, $s);
-
-
-      $this->_related[$s] = array_unique($this->_related[$s]);
-      $this->_related[$o] = array_unique($this->_related[$o]);
-
-  }
-
-  function getRelated($s_id){
-    return $this->related[$s_id];
-  }
-  function getLinkersTo($uri){
-    $linkers_to_uri = array();
-    foreach($this->_related as $s_uri => $r_uris){
-      if(is_array($r_uris) AND in_array($uri, $r_uris)) $linkers_to_uri[] = $s_uri;
-    }
-    return isset($this->_related[$uri])? array_merge( $this->_related[$uri], $linkers_to_uri) : $linkers_to_uri;
-  }
-
-  function subjectIsIndexed($s){
+ function subjectIsIndexed($s){
     return $this->getSubject($s)? true : false;
   }
 
-  function getOrCreateSubject($s){
+  /* 
+   * gets term ID or creates one if none exists
+   */
+  function getTermID($s){
     $id = $this->getSubject($s);
     if($id===null) {
       $id = $this->object_id_counter++;
@@ -92,24 +33,6 @@ class Index {
     } else {
       return $id;
     }
-  }
-
-  function convertRelatedUrisToIds(){
-    $related_as_ids = array();
-    foreach($this->_related as $s_uri => $r_uris){
-        $s_id = $this->getOrCreateSubject($s_uri);
-        foreach($r_uris as $r_uri){
-          $r_id = $this->getOrCreateSubject($r_uri);
-          $related_as_ids[$s_id][]= $r_id;
-          $r_uri2 = $this->getSubjectByID($r_id);
-          $r_uri3 = $this->getSubjectByID($r_id);
-          if($r_uri2!=$r_uri){
-           var_dump(array($r_uri, $r_id, $r_uri2, $r_uri3), $this->related);
-          }
-        }
-    }
-//    $this->_related = array();
-    $this->related = $related_as_ids;
   }
 
   function reloadIndex($p=false){
@@ -244,6 +167,7 @@ class Index {
       foreach($linenumbers as $linenumber){
         if(!in_array($linenumber, $existingLineNumbers)){ 
           array_push( $this->po[$p][$o], $linenumber );
+          sort($this->po[$p][$o]);
         }
     }
     return $this->po[$p][$o];
@@ -302,6 +226,27 @@ class Index {
     return $this->po[$p];
   }
 
+  function filterPredicateObjectIndex($ids){
+    $filteredPo = array();
+    $idHash = array_flip($ids);
+    $this->reloadIndex();
+    foreach($this->po as $p => $objs){
+      foreach($objs as $o => $sIDs){
+        if(count($sIDs) > 1){
+          $intersect = array();
+          foreach($sIDs as $sID){
+            if(isset($idHash[$sID])) $intersect[]=$sID;
+          }
+          if(!empty($intersect)){
+            $o = strval($o);
+            $filteredPo[$p][$o] = $intersect;
+          }
+        }
+      }
+    }
+    return $filteredPo;
+  }
+
   function searchObject( $o, $p=false){
     $all_ids = array();
     if(empty($p)){
@@ -347,6 +292,8 @@ class Index {
     }
     return $filter->ids();
   }
+
+  
 }
 
 ?>

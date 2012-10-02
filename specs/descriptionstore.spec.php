@@ -53,6 +53,19 @@ describe("DescriptionStore", function(){
     expect($actual)->to_equal($description); 
   });
 
+  it("should let you replace descriptions", function(){
+    $store = getStore();
+    $ex = 'http://example.com/';
+    $description = array($ex.'id' => array($ex.'name' => array("James")));
+    $lineNumbers = $store->insertDescriptions($description);
+    $id = $lineNumbers[$ex.'id'];
+    $newdescription = array($ex.'id' => array($ex.'name' => array("Jamie")));
+    $replacement = array( $id => $newdescription);
+    $store->replaceDescriptions($replacement);
+    $actual = $store->getDescriptionsByIDs(array($id));
+    expect($actual)->to_equal($newdescription);
+
+  });
 
 });
 

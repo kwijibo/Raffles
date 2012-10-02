@@ -1,4 +1,12 @@
 {
+  "openflights": {
+    "data":"openflights.nt",
+    "prefixes":{
+    "openflights":"http://data.kasabi.com/dataset/openflights-airlines/terms/"
+    },
+    "index_predicates": []
+    
+  },
   "ecco" : {
     "data": "ecco.nt",
     "prefixes": {
@@ -40,7 +48,8 @@
       "pbac:namedCollector",
       "pbac:isNamedCollectorOn",
       "rdfs:label",
-      "dct:title"
+      "dct:title",
+      "owl:sameAs"
     ]
   },
   "climb" : {
