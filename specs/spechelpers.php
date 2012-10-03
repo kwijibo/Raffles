@@ -59,7 +59,7 @@ function getFilter(){
 }
 
 function getStore(){
-  $store = new DescriptionStore('testdata/descriptions');
+  $store = new DescriptionStore(__DIR__.DIRECTORY_SEPARATOR.'testdata'.DIRECTORY_SEPARATOR.'descriptions');
   $store->reset();
   return $store;
 }
@@ -86,7 +86,7 @@ function getTriplePatternArray(){
 }
 
 function getRafflesStore($load=false){
-  $dirname = 'testdata';
+  $dirname = __DIR__.DIRECTORY_SEPARATOR.'testdata';
   $store = new RafflesStore($dirname);
   $store->indexPredicates = false;
   $store->reset();

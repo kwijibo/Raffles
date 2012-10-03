@@ -1,9 +1,10 @@
 <?php
 
+require_once 'specs/spechelpers.php';
+
 require_once 'lib/descriptionstore.php';
 require_once 'vendor/autoload.php';
 
-require_once 'specs/spechelpers.php';
 describe("DescriptionStore", function(){
   
   it("should return zero for the size of an empty store", function(){

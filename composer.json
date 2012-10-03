@@ -1,9 +1,9 @@
 {
-    "name": "keithalexander/Raffles",
-    "description": "simple filebased rdf store",
+    "name": "kwijibo/Raffles",
+    "description": "An embeddable RDF store supporting simple querying, searching, geo search and faceted browsing",
     "require": {
         "nharbour/pecs": "dev-master",
-        "njh/easyrdf": "dev-master"
+        "kwijibo/arc2": "dev-master"
     },
     "authors": [
         {

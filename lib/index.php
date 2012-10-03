@@ -7,7 +7,7 @@ class Index {
   var $_subjects = array();
   var $po = array();
   var $geo = array();
-  var $object_id_counter = 'A';
+  var $object_id_counter = 'a';
 
   function __construct(){
   }

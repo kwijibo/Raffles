@@ -87,5 +87,6 @@ Results are returned as a PHP associative array following the [RDF JSON](https:/
 
 ### License
 
+This code is Public Domain.
 Use, copy, or change it freely, at your own risk.
 

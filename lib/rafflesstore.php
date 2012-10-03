@@ -1,15 +1,19 @@
 <?php
-require_once 'ldpath.php';
-require_once 'index.php';
-require_once 'hierarchicalindex.php';
-require_once 'descriptionstore.php';
-require_once 'streamingparsers.php';
+require 'ldpath.php';
+require 'index.php';
+require 'hierarchicalindex.php';
+require 'descriptionstore.php';
+require 'utils.php';
 
 class RafflesStore {
   var $Index;
   var $HierarchicalIndex;
   var $DescriptionStore;
   var $dirname;
+  var $dirname_absolute;
+  var $index_file_name;
+  var $descriptions_file_name;
+  var $hierarchical_index_file_name;
   var $LDPath;
   var $_lastSet=array();
   var $prefixes = array(
@@ -30,22 +34,28 @@ class RafflesStore {
 
   function __construct($dirname){
     $this->dirname = $dirname;
-    if(!is_dir($this->dirname)){
-      if(!mkdir($this->dirname)){
-        throw new Exception("Couldn't create directory $this->dirname");
-      }
+    $this->dirname_absolute=realpath($this->dirname);
+    if(!$this->dirname_absolute) $this->dirname_absolute = $dirname;
+    $this->descriptions_file_name = $this->dirname_absolute . DIRECTORY_SEPARATOR . 'descriptions';
+    if(!is_dir($this->dirname_absolute)){
+      mkdir($this->dirname_absolute);
     }
-    $index_file = $this->dirname . DIRECTORY_SEPARATOR .'index';
+    $this->index_file_name = $this->dirname_absolute . DIRECTORY_SEPARATOR .'index';
+    $this->hierarchical_index_file_name = $this->dirname_absolute . DIRECTORY_SEPARATOR .'hierarchical_index';
     $this->Index = new Index();
-    if(file_exists($index_file)){
-      $index = unserialize(file_get_contents($index_file));
-      if(is_object($index)){
-        $this->Index = $index;
-      }
-    }
-    $this->DescriptionStore = new DescriptionStore($dirname . DIRECTORY_SEPARATOR . 'descriptions');
+    $this->DescriptionStore = new DescriptionStore($this->descriptions_file_name);
     $this->LDPath = new LDPath($this->prefixes);
     $this->HierarchicalIndex = new HierarchicalIndex($this->Index);
+    $this->loadIndex('Index',$this->index_file_name);
+  }
+
+  function loadIndex($Name, $index_location){
+    if(file_exists($index_location)){
+      $index = unserialize(file_get_contents($index_location));
+      if(is_object($index)){
+        $this->$Name = $index;
+      }
+    }
   }
 
   function addPrefix($prefix, $ns){
@@ -68,7 +78,8 @@ class RafflesStore {
     $alreadyStoredDescriptions=array();
     $newDescriptions = array();
     foreach($descriptions as $s => $props){
-      if($id = $this->Index->getSubject($s)){
+      $id = $this->Index->getSubject($s);
+      if($id > 0 OR $id ===0){
         $alreadyStoredDescriptions[$s]=$id;
       } else {
         $newDescriptions[$s] = $props;
@@ -98,7 +109,6 @@ class RafflesStore {
       } else {
         throw new Exception($s.' somehow not indexed');
       }
-      $lineNumber = $lineNumbers[$s];
       $this->Index->addSubject($s, $lineNumber);
       $count['s']++;
 
@@ -113,6 +123,7 @@ class RafflesStore {
         $lat_long = trim($lat_long);
         $this->Index->setUriLatLong($s, $lat_long); 
         $this->Index->addPredicateObject(Geo_NS.'lat_long', $lat_long, $lineNumber);
+        unset($lat_long);
       }
 
       foreach($props as $p => $objs){
@@ -146,12 +157,10 @@ class RafflesStore {
     $parser = ARC2::getRDFParser();
     $parser->parse('',$data);
     return $this->load($parser->getSimpleIndex(0));
-    $graph = new EasyRdf_Graph();
-    $graph->parse($data);
-    return $this->load($graph->toArray());
   }
 
   function loadDataFile($filename){
+    require_once 'streamingparsers.php';
     require_once 'streamingparsers.php';
     $extension = array_pop(explode('.',$filename));
     switch($extension){
@@ -173,11 +182,13 @@ class RafflesStore {
     $parser->parse($filename);
     $leftovers = $parser->getSimpleIndex(0);
     $this->load($leftovers);
+    $this->createHierarchicalIndex();
   }
 
   function createHierarchicalIndex(){
     $ids = $this->Index->getAll();
-    $batches = array_chunk($ids, 50);
+    $this->HierarchicalIndex = new HierarchicalIndex($this->Index);
+    $batches = array_chunk($ids, 100);
     foreach($batches as $batch){
       $descriptions = $this->describeIDs($batch);
       foreach($descriptions as $uri => $props){
@@ -192,8 +203,13 @@ class RafflesStore {
     }
   }
 
-  function relatedUris($uri){
-    return $this->HierarchicalIndex->getRelatedByURI($uri);
+  function related($uri){
+    $this->loadIndex('HierarchicalIndex',$this->hierarchical_index_file_name);
+    $this->HierarchicalIndex->Index = &$this->Index;
+    $id = $this->Index->getSubject($uri);
+    $ids = $this->HierarchicalIndex->getRelatedIDs($id);
+    $this->_lastSet=$ids;
+    return $this->describeIDs($ids);
   }
   
   function getFacets($p){
@@ -216,8 +232,13 @@ class RafflesStore {
   }
 
   function query($path, $limit=50,$offset=0){
-    $triples = $this->LDPath->parse($path);
-    $ids = $this->Index->query($triples);
+    $queries = explode('&', $path);
+    $ids = array();
+    foreach($queries as $no => $query){
+      $triples = $this->LDPath->parse($query);
+      if($no===0) $ids = $this->Index->query($triples);
+      else $ids = array_intersect($ids,$this->Index->query($triples));
+    }
     $this->_lastSet = $ids;
     return $this->DescriptionStore->getDescriptionsByIDs(array_slice((array)$ids, $offset, $limit));
   }
@@ -256,18 +277,24 @@ class RafflesStore {
   }
 
   function __destruct() {
-    $index_file_name = $this->dirname . DIRECTORY_SEPARATOR .'index';
-    $descriptions_file_name = $this->dirname . DIRECTORY_SEPARATOR .'descriptions';
-    if(!is_file($index_file_name) OR is_file($descriptions_file_name) AND filemtime($descriptions_file_name) > filemtime($index_file_name) ){
+    $this->saveIndexesToFile();
+  }
+
+  function saveIndexesToFile(){
+    if(!is_file($this->index_file_name) OR is_file($this->descriptions_file_name) AND filemtime($this->descriptions_file_name) > filemtime($this->index_file_name) ){
       foreach($this->Index->po as $p => $o_ids){
         if(is_array($o_ids)){
-          $filename = $this->dirname . DIRECTORY_SEPARATOR . 'index_po_' .urlencode($p);
-          file_put_contents($filename, serialize($o_ids), LOCK_EX);
-          $this->Index->po[$p] = $filename;
+          $relative_filename = $this->dirname . DIRECTORY_SEPARATOR . 'index_po_' .urlencode($p);
+          $absolute_filename = $this->dirname_absolute . DIRECTORY_SEPARATOR . 'index_po_' .urlencode($p);
+          file_put_contents($absolute_filename, serialize($o_ids), LOCK_EX);
+          $this->Index->po[$p] = $relative_filename;
         }
       }
-      file_put_contents($index_file_name, serialize($this->Index), LOCK_EX);
+      file_put_contents($this->index_file_name, serialize($this->Index), LOCK_EX);
+      $this->HierarchicalIndex->Index=null;
+      file_put_contents($this->hierarchical_index_file_name, serialize($this->HierarchicalIndex), LOCK_EX);
     }
+
   }
 
   function reset(){

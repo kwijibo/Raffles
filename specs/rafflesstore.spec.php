@@ -58,6 +58,48 @@ describe("Raffles Store", function(){
     expect(array_keys($description))->to_equal(array('http://example.org/ecco-tcp/text/CW3305901409'));
   });
 
+  describe("Loading descriptions of things already described in the store", function(){
+    it("should augment the existing descriptions", function(){
+    $store = getRafflesStore();
+    $input1 =       
+      array(
+        ex.'id/1' => array(
+          ex.'name' => array(
+            array('value' => "Jim")
+          ),
+        ),
+      );
+
+     $input2 =       
+      array(
+        ex.'id/1' => array(
+          ex.'nickname' => array(
+            array('value' => "Jimmy")
+          ),
+        ),
+      );
+
+     $input3 =       
+      array(
+        ex.'id/1' => array(
+          ex.'age' => array(
+            array('value' => "36")
+          ),
+        ),
+      );
+
+
+
+    $response = $store->load($input1);
+    $response = $store->load($input2);
+    $response = $store->load($input3);
+    $description = $store->get(ex.'id/1');
+    $merge = array_merge($input3[ex.'id/1'], $input2[ex.'id/1'], $input1[ex.'id/1']);
+    expect($description[ex.'id/1'])->to_equal($merge);
+
+    });
+  });
+
   it("should let you get facets for a property", function(){
     $store = getRafflesStore();
     $data = file_get_contents('specs/test.ttl');

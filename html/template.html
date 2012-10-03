@@ -50,15 +50,20 @@ a.current {
 }
 
 footer {
-  font-size: larger;
-  text-align: right;
   color: #444;
   clear:both;
-}
+  padding: 1em;
+ }
 
+#brand>* {
+  display: block;
+ font-weight: bold;
+ text-align: right;
+
+}
 footer a.logo {
-  font-size: 200%;
-  font-family: 'Ranchers', cursive;
+  font-size: 230%;
+  font-family: 'Ranchers', sans-serif;
   color: #819B8B;
 }
 
@@ -140,7 +145,7 @@ margin-left: 1em;
   <ul id="types">
     <?php foreach($types as $type => $count):?>
     <li>
-      <a href="?rdf:type=<?php echo curie($type)?>"><?php echo local($type) ?></a>
+      <a href="?rdf:type=<?php echo urlencode(curie($type))?>"><?php echo local($type) ?></a>
       (<?php echo $count?>)
      </li>
     <?php endforeach ?>
@@ -163,7 +168,7 @@ margin-left: 1em;
     <h4><?php echo local($p)?></h4>
       <ol>
       <?php foreach($objs as $val => $count):?>
-      <li><a href="?<?php echo curie($p).'='.curie($val)?>"><?php echo empty($val)? 'none' : local($val)?></a><span class="count"><?php echo $count ?></span></li> 
+      <li><a href="?<?php echo curie($p).'='.urlencode(curie($val)).'&amp;'.getQuery()?>"><?php echo empty($val)? 'none' : local($val)?></a><span class="count"><?php echo $count ?></span></li> 
       <?php endforeach ?>
     </ol>
   </section>
@@ -225,7 +230,10 @@ margin-left: 1em;
   <?php endif?>
 
   <footer>
-    <a class="logo" href="https://github.com/kwijibo/Raffles">Raffles</a>, an RDF store in PHP.
+  <div id="brand">
+    <a class="logo" href="https://github.com/kwijibo/Raffles">Raffles</a>
+    <span class="strapline">an RDF store in PHP</span>
+  </div>
   </footer>
 
 </body>

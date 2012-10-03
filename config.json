@@ -26,6 +26,7 @@
   },
   "pbac" : {
     "data": "pbac.rdf",
+    "urispace": "http://keithalexander.co.uk/pbac/",
     "prefixes": {
       "library": "http://purl.org/library/",
       "pbac": "http://keithalexander.co.uk/vocabs/pbac#",
@@ -54,6 +55,7 @@
   },
   "climb" : {
     "data": "climb.min.ttl",
+    "urispace": "http://climb.dataincubator.org/",
     "prefixes" : {
       "climb": "http://climb.dataincubator.org/vocabs/climb/",
       "compass": "http://purl.org/net/compass#",

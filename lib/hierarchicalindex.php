@@ -1,7 +1,7 @@
 <?php
 class HierarchicalIndex {
 
-  var $index=array();
+  var $paths_from=array();
   var $links_to = array();
   var $Index;
 
@@ -15,104 +15,111 @@ class HierarchicalIndex {
       $this->Index->getTermID($p_uri),
       $this->Index->getTermID($o_uri),
     );
-    $this->indexTriple($s,$p,$o);
+    $this->indexPath($s,$p,$o);
   }
 
-  //return false if
-  //  shorter path to object exists
-  //  shorter path fails
-  //fail path if
-  //  s == o
-  //  linker_to_s == o
-  //
-  //add s[p][o]
-  //linker_to_s[path_to_s+p][o]
 
-    function indexTriple($s, $path, $o){
+  function setupIndexes($s, $path, $o){
+      if(!isset($this->paths_from[$s])){
+        $this->paths_from[$s] = array();
+      }
+      if(!isset($this->links_to[$s])){
+        $this->links_to[$s] = array();
+      }
+      if(!isset($this->links_to[$o])){
+        $this->links_to[$o] = array();
+      }
+      if(!isset($this->paths_from[$s][$path])){
+        $this->paths_from[$s][$path] = array();
+      }  
+  }
 
+  function undoPath($s,$path,$o){
+    if(!is_array($this->paths_from[$s][$path])) return false;
+    foreach($this->paths_from[$s][$path] as $i => $existing_value){
+        $n = array_search($s, $this->links_to[$existing_value]);
+        unset($this->links_to[$existing_value][$n]); 
+    }
+    $this->paths_from[$s][$path]='!';
+  }
+
+  function indexPath($s, $path, $o){
+  
+    $this->setupIndexes($s,$path,$o);
+
+    if($this->paths_from[$s][$path]!='!' AND in_array($o, $this->paths_from[$s][$path])) return true;
+
+    if($s==$o){
+      $this->undoPath($s,$path,$o); //undo shorter paths
+      foreach($this->paths_from[$s] as $existing_path => $vals){
+        if(strpos($existing_path.'|',$path.'|')===0){
+          $this->undoPath($s,$existing_path, null);
+        }
+      }
       return false;
-      if(!isset($this->_related[$s_uri])){
-        $this->_related[$s_uri] = array();
-      }
-      if(!isset($this->_related_from[$s_uri])){
-        $this->_related_from[$s_uri] = array();
-      }
-      if(!isset($this->_related_from[$r_uri])){
-        $this->_related_from[$r_uri] = array();
-      }
-      if(!isset($this->_related[$s_uri][$p_path])){
-        $this->_related[$s_uri][$p_path] = array();
-      }
-
-    foreach($this->_related[$s_uri] as $shorter_path => $objs){
-      if($objs=='END' AND strpos($p_path, $shorter_path)===0){
-        echo "\n\n failed: ";
-        print_r(array($s_uri, $p_path, $r_uri));
-        echo "\n because of $shorter_path";
+    }
+    foreach($this->paths_from[$s] as $existing_path => $values){
+      if(strpos($path.'|',$existing_path.'|')===0 AND $values==='!'){
         return false;
-      } else if(strpos($p_path, $shorter_path)!==false AND (is_array($objs) AND in_array($r_uri, $objs))){
-        echo "\nfailed $p_path because shorter path $shorter_path exists\n";
-        return false; 
+      } else if(is_array($values) AND in_array($o, $values)) {
+        $this->undoPath($s,$path,$o);
+        return false;
       }
     }
 
-    if($this->_related[$s_uri][$p_path]=='END'){
-      
-      return false;
+    $this->paths_from[$s][$path][]=$o;
+    $this->links_to[$o][]=$s;
 
-    } else if($s_uri==$r_uri){
-      foreach($this->_related[$s_uri][$p_path] as $prev_r_uri){
-        $n = array_search($s_uri, $this->_related_from[$prev_r_uri]);
-        unset($this->_related_from[$prev_r_uri][$n]); 
+    foreach($this->links_to[$s] as $linker_to_s){
+      foreach($this->paths_from[$linker_to_s] as $path_to => $values){
+        if($values!=='!' AND in_array($s,$values)){
+          $path_to_o = $path_to.'|'.$path;
+          $this->indexPath($linker_to_s, $path_to_o, $o);
+        }
       }
-      print_r(array("already related", $s_uri, $r_uri));
-      $this->_related[$s_uri][$p_path] = 'END';
-      return false;
-    } else {
-      $this->_related[$s_uri][$p_path][]=$r_uri;
-      if(!in_array($s_uri, $this->_related_from[$r_uri])){
-        $this->_related_from[$r_uri][]=$s_uri;
-      }
-     $links_to_s = $this->_related_from[$s_uri];
-     foreach($links_to_s as $s_rf_uri){
-       $linker_paths = $this->_related[$s_rf_uri];
-       if(!in_array($s_rf_uri, $this->_related_from[$r_uri])){
-         $this->_related_from[$r_uri][]=$s_rf_uri;
-       }
-        foreach($linker_paths as $rf_path => $rf_obs){
-          if($rf_obs!='END' AND in_array($s_uri, $rf_obs)){
-            $deeper_path = $rf_path.'|'.$p_path;
-            if( 
-              !isset($this->_related[$s_rf_uri][$deeper_path]) 
-              OR ($this->_related[$s_rf_uri][$deeper_path]!='END'
-              AND !in_array($s_uri, $this->_related[$s_rf_uri][$deeper_path])
-              )
-            ){
-              $this->addSubjectUriRelation($s_rf_uri, $deeper_path, $r_uri);
-            }
-          }
+    }
+
+    if(!isset($this->paths_from[$o])) return;
+
+    foreach($this->paths_from[$o] as $path_from_o => $o_os){
+      if($o_os!=='!'){
+        foreach($o_os as $os_o ){
+          $path_to_os_o = $path.'|'.$path_from_o;
+          $this->indexPath($s, $path_to_os_o, $os_o);
         }
       }
     }
   }
 
-  function getRelatedByURI($uri){
-    return array();
-    if(!empty($this->_related) && isset($this->_related[$uri])){
-      $rel = array();
-      foreach(array_values($this->_related[$uri]) as $set){ 
-        if(is_array($set)) array_splice($rel,0,0,$set);
-      }
-      return $rel; 
-    } else {
-      $id = $this->getSubject($uri);
-      if($id){
-        return $this->getRelated($id);
-      } else {
-        return array();
+  function getRelatedIDs($id){
+    $related = array();
+    if(isset($this->paths_from[$id])){
+      foreach($this->paths_from[$id] as $path => $vals){
+        if(is_array($vals) AND !empty($vals)){
+          $related = array_merge($related, $vals);
+        }
       }
     }
+   // $related = array_merge($related, $this->links_to[$id]);
+    return $related;   
+
   }
+
+  function getRelatedByURI($uri){
+    $id = $this->Index->getSubject($uri);
+    $related = array();
+    if($id AND isset($this->paths_from[$id])){
+      foreach($this->paths_from[$id] as $path => $vals){
+        if(is_array($vals)){
+          foreach($vals as $val_id){
+            $related[]=$this->Index->getSubjectByID($val_id);
+          }
+        }
+      }
+    }
+    return $related;   
+  }
+  
 
 }
 

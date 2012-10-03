@@ -5,6 +5,9 @@ class DescriptionStore {
   var $File, $filename;
   function __construct($filename){
     $this->filename = $filename;
+    if(!is_file($filename)){
+      touch($filename);
+    }
   }
 
   function size(){
@@ -69,7 +72,7 @@ class DescriptionStore {
     rewind($file);
     $lastLine = max($numbers);
     while($line=fgets($file) AND $i <= $lastLine){
-      if(in_array($i, $numbers)){
+      if(in_array((string)$i, $numbers)){
         $descriptions = array_merge($descriptions, json_decode($line, 1));
       }
       $i++;
