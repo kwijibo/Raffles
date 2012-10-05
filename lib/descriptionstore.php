@@ -69,16 +69,22 @@ class DescriptionStore {
     if(empty($numbers)) return $descriptions;
     $i = 0;
     $file = fopen($this->filename, 'r');
+    flock($file,LOCK_SH);
     rewind($file);
     $lastLine = max($numbers);
     while($line=fgets($file) AND $i <= $lastLine){
       if(in_array((string)$i, $numbers)){
-        $descriptions = array_merge($descriptions, json_decode($line, 1));
+        $descriptions[$i] =  json_decode($line, 1);
       }
       $i++;
     }
+    flock($file,LOCK_UN);
     fclose($file);
-    return $descriptions;
+    $sorted= array();
+    foreach($numbers as $num){
+      $sorted = array_merge($sorted, $descriptions[$num]);
+    }
+    return $sorted;
   }
 
   function reset(){

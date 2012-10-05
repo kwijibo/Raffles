@@ -1,4 +1,5 @@
 <?php
+/*
 require_once 'specs/spechelpers.php';
 require_once 'lib/index.php';
 require_once 'lib/hierarchicalindex.php';
@@ -175,5 +176,8 @@ _TTL_;
  
 
 });
-\pecs\run();
+//\pecs\run();
+//
+//
+*/
 ?>

@@ -247,22 +247,42 @@ class Index {
     return $filteredPo;
   }
 
-  function searchObject( $o, $p=false){
+  /* searches for text value $text in triple objects */
+  function searchObject($text,$p=false){
+    return $this->compareObject($text,$p,'stripos');
+  }
+  
+
+  /* 
+   * compares input $o to other 
+   * values (optionally of $p) 
+   * by comparison function 
+   *
+   * */
+  function compareObject( $o, $p=false, $compare_function){
     $all_ids = array();
     if(empty($p)){
       $this->reloadIndex();
       $p = array_keys($this->po);
     }
     $p = (array)$p;
+    $high=time();
     foreach($p as $no => $property){
       $this->reloadIndex($property);
       foreach($this->po[$property] as $object => $ids){
-        if(stripos($object,$o)!==false){
-          $all_ids = array_merge($all_ids, $ids);
-        }
+        $pos = call_user_func($compare_function, $object,$o);
+        if($pos!==false){
+          //if(strpos($object,'http')===0) $pos = $high++;
+          print_r($object,$o);
+          if(!isset($all_ids[$pos]))$all_ids[$pos]=array();
+          $all_ids[$pos] = array_merge($all_ids[$pos], $ids);
+        } 
       }
     }
-    return $all_ids;
+    ksort($all_ids, SORT_NUMERIC);
+    $sorted = array();
+    foreach($all_ids as $pos => $ids) $sorted = array_merge($sorted, $ids);
+    return $sorted;
   }
 
 
@@ -285,7 +305,30 @@ class Index {
     $s = ($triple['s']['type']=='variable')? null : $triple['s']['value'];
     $p = ($triple['p']['type']=='variable')? null : $triple['p']['value'];
     $o = ($triple['o']['type']=='variable')? null : $triple['o']['value'];
-    $filter = $filter->filter($s,$p, $o);
+    if($triple['o']['type']=='filter'){
+      switch($triple['o']['filter']){
+      case '_search':
+        $filter->ids=$this->searchObject($o,$p);
+          break;
+      case '_distance':
+        $latlong = $this->getUriLatLong($o);
+        $filter->ids=$this->getIDsByDistance($lat_long);
+        break;
+      case '_min':
+        $filter->ids=$this->compareObject($o,$p, function($in,$o){ 
+          return intval($in)>=intval($o)? 1 : false;
+        });
+        break;
+      case '_max':
+        $filter->ids=$this->compareObject($o,$p, function($in,$o){ 
+          return intval($in)<=intval($o);
+        });
+        break;
+
+      }
+    } else {
+      $filter = $filter->filter($s,$p, $o);
+    }
     foreach($triples as $triple){
       $p = ($triple['p']['type']=='variable')? null : $triple['p']['value'];
       $filter = $filter->traverseOut($p);

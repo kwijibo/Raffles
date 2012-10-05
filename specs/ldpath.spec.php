@@ -42,10 +42,55 @@ describe("LDPath", function(){
   });
 
   it("should parse CURIEs into URIs",function(){
-  
+      $ldpath = new LDPath(array('foo'=>ex));
+      $actual = $ldpath->curie_to_uri('foo:bar');
+      expect($actual)->to_equal(ex.'bar');
   });
   it("should treat non-CURIE object-position as literals", function(){
+    $path = new LDPath();
+    $actual = $path->parse("foaf:name=Arthur"); 
+    $expected = array(
+      array(
+        's' => array('type' => 'variable', 'value' => 'a'), 
+        'p' => array('type' => 'uri', 'value' => 'http://xmlns.com/foaf/0.1/name'), 
+        'o' => array('type' => 'literal', 'value' => 'Arthur')
+      )
+    );
+    expect($actual)->to_equal($expected);
+
+  });
+  describe("foaf:name;_search=foo ", function(){
+    it("should have an object of type 'filter' and filter_type 'search' ", function(){
+    
+    $path = new LDPath();
+    $actual = $path->parse("foaf:name;_search=foo");
+    $expected = array(
+      array(
+        's' => array('type' => 'variable', 'value' => 'a'), 
+        'p' => array('type' => 'uri', 'value' => 'http://xmlns.com/foaf/0.1/name'), 
+        'o' => array('type' => 'filter', 'value' => 'foo', 'filter' => '_search')
+      )
+    );
+    expect($actual)->to_equal($expected);
+
+    });
+  }); 
   
+  describe("_search=foo ", function(){
+    it("should have a predicate of type 'variable' and an object of type 'filter' and filter_type 'search' ", function(){
+    
+    $path = new LDPath();
+    $actual = $path->parse("_search=foo");
+    $expected = array(
+      array(
+        's' => array('type' => 'variable', 'value' => 'b'), 
+        'p' => array('type' => 'variable', 'value' => 'a'), 
+        'o' => array('type' => 'filter', 'value' => 'foo', 'filter' => '_search')
+      )
+    );
+    expect($actual)->to_equal($expected);
+
+    });
   });
 });
 //\pecs\run();

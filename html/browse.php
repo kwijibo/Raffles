@@ -4,6 +4,15 @@ require '../lib/rafflesstore.php';
 require '../vendor/autoload.php';
 require 'helpers.php';
 
+$etag = get_etag();
+$if_none = get_if_none_match();
+if($etag==$if_none){
+  header("HTTP/1.1 304 Not Modified");
+  exit;
+}
+session_cache_limiter("public");
+header("Cache-Control:public");
+header("Etag: {$etag}");
 
 $Config = json_decode(file_get_contents('config.json'));
 
@@ -46,13 +55,15 @@ foreach($prefixes as $prefix => $ns){
     }
     $store->loadDataFile($data_file);
 //       $store->loadData(file_get_contents($data_file));
+    //           $this->createHierarchicalIndex();
+
   }
 
   $types = $store->getTypes();
   $query = getQuery();
   $page = 1;
   $offset = (isset($_GET['_page']) && $page = $_GET['_page'])? ($_GET['_page']-1)*10 : 0;
-
+  $showMap=false;
 
   if(!empty($query)){
       //query based title
@@ -64,16 +75,17 @@ foreach($prefixes as $prefix => $ns){
     $data = $store->query($query, 10, $offset);
 
   } else if(isset($_GET['_search']) && $search = $_GET['_search']){
-    $data = $store->search($search);
+    $data = $store->search($search,null,10,$offset);
 
   } else if(isset($_GET['_near'])) {
-    $distance = (isset($_GET['_near_distance']))? (float) $_GET['_near_distance'] : 20;
+    $distance = (isset($_GET['_near_distance']))? (float) $_GET['_near_distance'] : 100;
     $data = $store->distance($_GET['_near'], $distance);
     $title = "Near ". local($_GET['_near']);
+    $showMap=true;
   } else if(isset($_GET['_related'])) {
       $title = 'Related: '.local($_GET['_related']);
-      //     $data = $store->get(null, null, $_GET['_related']);
-      $data = $store->related($_GET['_related']);
+      $data = $store->get(null, null, $_GET['_related']);
+      //$data = $store->related($_GET['_related']);
   } else {
     if(isset($_GET['_uri'])){
       $requestUri = $_GET['_uri'];

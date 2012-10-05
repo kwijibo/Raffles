@@ -29,6 +29,7 @@ class RafflesStore {
     "gr" => "http://purl.org/goodrelations/v1#",
     "geo" => "http://www.w3.org/2003/01/geo/wgs84_pos#",
     "open" => "http://open.vocab.org/terms/",
+    "mo" => "http://purl.org/ontology/mo/",
   );
   var $indexPredicates = array('http://www.w3.org/1999/02/22-rdf-syntax-ns#type');
 
@@ -44,7 +45,8 @@ class RafflesStore {
     $this->hierarchical_index_file_name = $this->dirname_absolute . DIRECTORY_SEPARATOR .'hierarchical_index';
     $this->Index = new Index();
     $this->DescriptionStore = new DescriptionStore($this->descriptions_file_name);
-    $this->LDPath = new LDPath($this->prefixes);
+    $this->LDPath = new LDPath();
+    $this->LDPath->setPrefixes($this->prefixes);
     $this->HierarchicalIndex = new HierarchicalIndex($this->Index);
     $this->loadIndex('Index',$this->index_file_name);
   }
@@ -182,7 +184,6 @@ class RafflesStore {
     $parser->parse($filename);
     $leftovers = $parser->getSimpleIndex(0);
     $this->load($leftovers);
-    $this->createHierarchicalIndex();
   }
 
   function createHierarchicalIndex(){
@@ -225,10 +226,11 @@ class RafflesStore {
     return $this->getFacets('http://www.w3.org/1999/02/22-rdf-syntax-ns#type');
   }
 
-  function search($o_text, $property=false){
+  function search($o_text, $property=false,$limit=50,$offset=0){
     $ids = $this->Index->searchObject($o_text,$property);
     $this->_lastSet = $ids;
-    return $this->DescriptionStore->getDescriptionsByIDs($ids);
+    $page_of_ids=array_slice($ids,$offset,$limit);
+    return $this->DescriptionStore->getDescriptionsByIDs($page_of_ids);
   }
 
   function query($path, $limit=50,$offset=0){
@@ -236,8 +238,12 @@ class RafflesStore {
     $ids = array();
     foreach($queries as $no => $query){
       $triples = $this->LDPath->parse($query);
-      if($no===0) $ids = $this->Index->query($triples);
-      else $ids = array_intersect($ids,$this->Index->query($triples));
+      if($no===0){
+        $ids = $this->Index->query($triples);
+      }
+      else {
+        $ids = array_intersect($ids,$this->Index->query($triples));
+      }
     }
     $this->_lastSet = $ids;
     return $this->DescriptionStore->getDescriptionsByIDs(array_slice((array)$ids, $offset, $limit));

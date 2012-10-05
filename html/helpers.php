@@ -1,5 +1,17 @@
 <?php
 
+
+  function get_etag(){
+    return time();
+  }
+
+  function get_if_none_match(){
+    $headers = apache_request_headers();
+    if(isset($headers["If-None-Match"])){
+     return $headers["If-None-Match"]; 
+    }
+  }
+
   function plural($word){
     if($word=='Person'){
       return 'People';
@@ -60,10 +72,11 @@ function label($props, $uri='Something'){
 }
 
 function getQuery(){
+  $get = $_GET;
+  unset($get['_page']);
+  unset($get['_related']);
   $q=array();
-  foreach($_GET as $k => $v){
-    if(strpos($k, '_')!==0) $q[]= "{$k}=".urldecode($v);
-  }
+  foreach($get as $k => $v) $q[]="{$k}=".($v);
   return implode('&',$q);
 }
 
