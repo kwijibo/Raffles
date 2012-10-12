@@ -26,7 +26,7 @@ session_start();
     $dataset = 'climb';
   }
   
-$store = new RafflesStore('.'.DIRECTORY_SEPARATOR.$dataset);
+$store = new \Raffles\RafflesStore('.'.DIRECTORY_SEPARATOR.$dataset);
 $prefixes = $Config->$dataset->prefixes;
 foreach($prefixes as $prefix => $ns){
   $store->addPrefix($prefix, $ns);
@@ -63,7 +63,8 @@ foreach($prefixes as $prefix => $ns){
   $query = getQuery();
   $page = 1;
   $offset = (isset($_GET['_page']) && $page = $_GET['_page'])? ($_GET['_page']-1)*10 : 0;
-  $showMap=false;
+  $showMap= (strpos($query,'_near')!==false || isset($_GET['_near']))? true : false ;
+
 
   if(!empty($query)){
       //query based title
@@ -74,14 +75,14 @@ foreach($prefixes as $prefix => $ns){
     else { $title = local($path).': '.$title; }
     $data = $store->query($query, 10, $offset);
 
+  } else if(isset($_GET['_near'])) {
+    $distance = (isset($_GET['_near_distance']))? (float) $_GET['_near_distance'] : 50;
+    $title = "Near: ". local($_GET['_near']);
+    $showMap=true;
+    $data = $store->distance($_GET['_near'], $distance);
   } else if(isset($_GET['_search']) && $search = $_GET['_search']){
     $data = $store->search($search,null,10,$offset);
 
-  } else if(isset($_GET['_near'])) {
-    $distance = (isset($_GET['_near_distance']))? (float) $_GET['_near_distance'] : 100;
-    $data = $store->distance($_GET['_near'], $distance);
-    $title = "Near ". local($_GET['_near']);
-    $showMap=true;
   } else if(isset($_GET['_related'])) {
       $title = 'Related: '.local($_GET['_related']);
       $data = $store->get(null, null, $_GET['_related']);
@@ -98,6 +99,11 @@ foreach($prefixes as $prefix => $ns){
     }
     $page =1;
   }
+  
+ 
+
+
+
 $facets = $store->getFacetsForLastQuery();
 
 $acceptTypes = AcceptHeader::getAcceptTypes();

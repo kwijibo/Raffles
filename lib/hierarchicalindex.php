@@ -1,4 +1,5 @@
 <?php
+namespace Raffles;
 class HierarchicalIndex {
 
   var $paths_from=array();

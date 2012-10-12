@@ -75,6 +75,11 @@ function getQuery(){
   $get = $_GET;
   unset($get['_page']);
   unset($get['_related']);
+  unset($get['_uri']);
+  unset($get['_dataset']);
+  unset($get['_near']);
+  unset($get['_reload']);
+  unset($get['_search']);
   $q=array();
   foreach($get as $k => $v) $q[]="{$k}=".($v);
   return implode('&',$q);

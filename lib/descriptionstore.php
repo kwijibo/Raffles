@@ -1,5 +1,5 @@
 <?php
-
+namespace Raffles;
 class DescriptionStore {
 
   var $File, $filename;
@@ -82,7 +82,9 @@ class DescriptionStore {
     fclose($file);
     $sorted= array();
     foreach($numbers as $num){
-      $sorted = array_merge($sorted, $descriptions[$num]);
+      if(isset($descriptions[$num])){
+        $sorted = array_merge($sorted, $descriptions[$num]);
+      }
     }
     return $sorted;
   }

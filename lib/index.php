@@ -1,17 +1,31 @@
 <?php 
+namespace Raffles;
 require 'indexfilter.php';
+require 'trie.php';
+
 define('Geo_NS', 'http://www.w3.org/2003/01/geo/wgs84_pos#');
+
+function intersectOfIds($a,$b){
+     $hash = array_flip($a);
+     $intersect=array();
+     foreach($b as $k => $v){
+       if(isset($hash[$v])) $intersect[]=$v;
+     }
+     return $intersect;
+   }
+
+
 class Index {
 
-  var $subjects = '';
-  var $_subjects = array();
+  var $subjects = array();
   var $po = array();
   var $geo = array();
   var $object_id_counter = 'a';
+  var $SearchTrie;
 
   function __construct(){
+    $this->SearchTrie = new Trie();
   }
-
 
  function subjectIsIndexed($s){
     return $this->getSubject($s)? true : false;
@@ -35,6 +49,12 @@ class Index {
     }
   }
 
+  function reloadSubjectsIndex(){
+    if(is_string($this->subjects) && is_readable($this->subjects)){
+      $this->subjects = unserialize(file_get_contents($this->subjects));
+    }
+  }
+
   function reloadIndex($p=false){
     if($p){
       if(isset($this->po[$p]) AND is_string($this->po[$p])){
@@ -54,33 +74,7 @@ class Index {
     }
   }
 
-  function __get($name){
 
-    switch($name){
-      case 'subjects':
-        if(empty($this->_subjects)){
-          $this->_subjects = unserialize(file_get_contents($this->subjects));
-        }
-        return $this->_subjects;
-      break;
-      default:
-      return $this->$name;
-    }
-  }
-
-  function __set($name, $value){
-    switch($name){
-      case 'subjects':
-        if(is_string($this->_subjects)){
-          $this->_subjects = unserialize(file_get_contents($this->_subjects));
-        }
-        return $this->_subjects = $value;
-      break;
-      default:
-      return $this->$name;
-    }
-
-  }
 
   /* 
    *  splits a URI by the last / in order to index 
@@ -88,7 +82,7 @@ class Index {
    *   eg http://example.com/people/ => array(John => 1, Paul => 2, Ringo => 3, George=> 4)
    */
   private function splitUri($s){
-    if(preg_match('@^(.+)(/.*)$@', $s, $m)){
+    if(preg_match('@^(.+)([^#/]*[/#]?)$@', $s, $m)){
       return array($m[1], $m[2]);
     }
     return array($s,'');
@@ -134,6 +128,7 @@ class Index {
   }
  
   function addSubject($s, $index_id,$overwrite=false){
+    $this->reloadSubjectsIndex();
     list($host,$local) = $this->splitUri($s);
     if(!$overwrite AND isset($this->subjects[$host][$local])){
         return false;
@@ -144,6 +139,7 @@ class Index {
   
 
   function replaceSubject($s, $new_id){
+    $this->reloadIndex();
     $old_id = $this->getSubject($s);
     $this->addSubject($s, $new_id, true);
     $this->reloadIndex();
@@ -183,6 +179,7 @@ class Index {
   }
 
   function getSubject($s){ 
+    $this->reloadSubjectsIndex();
     list($host,$local) = $this->splitUri($s);
     if(!isset($this->subjects[$host]) || !isset($this->subjects[$host][$local])){
       return null;
@@ -191,8 +188,9 @@ class Index {
   }
 
   function getSubjectByID($id){
-    $subjects = $this->subjects;
-    foreach($subjects as $host => $local_to_id){
+    $this->reloadSubjectsIndex();
+    $this->subjects;
+    foreach($this->subjects as $host => $local_to_id){
       foreach($local_to_id as $local => $id_no){ 
         if($id_no===$id) return $host.$local;
       }
@@ -227,6 +225,8 @@ class Index {
   }
 
   function filterPredicateObjectIndex($ids){
+    if(!$ids) return array();
+
     $filteredPo = array();
     $idHash = array_flip($ids);
     $this->reloadIndex();
@@ -249,7 +249,16 @@ class Index {
 
   /* searches for text value $text in triple objects */
   function searchObject($text,$p=false){
-    return $this->compareObject($text,$p,'stripos');
+    if($p){ 
+      return $this->compareObject($text,$p,'stripos');
+    } else {
+      $results = array_values($this->SearchTrie->search($text,false));
+      $intersect = array_pop($results);
+      foreach($results as $batch){
+        $intersect = intersectOfIds($intersect,$batch);
+      }
+      return $intersect;
+    }
   }
   
 
@@ -287,6 +296,7 @@ class Index {
 
 
   function getAll(){
+    $this->reloadSubjectsIndex();
     $ids = array();
     foreach($this->subjects as $host => $locals){
       $ids = array_merge($ids, array_values($locals));
@@ -310,9 +320,15 @@ class Index {
       case '_search':
         $filter->ids=$this->searchObject($o,$p);
           break;
-      case '_distance':
+      case '_near':
         $latlong = $this->getUriLatLong($o);
-        $filter->ids=$this->getIDsByDistance($lat_long);
+        $dist_ids = $this->getIDsByDistance($latlong, 50);
+        ksort($dist_ids);
+        $filter->ids = array();
+        foreach($dist_ids as $d => $ids){
+          $filter->ids = array_merge( $filter->ids, $ids);
+        }
+        return $filter->ids;
         break;
       case '_min':
         $filter->ids=$this->compareObject($o,$p, function($in,$o){ 

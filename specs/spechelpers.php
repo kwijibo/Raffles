@@ -38,7 +38,7 @@ function getIndexWithBooks(){
 
 
     );
-    $Index = new Index();
+    $Index = new \Raffles\Index();
     $i = 0;
     foreach($data as $s => $ps){
       $Index->addSubject($s, $i);
@@ -54,18 +54,18 @@ function getIndexWithBooks(){
 
 function getFilter(){
   $Index = getIndexWithBooks();
-  $Filter = new IndexFilter($Index); 
+  $Filter = new \Raffles\IndexFilter($Index); 
   return $Filter;
 }
 
 function getStore(){
-  $store = new DescriptionStore(__DIR__.DIRECTORY_SEPARATOR.'testdata'.DIRECTORY_SEPARATOR.'descriptions');
+  $store = new \Raffles\DescriptionStore(__DIR__.DIRECTORY_SEPARATOR.'testdata'.DIRECTORY_SEPARATOR.'descriptions');
   $store->reset();
   return $store;
 }
 
 function getIndex(){
-  $index = new Index();
+  $index = new \Raffles\Index();
   return $index;
 }
 
@@ -87,7 +87,7 @@ function getTriplePatternArray(){
 
 function getRafflesStore($load=false){
   $dirname = __DIR__.DIRECTORY_SEPARATOR.'testdata';
-  $store = new RafflesStore($dirname);
+  $store = new \Raffles\RafflesStore($dirname);
   $store->indexPredicates = false;
   $store->reset();
   if($load){

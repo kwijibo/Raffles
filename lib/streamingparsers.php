@@ -1,15 +1,17 @@
 <?php
 
- include '../vendor/kwijibo/arc2/ARC2.php';
- include '../vendor/kwijibo/arc2/parsers/ARC2_TurtleParser.php';
- include '../vendor/kwijibo/arc2/parsers/ARC2_RDFXMLParser.php';
+namespace Raffles;
 
-class StreamingTurtleParser extends ARC2_TurtleParser {
+ include __DIR__.'/../vendor/kwijibo/arc2/ARC2.php';
+ include __DIR__.'/../vendor/kwijibo/arc2/parsers/ARC2_TurtleParser.php';
+ include __DIR__.'/../vendor/kwijibo/arc2/parsers/ARC2_RDFXMLParser.php';
+
+class StreamingTurtleParser extends \ARC2_TurtleParser {
 
   var $callback;
 
   function __construct(){
-    parent::__construct(array(), new StdClass());
+    parent::__construct(array(), new \StdClass());
   }
   
   function setCallback(&$callback){
@@ -27,12 +29,12 @@ class StreamingTurtleParser extends ARC2_TurtleParser {
 
 }
 
-class StreamingRDFXMLParser extends ARC2_RDFXMLParser {
+class StreamingRDFXMLParser extends \ARC2_RDFXMLParser {
 
   var $callback;
 
     function __construct(){
-    parent::__construct(array(), new StdClass());
+    parent::__construct(array(), new \StdClass());
   }
 
   function setCallback(&$callback){

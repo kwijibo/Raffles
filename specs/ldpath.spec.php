@@ -6,14 +6,14 @@ require_once 'specs/spechelpers.php';
 
 describe("LDPath", function(){
   it("should turn an LDPath string into an associative array that can be processed into index queries", function(){
-    $path = new LDPath();
+    $path = new \Raffles\LDPath();
     $actual = $path->parse("foaf:made/dct:date=1728"); 
     $expected = getTriplePatternArray();
     expect($actual)->to_equal($expected);
   });
 
   it("should leave http uris as they are", function(){
-    $path = new LDPath();
+    $path = new \Raffles\LDPath();
     $actual = $path->parse("rdf:type=http://example.org/Thing"); 
     $expected = array(
       array(
@@ -28,7 +28,7 @@ describe("LDPath", function(){
   });
 
   it("should parse CURIEs in object position into URIs", function(){
-    $path = new LDPath();
+    $path = new \Raffles\LDPath();
     $actual = $path->parse("rdf:type=foaf:Person"); 
     $expected = array(
       array(
@@ -42,12 +42,12 @@ describe("LDPath", function(){
   });
 
   it("should parse CURIEs into URIs",function(){
-      $ldpath = new LDPath(array('foo'=>ex));
+      $ldpath = new \Raffles\LDPath(array('foo'=>ex));
       $actual = $ldpath->curie_to_uri('foo:bar');
       expect($actual)->to_equal(ex.'bar');
   });
   it("should treat non-CURIE object-position as literals", function(){
-    $path = new LDPath();
+    $path = new \Raffles\LDPath();
     $actual = $path->parse("foaf:name=Arthur"); 
     $expected = array(
       array(
@@ -62,7 +62,7 @@ describe("LDPath", function(){
   describe("foaf:name;_search=foo ", function(){
     it("should have an object of type 'filter' and filter_type 'search' ", function(){
     
-    $path = new LDPath();
+    $path = new \Raffles\LDPath();
     $actual = $path->parse("foaf:name;_search=foo");
     $expected = array(
       array(
@@ -79,7 +79,7 @@ describe("LDPath", function(){
   describe("_search=foo ", function(){
     it("should have a predicate of type 'variable' and an object of type 'filter' and filter_type 'search' ", function(){
     
-    $path = new LDPath();
+    $path = new \Raffles\LDPath();
     $actual = $path->parse("_search=foo");
     $expected = array(
       array(

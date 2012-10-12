@@ -1,4 +1,5 @@
 <?php
+namespace Raffles;
 
 function merge(){
   $old_bnodeids = array();
@@ -65,3 +66,8 @@ function merge(){
   }
   return $current;
 }
+
+class IndexingException extends \Exception {}
+class ParsingException extends \Exception {}
+
+

@@ -1,4 +1,5 @@
 <?php
+namespace Raffles;
 
 class LDPath {
 
@@ -37,7 +38,7 @@ class LDPath {
   function curie_to_uri($curie){
     list($prefix,$localname) = explode(':', $curie);
     if(!isset($this->prefixes[$prefix])){
-      throw new Exception("No namespace for prefix {$prefix} is defined");
+      throw new LDPathException("No namespace for prefix {$prefix} is defined");
     }
     return $this->prefixes[$prefix].$localname;
   }
@@ -79,7 +80,7 @@ class LDPath {
       }
             
       if($filter AND !in_array($filter, $this->filters)){
-        throw new Exception("$filter is not a recognised filter");
+        throw new LDPathException("$filter is not a recognised filter");
       }
 
       $o = ($no===0)? array( 'type' => $value_type, 'value'=> $value) : array( 'type' => 'variable', 'value' => $var_name);
@@ -103,4 +104,5 @@ class LDPath {
   }
 }
 
+class LDPathException extends \Exception {}
 ?>

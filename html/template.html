@@ -155,7 +155,7 @@ margin-left: 1em;
 
 
     <form action="" method="get" accept-charset="utf-8">    
-      <input type=text" name="_search" value="">
+      <input type="search" name="_search" value="">
       <p><input type="submit" value="Search"></p>
     </form>
 
@@ -192,7 +192,7 @@ margin-left: 1em;
     $itemCount=0;
   ?>
   <section id="data-list">
-  <?php if($showMap):?>
+  <?php if($showMap && isset($_GET['_near'])):?>
 
   <div id="map" style="height:500px"></div>
 

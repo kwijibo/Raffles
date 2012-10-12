@@ -1,9 +1,12 @@
 <?php
-require 'ldpath.php';
-require 'index.php';
-require 'hierarchicalindex.php';
-require 'descriptionstore.php';
-require 'utils.php';
+namespace Raffles;
+
+ require __DIR__.'/ldpath.php';
+ require __DIR__.'/index.php';
+ require __DIR__.'/hierarchicalindex.php';
+ require __DIR__.'/descriptionstore.php';
+ require __DIR__.'/utils.php';
+
 
 class RafflesStore {
   var $Index;
@@ -109,7 +112,7 @@ class RafflesStore {
       } else if(isset($alreadyStoredDescriptions[$s])) {
         $lineNumber = $alreadyStoredDescriptions[$s]; 
       } else {
-        throw new Exception($s.' somehow not indexed');
+        throw new IndexingException($s.' somehow not indexed');
       }
       $this->Index->addSubject($s, $lineNumber);
       $count['s']++;
@@ -134,6 +137,9 @@ class RafflesStore {
           if(!$this->indexPredicates OR in_array($p, $this->indexPredicates)){
             $this->Index->addPredicateObject($p, $obj['value'], $lineNumber);
           }
+          if($obj['type']=='literal') {
+            $this->Index->SearchTrie->indexText($obj['value'], $lineNumber);
+          }
           $count['o']++;
           
         }
@@ -156,15 +162,15 @@ class RafflesStore {
 
   function loadData($data){
     require_once 'arc/ARC2.php';
-    $parser = ARC2::getRDFParser();
+    $parser = \ARC2::getRDFParser();
     $parser->parse('',$data);
     return $this->load($parser->getSimpleIndex(0));
   }
 
-  function loadDataFile($filename){
+  function loadDataFile($filename, $extension=false){
     require_once 'streamingparsers.php';
     require_once 'streamingparsers.php';
-    $extension = array_pop(explode('.',$filename));
+    if(!$extension) $extension = array_pop(explode('.',$filename));
     switch($extension){
       case 'ttl':
       case 'nt':
@@ -176,7 +182,7 @@ class RafflesStore {
         $parser = new StreamingRDFXMLParser();
         break;
       default:
-        throw Exception("No Handler for Data File extension: $extension");
+        throw new ParsingException("No Handler for Data File extension: $extension");
         break;
     }
     $callback = array(&$this, 'load');
@@ -227,7 +233,18 @@ class RafflesStore {
   }
 
   function search($o_text, $property=false,$limit=50,$offset=0){
-    $ids = $this->Index->searchObject($o_text,$property);
+    if($property){
+      $ids = $this->Index->searchObject($o_text,$property);
+    } else {
+      $results = $this->Index->SearchTrie->search($o_text, true);
+      $ids = array();
+      foreach($results as $word => $matchingIDs){
+        $ids = array_merge($ids, $matchingIDs);
+      }
+      $ordered = array_count_values($ids);
+      arsort($ordered);
+      $ids = array_keys($ordered);
+    }
     $this->_lastSet = $ids;
     $page_of_ids=array_slice($ids,$offset,$limit);
     return $this->DescriptionStore->getDescriptionsByIDs($page_of_ids);
@@ -242,14 +259,14 @@ class RafflesStore {
         $ids = $this->Index->query($triples);
       }
       else {
-        $ids = array_intersect($ids,$this->Index->query($triples));
+        $ids = intersectOfIds($ids,$this->Index->query($triples));
       }
     }
     $this->_lastSet = $ids;
     return $this->DescriptionStore->getDescriptionsByIDs(array_slice((array)$ids, $offset, $limit));
   }
 
-  function getFacetsForLastQuery(){
+  function getFacetsForLastQuery($limit=10){
     $po =  $this->Index->filterPredicateObjectIndex($this->_lastSet);
     $p_index = array();
     foreach($po as $p => $os){
@@ -259,7 +276,13 @@ class RafflesStore {
         $po[$p][$o] = count($ids);
       }
       arsort($po[$p]);
-      $po[$p] = array_slice($po[$p],0,15,true);
+      
+      $po[$p] = array_slice($po[$p],0,$limit,true);
+      
+      if(is_numeric($o)){
+        ksort($po[$p]);
+      }    
+
     }
     asort($p_index);
     foreach($p_index as $p => $count){
@@ -289,13 +312,15 @@ class RafflesStore {
   function saveIndexesToFile(){
     if(!is_file($this->index_file_name) OR is_file($this->descriptions_file_name) AND filemtime($this->descriptions_file_name) > filemtime($this->index_file_name) ){
       foreach($this->Index->po as $p => $o_ids){
-        if(is_array($o_ids)){
+        if( is_array($o_ids)){
           $relative_filename = $this->dirname . DIRECTORY_SEPARATOR . 'index_po_' .urlencode($p);
           $absolute_filename = $this->dirname_absolute . DIRECTORY_SEPARATOR . 'index_po_' .urlencode($p);
           file_put_contents($absolute_filename, serialize($o_ids), LOCK_EX);
           $this->Index->po[$p] = $relative_filename;
         }
       }
+      file_put_contents($this->index_file_name.'_subjects', serialize($this->Index->subjects), LOCK_EX);
+      $this->Index->subjects = $this->index_file_name.'_subjects';
       file_put_contents($this->index_file_name, serialize($this->Index), LOCK_EX);
       $this->HierarchicalIndex->Index=null;
       file_put_contents($this->hierarchical_index_file_name, serialize($this->HierarchicalIndex), LOCK_EX);
@@ -313,3 +338,5 @@ class RafflesStore {
     $this->DescriptionStore = new DescriptionStore($this->dirname . DIRECTORY_SEPARATOR . 'descriptions');
   }
 }
+
+?>
