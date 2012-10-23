@@ -164,6 +164,24 @@ describe("Raffles Store", function(){
     expect($uris[0])->to_equal('http://example.org/ecco-tcp/person/A_Alison');
 });
 
+  it("should tell you what namespaces are used in the data", function(){
+    $data = array(
+      ex.'people/tom' => array(
+        ex.'vocab/name' =>  array(
+          array('value' => 'Tom', 'type' => 'literal'),
+        ),
+      ),
+    );
+    $store = new \Raffles\RafflesStore('testdata');
+    $store->reset();
+    $store->load($data);
+    expect($store->Index->getSubjectNamespaces())->to_equal(array(ex.'people/'));
+    expect($store->getNamespaces())->to_equal(array(
+      ex.'people/' => 'people',
+      ex.'vocab/' => 'vocab',
+    ));
+ 
+  });
 
 });
 

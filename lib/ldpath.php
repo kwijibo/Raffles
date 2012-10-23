@@ -28,7 +28,7 @@ class LDPath {
     $this->prefixes = array_merge( $prefixes, $this->prefixes);
   }
   function is_curie($str){
-    return (strpos( $str, ':') AND !strpos( $str, '/'))? true : false;
+    return (strpos( $str, ':') AND !strpos( $str, '/') AND !strpos( $str, '\:'))? true : false;
   }
 
   function is_uri($str){
@@ -52,10 +52,13 @@ class LDPath {
   function parse($ldpath){
     $triple_patterns = array();
     list($path,$value) = explode('=', $ldpath);
+    $value = urldecode($value);
     $value_type = ($this->is_curie($value) OR $this->is_uri($value))? 'uri' : 'literal';
     $value = (!$this->is_curie($value))? $value : $this->curie_to_uri($value);
+    if($value_type=='literal'){
+      $value = str_replace('\:',':',$value);
+    }
     $curies = explode('/', $path);
-//    array_walk($curies, array(&$this, 'curie_to_uri'));
     $path_parts = array_reverse($curies);
     $var_name = 'a';
     foreach($path_parts as $no => $part){
@@ -74,7 +77,9 @@ class LDPath {
           $p = $this->term_to_uri($part);
           $p_type='uri';
         }
-      } else {
+      } else if($part=='*'){
+        $p_type='variable';
+      }  else {
         $p = $this->term_to_uri($part);
         $p_type='uri';
       }

@@ -37,6 +37,13 @@ describe("Trie Text Search Index", function(){
     
   });
 
+  it("should let you search for æ", function(){
+      $trie = new \Raffles\Trie();
+      $trie->indexText('Romanæ Historiæ', 42);
+      $trie->indexText('Romanü', 53);
+      expect($trie->find('romanæ'))->to_equal(array('romanæ' => array(42)));
+  });
+
   it("should return results for a multi-word search", function(){
     $trie = new \Raffles\Trie();
     $text = "Peter Piper Picked a Pack of Pickled Peppers so what's the pack of pickled peppers peter piper picked?";
@@ -48,7 +55,30 @@ describe("Trie Text Search Index", function(){
     $trie = new \Raffles\Trie();
     $text = "Peter Piper Picked a Pack of Pickled Peppers so what's the pack of pickled peppers peter piper picked?";
     $trie->indexText($text, 5);
-    expect($trie->search('pickles'))->to_equal(array('pickled'=>array(5),'pickles'=> false));
+    expect($trie->search('pickles'))->to_equal(array('pickled'=>array(5),'pickles'=> array()));
+  });
+
+  it("should return longer words when the shorter word isn't indexed", function(){
+    $trie = new \Raffles\Trie();
+    $trie->indexText('searching', 42);
+    expect($trie->find('search',true))->to_equal(array('searching' => array(42), 'search' => array()));
+  });
+
+  it("should return all words beginning with a prefix", function(){
+    $trie = new \Raffles\Trie();
+    $trie->indexText('searching', 42);
+    $trie->indexText('searchable', 42);
+    $trie->indexText('searchers', 42);
+    $trie->indexText('searched', 42);
+    $trie->indexText('another', 42);
+    $actual = $trie->getAllChildren('search', $trie->_tree['s']['e']['a']['r']['c']['h']);
+    $expected = array(
+      'searching' => array(42),
+      'searchable' => array(42),
+      'searchers' => array(42),
+      'searched' => array(42),
+    );
+    expect($actual)->to_equal($expected);
   });
 
 });

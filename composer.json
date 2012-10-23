@@ -1,5 +1,5 @@
 {
-    "name": "kwijibo/Raffles",
+    "name": "kwijibo/raffles",
     "description": "An embeddable RDF store supporting simple querying, searching, geo search and faceted browsing",
     "require": {
         "nharbour/pecs": "dev-master",

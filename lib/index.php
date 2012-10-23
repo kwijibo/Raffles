@@ -4,6 +4,7 @@ require 'indexfilter.php';
 require 'trie.php';
 
 define('Geo_NS', 'http://www.w3.org/2003/01/geo/wgs84_pos#');
+define('rdf_type', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type');
 
 function intersectOfIds($a,$b){
      $hash = array_flip($a);
@@ -49,6 +50,12 @@ class Index {
     }
   }
 
+  function reloadSearchTrie(){
+    if(is_string($this->SearchTrie) && is_readable($this->SearchTrie)){
+      $this->SearchTrie = unserialize(file_get_contents($this->SearchTrie));
+    }    
+  }
+
   function reloadSubjectsIndex(){
     if(is_string($this->subjects) && is_readable($this->subjects)){
       $this->subjects = unserialize(file_get_contents($this->subjects));
@@ -81,8 +88,8 @@ class Index {
    *  it as an associative array of firstpart => lastparts
    *   eg http://example.com/people/ => array(John => 1, Paul => 2, Ringo => 3, George=> 4)
    */
-  private function splitUri($s){
-    if(preg_match('@^(.+)([^#/]*[/#]?)$@', $s, $m)){
+    function splitUri($s){
+    if(preg_match('@^(.+[/#]+)([^#/]+[#/]*)$@', $s, $m)){
       return array($m[1], $m[2]);
     }
     return array($s,'');
@@ -228,7 +235,7 @@ class Index {
     if(!$ids) return array();
 
     $filteredPo = array();
-    $idHash = array_flip($ids);
+    $idHash = array_flip((array)$ids);
     $this->reloadIndex();
     foreach($this->po as $p => $objs){
       foreach($objs as $o => $sIDs){
@@ -252,7 +259,8 @@ class Index {
     if($p){ 
       return $this->compareObject($text,$p,'stripos');
     } else {
-      $results = array_values($this->SearchTrie->search($text,false));
+      $this->reloadSearchTrie();
+      $results = array_values($this->SearchTrie->search($text, true));
       $intersect = array_pop($results);
       foreach($results as $batch){
         $intersect = intersectOfIds($intersect,$batch);
@@ -261,6 +269,29 @@ class Index {
     }
   }
   
+  function getSubjectNamespaces(){
+    $this->reloadSubjectsIndex();
+    return array_keys($this->subjects);
+  }
+
+  function getVocabularyNamespaces(){
+    $terms = array_merge($this->getPredicates(), $this->getTypes());
+    $namespaces = array();
+    foreach($terms as $term){
+      $ns = array_shift($this->splitUri($term));
+      if(!in_array($ns, $namespaces))
+        $namespaces[]= $ns;
+    }
+    return $namespaces;
+  }
+
+  function getPredicates(){
+    return  array_keys($this->po);
+  }
+
+  function getTypes(){
+    return array_keys($this->getPredicateValues(rdf_type));
+  }
 
   /* 
    * compares input $o to other 
@@ -322,7 +353,7 @@ class Index {
           break;
       case '_near':
         $latlong = $this->getUriLatLong($o);
-        $dist_ids = $this->getIDsByDistance($latlong, 50);
+        $dist_ids = $this->getIDsByDistance($latlong, 5000);
         ksort($dist_ids);
         $filter->ids = array();
         foreach($dist_ids as $d => $ids){

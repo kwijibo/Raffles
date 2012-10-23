@@ -3,20 +3,17 @@ namespace Raffles;
 
  require __DIR__.'/ldpath.php';
  require __DIR__.'/index.php';
- require __DIR__.'/hierarchicalindex.php';
  require __DIR__.'/descriptionstore.php';
  require __DIR__.'/utils.php';
 
 
 class RafflesStore {
   var $Index;
-  var $HierarchicalIndex;
   var $DescriptionStore;
   var $dirname;
   var $dirname_absolute;
   var $index_file_name;
   var $descriptions_file_name;
-  var $hierarchical_index_file_name;
   var $LDPath;
   var $_lastSet=array();
   var $prefixes = array(
@@ -33,6 +30,7 @@ class RafflesStore {
     "geo" => "http://www.w3.org/2003/01/geo/wgs84_pos#",
     "open" => "http://open.vocab.org/terms/",
     "mo" => "http://purl.org/ontology/mo/",
+    "skos" => "http://www.w3.org/2004/02/skos/core#",
   );
   var $indexPredicates = array('http://www.w3.org/1999/02/22-rdf-syntax-ns#type');
 
@@ -45,12 +43,10 @@ class RafflesStore {
       mkdir($this->dirname_absolute);
     }
     $this->index_file_name = $this->dirname_absolute . DIRECTORY_SEPARATOR .'index';
-    $this->hierarchical_index_file_name = $this->dirname_absolute . DIRECTORY_SEPARATOR .'hierarchical_index';
     $this->Index = new Index();
     $this->DescriptionStore = new DescriptionStore($this->descriptions_file_name);
     $this->LDPath = new LDPath();
     $this->LDPath->setPrefixes($this->prefixes);
-    $this->HierarchicalIndex = new HierarchicalIndex($this->Index);
     $this->loadIndex('Index',$this->index_file_name);
   }
 
@@ -106,6 +102,8 @@ class RafflesStore {
     gc_enable();
     gc_collect_cycles();
     gc_disable();
+    $this->Index->reloadSearchTrie();
+    $this->Index->reloadIndex();
     foreach($descriptions as $s => $props){
       if(isset($lineNumbers[$s])){
         $lineNumber = $lineNumbers[$s];
@@ -137,7 +135,7 @@ class RafflesStore {
           if(!$this->indexPredicates OR in_array($p, $this->indexPredicates)){
             $this->Index->addPredicateObject($p, $obj['value'], $lineNumber);
           }
-          if($obj['type']=='literal') {
+          if(isset($obj['type']) AND $obj['type']=='literal') {
             $this->Index->SearchTrie->indexText($obj['value'], $lineNumber);
           }
           $count['o']++;
@@ -151,6 +149,7 @@ class RafflesStore {
   function get($s=false, $p=false, $o=false,$limit=50,$offset=0){
     $descriptions = array();
     $IDs = $this->Index->filter($s,$p, $o)->ids();   
+    $this->_lastSet = $IDs;
     return $this->describeIDs(array_slice((array)$IDs, $offset, $limit));
   }
 
@@ -192,31 +191,8 @@ class RafflesStore {
     $this->load($leftovers);
   }
 
-  function createHierarchicalIndex(){
-    $ids = $this->Index->getAll();
-    $this->HierarchicalIndex = new HierarchicalIndex($this->Index);
-    $batches = array_chunk($ids, 100);
-    foreach($batches as $batch){
-      $descriptions = $this->describeIDs($batch);
-      foreach($descriptions as $uri => $props){
-        foreach($props as $p => $objs){
-          foreach($objs as $o){
-            if(isset($o['type']) AND ($o['type']=='uri' OR $o['type']=='bnode')){
-              $this->HierarchicalIndex->addTriple($uri,$p,$o['value']);
-            }
-          }
-        }
-      }
-    }
-  }
-
   function related($uri){
-    $this->loadIndex('HierarchicalIndex',$this->hierarchical_index_file_name);
-    $this->HierarchicalIndex->Index = &$this->Index;
-    $id = $this->Index->getSubject($uri);
-    $ids = $this->HierarchicalIndex->getRelatedIDs($id);
-    $this->_lastSet=$ids;
-    return $this->describeIDs($ids);
+    return $this->get(null,null,$uri);
   }
   
   function getFacets($p){
@@ -236,6 +212,7 @@ class RafflesStore {
     if($property){
       $ids = $this->Index->searchObject($o_text,$property);
     } else {
+      $this->Index->reloadSearchTrie();
       $results = $this->Index->SearchTrie->search($o_text, true);
       $ids = array();
       foreach($results as $word => $matchingIDs){
@@ -291,6 +268,17 @@ class RafflesStore {
     return $p_index;
   }
 
+  function getResultsCountForLastQuery(){
+    return count($this->_lastSet);
+  }
+
+  function getNamespaces(){
+    return array_merge(
+      $this->Index->getSubjectNamespaces(),
+      $this->Index->getVocabularyNamespaces()
+    );
+  }
+
   function distance($uri, $km=30){
     if($lat_long = $this->Index->getUriLatLong($uri)){
       $ids_by_distance = $this->Index->getIDsByDistance($lat_long, $km);
@@ -319,11 +307,11 @@ class RafflesStore {
           $this->Index->po[$p] = $relative_filename;
         }
       }
-      file_put_contents($this->index_file_name.'_subjects', serialize($this->Index->subjects), LOCK_EX);
-      $this->Index->subjects = $this->index_file_name.'_subjects';
+      file_put_contents($this->dirname_absolute . DIRECTORY_SEPARATOR .'subjects_index', serialize($this->Index->subjects), LOCK_EX);
+      $this->Index->subjects = $this->dirname . DIRECTORY_SEPARATOR .'subjects_index';
+      file_put_contents($this->dirname_absolute . DIRECTORY_SEPARATOR .'search_trie', serialize($this->Index->SearchTrie), LOCK_EX);
+      $this->Index->SearchTrie = $this->dirname . DIRECTORY_SEPARATOR .'search_trie';
       file_put_contents($this->index_file_name, serialize($this->Index), LOCK_EX);
-      $this->HierarchicalIndex->Index=null;
-      file_put_contents($this->hierarchical_index_file_name, serialize($this->HierarchicalIndex), LOCK_EX);
     }
 
   }

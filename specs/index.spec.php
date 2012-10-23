@@ -1,9 +1,9 @@
 <?php 
+require_once 'specs/spechelpers.php';
 
 require_once 'lib/index.php';
 require_once 'vendor/autoload.php';
 
-require_once 'specs/spechelpers.php';
 
 describe("Index", function(){
   it("should let you add an entry", function(){
@@ -43,13 +43,19 @@ describe("Index", function(){
       expect($index->searchObject( '15', 'date'))->to_equal(array(1,2));
   });
 
+  /*
+    commented out because it uses the SearchTrie, which is currently built independently 
+    of addPredicateObject
+    
     it("should let you search for an object of all predicates", function(){
       $index = getIndex();
-      $index->addPredicateObject('date', '1500', 1);
-      $index->addPredicateObject('before', '1550', 2);
-      $index->addPredicateObject('after', '1066', 3);
-      expect($index->searchObject( '15'))->to_equal(array(1,2));
-  });
+      $index->addPredicateObject('name', 'John Paul', 1);
+      $index->addPredicateObject('surname', 'Paul', 2);
+      $index->addPredicateObject('firstname', 'John', 3);
+      expect($index->searchObject( 'Paul'))->to_equal(array(1,2));
+    });
+
+   */
 
   it("should let you getAll IDs in the index", function(){
     $index = getIndex();
@@ -58,6 +64,41 @@ describe("Index", function(){
    $index->addSubject('c', 9); 
    expect($index->getAll())->to_equal(array(1,34,9));
   });
+
+  it("should give you subject namespaces", function(){
+    $index = getIndex();
+    $ex = 'http://example.com/id/';
+   $index->addSubject($ex.'a', 1); 
+   $index->addSubject($ex.'b', 34); 
+   $index->addSubject($ex.'c', 9); 
+   expect($index->getSubjectNamespaces())->to_equal(array($ex));
+
+  });
+
+  it("should give you subject namespaces", function(){
+    $index = getIndex();
+    $ex = 'http://example.com/id/';
+   $index->addSubject($ex.'a', 1); 
+   $index->addSubject($ex.'b', 34); 
+   $index->addSubject($ex.'c', 9); 
+   expect($index->getSubjectNamespaces())->to_equal(array($ex));
+
+  });
+
+  describe("getVocabularyNamespaces", function(){
+    it("should return namespaces used in properties", function(){
+          $index = getIndex();
+    $ex = 'http://example.com/terms/';
+   $index->addPredicateObject($ex.'a', 'foo', 1); 
+   $index->addPredicateObject($ex.'b', 'foo', 1); 
+   $index->addPredicateObject($ex.'c', 'foo', 1); 
+   $index->addPredicateObject($ex.'v2/a', 'foo',1); 
+   expect($index->getVocabularyNamespaces())->to_equal(array($ex, $ex.'v2/'));
+
+    });
+  });
+
+
 
   it("should return results from a triple pattern query", function(){
     $index = getRafflesStore(true)->Index;
@@ -91,8 +132,19 @@ _TTL_;
 
   });
 
+  describe("splitURI", function(){
+    it("should return an array( namespace, localname)", function(){
+      $index = getIndex();
+      expect($index->splitURI('http://example.com/foo/bar'))->to_equal(array('http://example.com/foo/', 'bar'));
+      expect($index->splitURI('http://example.com/foo/bar/'))->to_equal(array('http://example.com/foo/', 'bar/'));
+      expect($index->splitURI('http://example.com/foo#bar'))->to_equal(array('http://example.com/foo#', 'bar'));
+      expect($index->splitURI('http://example.com/foo/bar#'))->to_equal(array('http://example.com/foo/', 'bar#'));
+      expect($index->splitURI('http://example.com/ns/people/tom'))->to_equal(array('http://example.com/ns/people/', 'tom'));
+    });
+  });
+
 });
 
 
-//\pecs\run();
+ //\pecs\run();
 ?>
