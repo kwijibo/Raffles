@@ -31,6 +31,8 @@ class RafflesStore {
     "open" => "http://open.vocab.org/terms/",
     "mo" => "http://purl.org/ontology/mo/",
     "skos" => "http://www.w3.org/2004/02/skos/core#",
+    "void" => "http://rdfs.org/ns/void#",
+    "search" => "http://a9.com/-/spec/opensearch/1.1/",
   );
   var $indexPredicates = array('http://www.w3.org/1999/02/22-rdf-syntax-ns#type');
 
