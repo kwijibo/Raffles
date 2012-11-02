@@ -7,9 +7,7 @@ hosting without using an external database.
 
 
 
-        git clone https://github.com/kwijibo/Raffles.git Raffles
-        cd Raffles
-        composer install
+composer create-project kwijibo/raffles raffles
 
 see [Composer](http://getcomposer.org)
 

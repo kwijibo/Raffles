@@ -174,11 +174,12 @@ describe("Raffles Store", function(){
     );
     $store = new \Raffles\RafflesStore('testdata');
     $store->reset();
+    $store->indexPredicates=false;
     $store->load($data);
     expect($store->Index->getSubjectNamespaces())->to_equal(array(ex.'people/'));
     expect($store->getNamespaces())->to_equal(array(
-      ex.'people/' => 'people',
-      ex.'vocab/' => 'vocab',
+      ex.'people/' => 'r1',
+      ex.'vocab/' => 'r2',
     ));
  
   });
@@ -186,5 +187,5 @@ describe("Raffles Store", function(){
 });
 
 
-//\pecs\run();
+\pecs\run();
 ?>

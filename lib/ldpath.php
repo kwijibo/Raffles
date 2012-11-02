@@ -90,12 +90,13 @@ class LDPath {
 
       $o = ($no===0)? array( 'type' => $value_type, 'value'=> $value) : array( 'type' => 'variable', 'value' => $var_name);
       
+
       if($p_type=='variable'){
-        $p = $var_name++;
+        $p = ($no===0)? $var_name++ : ++$var_name;
       }
       
+   
       $s = ($no===0)? $var_name : ++$var_name;
-
 
 
       if($value_type=='filter') $o['filter'] = $filter;

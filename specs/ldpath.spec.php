@@ -107,15 +107,21 @@ describe("LDPath", function(){
   });
 
   describe("*/ex:bar=foo ", function(){
-    it("should have a predicate of type 'variable' and an object of type 'filter' and filter_type 'search' ", function(){
+    it("should parse the * as a wildcard that traverse the graph outwards from the restriction to the right ", function(){
     
     $path = new \Raffles\LDPath();
+    $path->prefixes['ex'] = 'http://example.com/';
     $actual = $path->parse("*/ex:bar=foo");
     $expected = array(
       array(
-        's' => array('type' => 'variable', 'value' => 'b'), 
-        'p' => array('type' => 'variable', 'value' => 'a'), 
-        'o' => array('type' => 'filter', 'value' => 'foo', 'filter' => '_search')
+        's' => array('type' => 'variable', 'value' => 'a'), 
+        'p' => array('type' => 'uri', 'value' => 'http://example.com/bar'), 
+        'o' => array('type' => 'literal', 'value' => 'foo')
+      ),
+      array(
+        's' => array('type' => 'variable', 'value' => 'c'), 
+        'p' => array('type' => 'variable', 'value' => 'b'), 
+        'o' => array('type' => 'variable', 'value' => 'a')
       )
     );
     expect($actual)->to_equal($expected);
@@ -125,5 +131,5 @@ describe("LDPath", function(){
 
 
 });
-//\pecs\run();
+\pecs\run();
 ?>

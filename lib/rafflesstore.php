@@ -275,10 +275,21 @@ class RafflesStore {
   }
 
   function getNamespaces(){
-    return array_merge(
+    $ns = array_merge(
       $this->Index->getSubjectNamespaces(),
       $this->Index->getVocabularyNamespaces()
     );
+    $ns_prefix = array();
+    $namespaces = array_flip($this->prefixes);
+    $no=1;
+    foreach($ns as $nsUri){
+      if(!empty($namespaces[$nsUri])){
+        $ns_prefix[$nsUri] = $namespaces[$nsUri];
+      } else {
+        $ns_prefix[$nsUri] = 'r'.$no++;
+      }
+    }
+    return $ns_prefix;
   }
 
   function distance($uri, $km=30){
