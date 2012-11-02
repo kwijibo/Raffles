@@ -283,10 +283,12 @@ class RafflesStore {
     $namespaces = array_flip($this->prefixes);
     $no=1;
     foreach($ns as $nsUri){
+      if(strpos($nsUri, 'http')===0){
       if(!empty($namespaces[$nsUri])){
         $ns_prefix[$nsUri] = $namespaces[$nsUri];
       } else {
         $ns_prefix[$nsUri] = 'r'.$no++;
+      }
       }
     }
     return $ns_prefix;
