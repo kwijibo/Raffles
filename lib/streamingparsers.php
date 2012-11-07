@@ -2,10 +2,6 @@
 
 namespace Raffles;
 
- include __DIR__.'/../vendor/kwijibo/arc2/ARC2.php';
- include __DIR__.'/../vendor/kwijibo/arc2/parsers/ARC2_TurtleParser.php';
- include __DIR__.'/../vendor/kwijibo/arc2/parsers/ARC2_RDFXMLParser.php';
-
 class StreamingTurtleParser extends \ARC2_TurtleParser {
 
   var $callback;
