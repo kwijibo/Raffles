@@ -10,9 +10,5 @@
             "name": "keith alexander",
             "email": "keithalexander@keithalexander.co.uk"
         }
-    ],
-   "autoload": {
-        "classmap": ["vendor/kwijibo/arc2/"]
-    }
-    
+    ]    
 }
